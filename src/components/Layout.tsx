@@ -14,7 +14,21 @@ export default function Layout() {
           <Link className='text-4xl' to="/">Composite Care</Link>
           <HeartIcon className="h-8 w-8 text-rose-100"/>
         </div>
-        <button className='place-self-center' onClick={() => setModal('login')}>Login</button>
+
+        <div className='flex gap-10'>
+          <button
+            className='place-self-center'
+            onClick={() => setModal('login')}
+          >
+            Login
+          </button>
+          <button
+            className='place-self-center'
+            onClick={() => setModal('signup')}
+          >
+            Signup
+          </button>
+        </div>
       </nav>
       <Outlet />
     </>
