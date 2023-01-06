@@ -1,31 +1,36 @@
 import { FormEvent, useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import LargeLink from '../components/ui/LargeLink';
 
 export default function LoginPage() {
   const [username, setUsername]= useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const navigate = useNavigate();
 
   async function submit(e: FormEvent) {
     e.preventDefault();
+
+    setError("");
 
     setUsername("");
     setPassword("");
   }
   
   return (
-    <form onSubmit={(e) => submit(e)} className='flex justify-center'>
-      <div className='flex flex-col items-center gap-7 shadow-xl rounded-xl mt-40 px-10 py-16'>
-        <h1 className='text-3xl'>Login</h1>
+  <form onSubmit={(e) => submit(e)} className='flex justify-center'>
+    <div className='flex flex-col gap-10 shadow-xl rounded-xl mt-40 px-10 py-16'>
+      <main className='flex flex-col gap-5'>
+        <h1 className='text-3xl text-center'>Login</h1>
         <input className='bg-gray-100 shadow-inner rounded-md px-5 py-2' type='text' placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)}></input>
         <input className='bg-gray-100 shadow-inner rounded-md px-5 py-2' type='text' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
-        <button className='bg-blue-600 rounded-md text-white mt-2 px-5 py-2 ease-out duration-300 hover:scale-110'>Log in</button>
+        <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>Log in</button>
+      </main>
 
-        { error ? <p className='text-red-600'>{error}</p> : null  }
+      <section className='flex gap-1 items-center text-lg'>
+        { error ? <p className='text-red-600'>{error}</p> : null }
         Not a member?
-        <Link to={'/signup'} className='text-blue-600 underline'>Create Account</Link>
-      </div>
-    </form>
+        <LargeLink to={'/signup'}>Create an Account</LargeLink>
+      </section>
+    </div>
+  </form>
  )
 }

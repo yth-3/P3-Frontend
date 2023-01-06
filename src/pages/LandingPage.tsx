@@ -30,7 +30,7 @@ export default function LandingPage() {
       
       <section className='flex gap-1 items-center text-lg'>
         Already a member?
-        <LargeLink to="login">Login</LargeLink>
+        <LargeLink to="/login">Login</LargeLink>
         or 
         <LargeLink to="/signup">Create an Account</LargeLink>
       </section>
