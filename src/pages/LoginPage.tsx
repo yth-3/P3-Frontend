@@ -25,9 +25,8 @@ export default function LoginPage() {
         <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>Log in</button>
       </main>
 
-      <section className='flex gap-1 items-center text-lg'>
+      <section className='flex gap-1 justify-center items-center text-lg'>
         { error && <p className='text-red-600'>{error}</p> }
-        Not a member?
         <LargeLink to={'/signup'}>Create an Account</LargeLink>
       </section>
     </div>
