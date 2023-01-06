@@ -1,16 +1,14 @@
-import { Link } from 'react-router-dom';
-
 type Props = {
   children: | JSX.Element | JSX.Element[] | string | string[];
-  to: string;
+  onClick: Function;
 };
-export default function LargeLink({ children, to }: Props): JSX.Element {
+export default function LargeLink({ children, onClick }: Props): JSX.Element {
   return (
-    <Link
+    <button
       className='bg-green-500 hover:bg-green-400 p-3 rounded-sm text-slate-50'
-      to={to}
+      onClick={(e) => onClick(e)}
     >
       {children}
-    </Link>
+    </button>
   )
 }

@@ -1,8 +1,21 @@
+import { BrowserRouter } from 'react-router-dom';
+import { atom, RecoilRoot } from 'recoil';
+import Modal from './components/Modal';
 import Router from './components/Router';
+
+export const modalState = atom<string | null>({
+  key: 'modalState',
+  default: null,
+});
 
 function App() {
   return (
-    <Router />
+    <RecoilRoot>
+      <BrowserRouter>
+        <Router />
+        <Modal />
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }
 
