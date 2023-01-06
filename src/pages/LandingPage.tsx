@@ -38,9 +38,9 @@ export default function LandingPage() {
       
       <section className='flex gap-1 items-center text-lg'>
         Already a member?
-        <LargeButton onClick={() => setModal('login')}>Login</LargeButton>
+        <LargeButton onClick={() => setModal('login')}>Log in</LargeButton>
         or 
-        <LargeButton onClick={() => setModal('signup')}>Create an Account</LargeButton>
+        <LargeButton onClick={() => setModal('signup')}>Create an account</LargeButton>
       </section>
 
       <section className='flex justify-around gap-4'>

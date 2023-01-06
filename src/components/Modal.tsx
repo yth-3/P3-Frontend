@@ -2,6 +2,7 @@ import { useRecoilState } from 'recoil'
 import { modalState } from '../App';
 import Login from '../modals/Login';
 import Signup from '../modals/Signup';
+import Logout from '../modals/Logout';
 import './Modal.css';
 
 export default function Modal() {
@@ -22,6 +23,7 @@ export default function Modal() {
           >
             {modal === 'login' && <Login />}
             {modal === 'signup' && <Signup />}
+            {modal === 'logout' && <Logout />}
           </div>
         </div>
       }

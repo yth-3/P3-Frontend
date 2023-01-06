@@ -26,7 +26,7 @@ export default function Signup() {
     return (
         <form onSubmit={(e) => submit(e)} className='flex flex-col gap-10 justify-center'>
             <main className='flex flex-col gap-5'>
-                <h2 className='text-3xl text-center'>Create an Account</h2>
+                <h2 className='text-3xl text-center'>Signup</h2>
                 <input
                     className='bg-gray-100 shadow-inner rounded-md px-5 py-2'
                     type='text'
@@ -55,13 +55,13 @@ export default function Signup() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>Submit</button>
+                <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>Create an account</button>
             </main>
             
             <section className='flex gap-1 justify-center items-center text-lg'>
                 { error && <p className='text-red-600'>{error}</p> }
                 Already a member?
-                <LargeButton onClick={() => setModal('login')}>Login</LargeButton>
+                <LargeButton onClick={() => setModal('login')}>Log in</LargeButton>
             </section>
         </form>
     )
