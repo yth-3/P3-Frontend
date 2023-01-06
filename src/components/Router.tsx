@@ -6,6 +6,7 @@ import LandingPage from '../pages/LandingPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import NurseDashboardPage from '../pages/NurseDashboardPage';
 import PatientDashboardPage from '../pages/PatientDashboardPage';
+import PatientDashboard from '../pages/PatientDashboard';
 import Layout from './Layout';
 
 export default function Router() {
@@ -18,6 +19,7 @@ export default function Router() {
         <Route path="/doctor-dashboard" element={<DoctorDashboardPage />} />
         <Route path="/insurer-dashboard" element={<InsurerDashboardPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+        <Route path="/dashboard" element={<PatientDashboard />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
