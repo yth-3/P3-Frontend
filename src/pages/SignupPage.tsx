@@ -1,5 +1,8 @@
-import { FormEvent, useContext, useState } from 'react';
-import LargeLink from '../components/ui/LargeLink';
+import { FormEvent, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+
+import { modalState } from '../App';
+import LargeButton from '../components/ui/LargeButton';
 
 export default function SignupPage() {
     const [username, setUsername] = useState<string>("");
@@ -7,6 +10,7 @@ export default function SignupPage() {
     const [password2, setPassword2] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [error, setError] = useState<string>("");
+    const setModal = useSetRecoilState(modalState);
 
     async function submit(e: FormEvent) {
         e.preventDefault();
@@ -34,7 +38,7 @@ export default function SignupPage() {
                 <section className='flex gap-1 justify-center items-center text-lg'>
                     { error && <p className='text-red-600'>{error}</p> }
                     Already a member?
-                    <LargeLink to="/login">Login</LargeLink>
+                    <LargeButton onClick={() => setModal('login')}>Login</LargeButton>
                 </section>
             </div>
         </form>

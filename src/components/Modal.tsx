@@ -1,6 +1,7 @@
 import { useRecoilState } from 'recoil'
 import { modalState } from '../App';
 import Login from '../modals/Login';
+import Signup from '../modals/Signup';
 import './Modal.css';
 
 export default function Modal() {
@@ -20,6 +21,7 @@ export default function Modal() {
             onClick={(e) => e.stopPropagation()}
           >
             {modal === 'login' && <Login />}
+            {modal === 'signup' && <Signup />}
           </div>
         </div>
       }
