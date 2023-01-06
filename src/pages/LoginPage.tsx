@@ -27,6 +27,7 @@ export default function LoginPage() {
 
       <section className='flex gap-1 justify-center items-center text-lg'>
         { error && <p className='text-red-600'>{error}</p> }
+        or
         <LargeLink to={'/signup'}>Create an Account</LargeLink>
       </section>
     </div>
