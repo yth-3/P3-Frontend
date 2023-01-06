@@ -32,7 +32,7 @@ export default function SignupPage() {
                 </main>
 
                 <section className='flex gap-1 items-center text-lg'>
-                    { error ? <p className='text-red-600'>{error}</p> : null }
+                    { error && <p className='text-red-600'>{error}</p> }
                     Already a member?
                     <LargeLink to="/login">Login</LargeLink>
                 </section>

@@ -19,14 +19,14 @@ export default function LoginPage() {
   <form onSubmit={(e) => submit(e)} className='flex justify-center'>
     <div className='flex flex-col gap-10 shadow-xl rounded-xl mt-40 px-10 py-16'>
       <main className='flex flex-col gap-5'>
-        <h1 className='text-3xl text-center'>Login</h1>
+        <h2 className='text-3xl text-center'>Login</h2>
         <input className='bg-gray-100 shadow-inner rounded-md px-5 py-2' type='text' placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)}></input>
         <input className='bg-gray-100 shadow-inner rounded-md px-5 py-2' type='text' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
         <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>Log in</button>
       </main>
 
       <section className='flex gap-1 items-center text-lg'>
-        { error ? <p className='text-red-600'>{error}</p> : null }
+        { error && <p className='text-red-600'>{error}</p> }
         Not a member?
         <LargeLink to={'/signup'}>Create an Account</LargeLink>
       </section>
