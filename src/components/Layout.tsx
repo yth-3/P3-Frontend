@@ -9,7 +9,10 @@ export default function Layout() {
           <Link className='text-4xl' to="/">Composite Care</Link>
           <HeartIcon className="h-8 w-8 text-rose-100"/>
         </div>
-        <Link className='place-self-center' to="/login">Login</Link>
+        <div className='flex gap-10'>
+          <Link className='place-self-center' to="/login">Login</Link>
+          <Link className='place-self-center' to="/signup">Signup</Link>
+        </div>
       </nav>
       <Outlet />
     </>
