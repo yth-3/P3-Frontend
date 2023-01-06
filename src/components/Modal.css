@@ -1,0 +1,9 @@
+#modal-container {
+  background-color: rgb(226, 232, 240, 0.8);
+}
+
+#modal-content {
+  top:100px;
+  left:50%;
+  transform: translateX(-50%);
+}
