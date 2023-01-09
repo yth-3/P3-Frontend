@@ -5,8 +5,17 @@ export default function ClaimDetail() {
   const claim = useRecoilValue(claimState);
 
   return (
-    <div>
-      <h3>{claim?.description}</h3>
-    </div>
+    <>
+      {claim && 
+        <div>
+          <h3>{claim.status}</h3>
+          <div>{claim.description}</div>
+          <div>${claim.claimed}</div>
+          <div>{claim.type}</div>
+          <div>{claim.id}</div>
+          <div>{claim.description}</div>
+        </div>
+      }
+    </>
   )
 }
