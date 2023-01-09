@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { claimState } from '../../App';
@@ -6,7 +5,14 @@ import { ApproveButton, DenyButton } from '../../components/ui/ResolveButton';
 
 export default function ResolveClaim() {
   const claim = useRecoilValue(claimState);
-  const navigate = useNavigate();
+
+  async function approve() {
+    console.log('approved');
+  }
+
+  async function deny() {
+    console.log('denied');
+  }
 
   return (
     <div>
@@ -27,8 +33,8 @@ export default function ResolveClaim() {
           <h3><b>Amount settled:</b>  {claim?.settled}</h3>
         </> :
         <section className='flex flex-row justify-center gap-5'>
-          <ApproveButton onClick={() => navigate("")} />
-          <DenyButton onClick={() => navigate("")}/>
+          <ApproveButton onClick={() => approve()} />
+          <DenyButton onClick={() => deny()}/>
         </section>
       }
     </div>

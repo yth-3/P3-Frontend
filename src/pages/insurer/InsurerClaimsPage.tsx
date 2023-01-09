@@ -33,6 +33,10 @@ const claims: Claim[] = [
 export default function InsurerClaimsPage() {
   const navigate = useNavigate();
 
+  async function fetch() {
+    navigate('');
+  }
+
   return (
     <>
       <header>
@@ -40,7 +44,7 @@ export default function InsurerClaimsPage() {
       </header>
 
       <section>
-        <ReloadButton onClick={() => navigate("")} />
+        <ReloadButton onClick={() => fetch()} />
         <ClaimsTable claims={claims} />
       </section>
     </>
