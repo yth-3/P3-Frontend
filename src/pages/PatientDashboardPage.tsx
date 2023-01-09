@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import LargeButton from '../components/ui/LargeButton';
 
 export default function PatientDashboardPage() {
 
@@ -9,8 +10,8 @@ export default function PatientDashboardPage() {
             </header>
 
             <section>
-              <button>File Claim</button>
-              <Link to="/claims">Manage Claims</Link>
+              <LargeButton onClick={() => {}}>File Claim</LargeButton>
+              <Link to="claims">Manage Claims</Link>
             </section>
         </main>
     )
