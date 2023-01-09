@@ -4,7 +4,8 @@ import Login from '../modals/Login';
 import Signup from '../modals/Signup';
 import Logout from '../modals/Logout';
 import './Modal.css';
-import { LOGIN, LOGOUT, SIGN_UP } from '../utility/constants';
+import { LOGIN, LOGOUT, SIGN_UP, VIEW_PATIENT_CLAIM } from '../utility/constants';
+import ClaimDetail from '../modals/patient/ClaimDetail';
 
 export default function Modal() {
   const [modal, setModal] = useRecoilState(modalState);
@@ -25,6 +26,7 @@ export default function Modal() {
             {modal === LOGIN && <Login />}
             {modal === SIGN_UP && <Signup />}
             {modal === LOGOUT && <Logout />}
+            {modal === VIEW_PATIENT_CLAIM && <ClaimDetail />}
           </div>
         </div>
       }

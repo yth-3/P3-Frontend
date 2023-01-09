@@ -10,6 +10,7 @@ import Layout from './Layout';
 import InsurerClaimsPage from '../pages/insurer/InsurerClaimsPage';
 import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
+import NewClaim from '../pages/patient/NewClaim';
 
 
 export default function Router() {
@@ -21,7 +22,10 @@ export default function Router() {
 
         <Route path="patient">
           <Route index element={<PatientDashboardPage />} />
-          <Route path="claims" element={<PatientClaimsPage />} />
+          <Route path="claims">
+            <Route index element={<PatientClaimsPage />} />
+            <Route path="new" element={<NewClaim />} />
+          </Route>
         </Route>
 
         <Route path="insurer">

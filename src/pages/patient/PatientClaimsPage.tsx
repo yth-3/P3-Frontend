@@ -1,3 +1,8 @@
+import { Link } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+
+import { modalState, claimState } from '../../App';
+import { VIEW_PATIENT_CLAIM } from '../../utility/constants';
 import { Claim } from '../../utility/types';
 
 const claims: Claim[] = [
@@ -20,7 +25,7 @@ export default function PatientClaimsPage() {
       </header>
 
       <section>
-        <button>New</button>
+        <Link to="new">New Claim</Link>
         <ClaimsTable claims={claims} />
       </section>
     </>
@@ -31,6 +36,14 @@ type TableProps = {
   claims: Claim[]
 };
 function ClaimsTable({ claims }: TableProps) {
+  const setModal = useSetRecoilState(modalState);
+  const setClaim = useSetRecoilState(claimState);
+
+  function handleDetailsClick(claim: Claim) {
+    setModal(VIEW_PATIENT_CLAIM);
+    setClaim(claim);
+  }
+
   return (
     <table>
       <thead>
@@ -51,7 +64,7 @@ function ClaimsTable({ claims }: TableProps) {
               <td>{claim.type}</td>
               <td>{claim.description}</td>
               <td>
-                <button>Details</button>
+                <button onClick={() => handleDetailsClick(claim)}>Details</button>
               </td>
             </tr>
           )
