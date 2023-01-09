@@ -26,16 +26,18 @@ export default function ResolveClaim() {
       { claim?.receipt &&
         <h3><b>Claim receipt:</b>  {claim?.receipt}</h3>
       }
-      { claim?.resolverId ?
-        <>
-          <h3><b>Resolver ID:</b>  {claim?.resolverId}</h3>
-          <h3><b>Date resolved:</b>  {claim?.resolved?.toUTCString()}</h3>
-          <h3><b>Amount settled:</b>  {claim?.settled}</h3>
-        </> :
-        <section className='flex flex-row justify-center gap-5'>
-          <ApproveButton onClick={() => approve()} />
-          <DenyButton onClick={() => deny()}/>
-        </section>
+      {
+        claim?.resolverId ?
+          <>
+            <h3><b>Resolver ID:</b>  {claim?.resolverId}</h3>
+            <h3><b>Date resolved:</b>  {claim?.resolved?.toUTCString()}</h3>
+            <h3><b>Amount settled:</b>  {claim?.settled}</h3>
+          </>
+        :
+          <section className='flex flex-row justify-center gap-5'>
+            <ApproveButton onClick={() => approve()} />
+            <DenyButton onClick={() => deny()}/>
+          </section>
       }
     </div>
   )

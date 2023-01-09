@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { modalState } from '../../App';
 import './InsurerDashboardPage.css';
 import LargeButton from '../../components/ui/LargeButton';
+import { FIND_PATIENT_CLAIM, RESOLVE_PATIENT_CLAIM } from '../../utility/constants';
 
 export default function InsurerDashboardPage() {
     const setModal = useSetRecoilState(modalState);
@@ -21,11 +22,10 @@ export default function InsurerDashboardPage() {
                 </div>
             </header>
 
-
             <section className='flex flex-row gap-5 items-center text-lg'>
                 Actions:
-                <LargeButton onClick={() => navigate("claims")}>Manage claims</LargeButton> { /* will take you to InsurerClaimsPage, from which insurer can view info for and approve/deny all claims */ }
-                <LargeButton onClick={() => navigate("/")}>Resolve claim</LargeButton> { /* will open ResolveClaim modal, from which insurer can approve/deny specific claim if they know claim ID */ }
+                <LargeButton onClick={() => navigate("claims")}>Manage claims</LargeButton>
+                <LargeButton onClick={() => setModal(FIND_PATIENT_CLAIM)}>Resolve claim</LargeButton>
             </section>
         </main>
     )

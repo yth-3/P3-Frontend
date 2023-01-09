@@ -14,7 +14,7 @@ const claims: Claim[] = [
     claimed: 123,
     type: '12345',
     description: '12345',
-    status: 'PENDING',
+    status: 'PENDING'
   },
   {
     id: '67890',
