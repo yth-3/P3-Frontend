@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom';
+import LargeLink from '../../components/ui/LargeLink';
 
 export default function PatientDashboardPage() {
 
     return (
         <main className='flex flex-col gap-10 items-center'>
-            <header className='text-lg flex flex-col items-center pt-8'>
-              <h2>Welcome, [USERS NAME HERE]!</h2>
+            <header className='flex flex-col items-center pt-8'>
+              <h2 className='text-4xl'>Welcome, [USERS NAME HERE]!</h2>
             </header>
 
-            <section>
-              <Link to="claims/new">New Claim</Link>
-              <Link to="claims">Manage Claims</Link>
+            <section className='flex gap-4'>
+              <LargeLink to="claims/new">New Claim</LargeLink>
+              <LargeLink to="claims">View Claims</LargeLink>
             </section>
         </main>
     )

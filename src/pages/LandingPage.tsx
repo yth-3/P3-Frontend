@@ -33,7 +33,8 @@ export default function LandingPage() {
         >
           <h2 className='text-6xl'>Welcome to Composite Care</h2>
           <div>Composite Cares about every aspect of your health</div>
-          <div>From scheduling to filing claims, we make it easy</div>
+          <div>From scheduling to filing claims</div>
+          <div>We make it easy</div>
         </div>
       </header>
       
@@ -42,6 +43,7 @@ export default function LandingPage() {
         <LargeButton onClick={() => setModal(LOGIN)}>Log in</LargeButton>
         or 
         <LargeButton onClick={() => setModal(SIGN_UP)}>Create an account</LargeButton>
+        to get started!
       </section>
 
       <section className='flex justify-around gap-4'>
