@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { claimState, modalState } from '../../App';
 
 import ReloadButton from '../../components/ui/ReloadButton';
-import { ApproveButton, DenyButton } from '../../components/ui/ResolveButton';
+import { RESOLVE_PATIENT_CLAIM } from '../../utility/constants';
 import { Claim } from '../../utility/types';
 
 const claims: Claim[] = [
@@ -12,7 +14,19 @@ const claims: Claim[] = [
     claimed: 123,
     type: '12345',
     description: '12345',
-    status: '12345',
+    status: 'PENDING',
+  },
+  {
+    id: '67890',
+    submitterId: '12345',
+    submitted: new Date(),
+    claimed: 678,
+    type: '67890',
+    description: '67890',
+    status: 'APPROVED',
+    resolverId: '67890',
+    resolved: new Date(),
+    settled: 123
   }
 ];
 
@@ -38,7 +52,13 @@ type TableProps = {
 };
 
 function ClaimsTable({ claims }: TableProps) {
-  const navigate = useNavigate();
+  const setModal = useSetRecoilState(modalState);
+  const setClaim = useSetRecoilState(claimState);
+
+  function handleDetailsClick(claim: Claim) {
+    setModal(RESOLVE_PATIENT_CLAIM);
+    setClaim(claim);
+  }
 
   return (
     <table>
@@ -49,7 +69,6 @@ function ClaimsTable({ claims }: TableProps) {
           <th>Type</th>
           <th>Description</th>
           <th>Details</th>
-          <th>Resolve</th>
         </tr>
       </thead>
       <tbody>
@@ -61,11 +80,12 @@ function ClaimsTable({ claims }: TableProps) {
               <td>{claim.type}</td>
               <td>{claim.description}</td>
               <td>
-                <button>Details</button>
-              </td>
-              <td className='flex gap-1'>
-                <ApproveButton onClick={() => navigate("")}/>
-                <DenyButton onClick={() => navigate("")}/>
+                <button
+                  className='text-blue-600 hover:underline'
+                  onClick={() => handleDetailsClick(claim)}
+                >
+                  Details
+                </button>
               </td>
             </tr>
           )
