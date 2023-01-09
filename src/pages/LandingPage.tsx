@@ -4,7 +4,7 @@ import { modalState } from '../App';
 import './LandingPage.css';
 import LargeButton from '../components/ui/LargeButton';
 import InformationCard from '../components/landing_page/InformationCard';
-import { LOGIN, SIGN_UP } from '../utility/constants';
+import { LOGIN, SIGNUP } from '../utility/constants';
 
 const information = [
   {
@@ -42,8 +42,7 @@ export default function LandingPage() {
         Already a member?
         <LargeButton onClick={() => setModal(LOGIN)}>Log in</LargeButton>
         or 
-        <LargeButton onClick={() => setModal(SIGN_UP)}>Create an account</LargeButton>
-        to get started!
+        <LargeButton onClick={() => setModal(SIGNUP)}>Create an account</LargeButton>
       </section>
 
       <section className='flex justify-around gap-4'>

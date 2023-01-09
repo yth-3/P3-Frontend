@@ -3,7 +3,7 @@ import { HeartIcon } from '@heroicons/react/24/outline';
 import { useSetRecoilState } from 'recoil';
 
 import { modalState } from '../App';
-import { LOGIN, SIGN_UP } from '../utility/constants';
+import { LOGIN, SIGNUP } from '../utility/constants';
 
 export default function Layout() {
   const setModal = useSetRecoilState(modalState);
@@ -25,7 +25,7 @@ export default function Layout() {
           </button>
           <button
             className='place-self-center'
-            onClick={() => setModal(SIGN_UP)}
+            onClick={() => setModal(SIGNUP)}
           >
             Signup
           </button>

@@ -1,10 +1,8 @@
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import { modalState } from '../App';
-import LargeButton from '../components/ui/LargeButton';
-import LogoutButton from '../components/ui/LogoutButton';
-import { LOGOUT } from '../utility/constants';
+import { modalState } from '../../App';
+import LargeButton from '../../components/ui/LargeButton';
 
 export default function AdminDashboardPage() {
     const setModal = useSetRecoilState(modalState);
@@ -25,11 +23,6 @@ export default function AdminDashboardPage() {
                     </section>
                 </div>
             </header>
-
-            <section className='flex gap-1 items-center text-lg'>
-                <LogoutButton onClick={() => setModal(LOGOUT)}>Log out</LogoutButton>
-            </section>
-            
         </main>
     )
 }

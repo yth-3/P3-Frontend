@@ -1,14 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
-import AdminDashboardPage from '../pages/AdminDashboardPage';
-import DoctorDashboardPage from '../pages/DoctorDashboardPage';
-import InsurerDashboardPage from '../pages/InsurerDashboardPage';
+import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
+import DoctorDashboardPage from '../pages/doctor/DoctorDashboardPage';
+import InsurerDashboardPage from '../pages/insurer/InsurerDashboardPage';
 import LandingPage from '../pages/LandingPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import NurseDashboardPage from '../pages/NurseDashboardPage';
-import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
+
+import NurseDashboardPage from '../pages/nurse/NurseDashboardPage';
 import Layout from './Layout';
+import InsurerClaimsPage from '../pages/insurer/InsurerClaimsPage';
+import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
 import NewClaim from '../pages/patient/NewClaim';
+
 
 export default function Router() {
   return (
@@ -25,10 +28,22 @@ export default function Router() {
           </Route>
         </Route>
 
-        <Route path="/nurse-dashboard" element={<NurseDashboardPage />} />
-        <Route path="/doctor-dashboard" element={<DoctorDashboardPage />} />
-        <Route path="/insurer-dashboard" element={<InsurerDashboardPage />} />
-        <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+        <Route path="insurer">
+          <Route index element={<InsurerDashboardPage />} />
+          <Route path="claims" element={<InsurerClaimsPage />} />
+        </Route>
+
+        <Route path="nurse">
+          <Route index element={<NurseDashboardPage />} />
+        </Route>
+
+        <Route path="doctor">
+          <Route index element={<DoctorDashboardPage />} />
+        </Route>
+
+        <Route path="admin">
+          <Route index element={<AdminDashboardPage />} />
+        </Route>
 
         <Route path="*" element={<NotFoundPage />} />
       </Route>

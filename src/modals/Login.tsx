@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 
 import { modalState } from '../App';
 import LargeButton from '../components/ui/LargeButton';
-import { SIGN_UP } from '../utility/constants';
+import { SIGNUP } from '../utility/constants';
 
 export default function Login() {
   const [username, setUsername]= useState<string>("");
@@ -43,7 +43,7 @@ export default function Login() {
       <section className='flex gap-1 justify-center items-center text-lg'>
         { error && <p className='text-red-600'>{error}</p> }
         or
-        <LargeButton onClick={() => setModal(SIGN_UP)}>Create an account</LargeButton>
+        <LargeButton onClick={() => setModal(SIGNUP)}>Create an account</LargeButton>
       </section>
     </form>
   )
