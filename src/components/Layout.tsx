@@ -3,6 +3,7 @@ import { HeartIcon } from '@heroicons/react/24/outline';
 import { useSetRecoilState } from 'recoil';
 
 import { modalState } from '../App';
+import { LOGIN, SIGN_UP } from '../utility/constants';
 
 export default function Layout() {
   const setModal = useSetRecoilState(modalState);
@@ -18,13 +19,13 @@ export default function Layout() {
         <div className='flex gap-10'>
           <button
             className='place-self-center'
-            onClick={() => setModal('login')}
+            onClick={() => setModal(LOGIN)}
           >
             Login
           </button>
           <button
             className='place-self-center'
-            onClick={() => setModal('signup')}
+            onClick={() => setModal(SIGN_UP)}
           >
             Signup
           </button>

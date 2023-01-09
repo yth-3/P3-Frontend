@@ -4,6 +4,7 @@ import Login from '../modals/Login';
 import Signup from '../modals/Signup';
 import Logout from '../modals/Logout';
 import './Modal.css';
+import { LOGIN, LOGOUT, SIGN_UP } from '../utility/constants';
 
 export default function Modal() {
   const [modal, setModal] = useRecoilState(modalState);
@@ -21,9 +22,9 @@ export default function Modal() {
             className='fixed w-fit h-fit bg-white p-8 rounded shadow-lg'
             onClick={(e) => e.stopPropagation()}
           >
-            {modal === 'login' && <Login />}
-            {modal === 'signup' && <Signup />}
-            {modal === 'logout' && <Logout />}
+            {modal === LOGIN && <Login />}
+            {modal === SIGN_UP && <Signup />}
+            {modal === LOGOUT && <Logout />}
           </div>
         </div>
       }

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { modalState } from '../App';
 import LargeButton from '../components/ui/LargeButton';
 import LogoutButton from '../components/ui/LogoutButton';
+import { LOGOUT } from '../utility/constants';
 
 export default function InsurerDashboardPage() {
     const setModal = useSetRecoilState(modalState);
@@ -26,7 +27,7 @@ export default function InsurerDashboardPage() {
             </header>
 
             <section className='flex gap-1 items-center text-lg'>
-                <LogoutButton onClick={() => setModal('logout')}>Log out</LogoutButton>
+                <LogoutButton onClick={() => setModal(LOGOUT)}>Log out</LogoutButton>
             </section>
             
         </main>
