@@ -4,11 +4,13 @@ import DoctorDashboardPage from '../pages/doctor/DoctorDashboardPage';
 import InsurerDashboardPage from '../pages/insurer/InsurerDashboardPage';
 import LandingPage from '../pages/LandingPage';
 import NotFoundPage from '../pages/NotFoundPage';
+
 import NurseDashboardPage from '../pages/nurse/NurseDashboardPage';
-import PatientDashboardPage from '../pages/PatientDashboardPage';
 import Layout from './Layout';
-import PatientClaimManagementPage from '../pages/ClaimManagementPage';
 import InsurerClaimsPage from '../pages/insurer/InsurerClaimsPage';
+import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
+import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
+
 
 export default function Router() {
   return (
@@ -19,7 +21,7 @@ export default function Router() {
 
         <Route path="patient">
           <Route index element={<PatientDashboardPage />} />
-          <Route path="claims" element={<PatientClaimManagementPage />} />
+          <Route path="claims" element={<PatientClaimsPage />} />
         </Route>
 
         <Route path="insurer">
