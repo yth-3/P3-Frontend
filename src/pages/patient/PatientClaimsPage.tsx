@@ -1,4 +1,4 @@
-import { Claim } from '../utility/types';
+import { Claim } from '../../utility/types';
 
 const claims: Claim[] = [
   {
@@ -12,7 +12,7 @@ const claims: Claim[] = [
   }
 ];
 
-export default function ClaimManagementPage() {
+export default function PatientClaimsPage() {
   return (
     <>
       <header>

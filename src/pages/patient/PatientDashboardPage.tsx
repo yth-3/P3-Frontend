@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import LargeButton from '../components/ui/LargeButton';
+import LargeButton from '../../components/ui/LargeButton';
 
 export default function PatientDashboardPage() {
 

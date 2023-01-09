@@ -5,9 +5,9 @@ import InsurerDashboardPage from '../pages/InsurerDashboardPage';
 import LandingPage from '../pages/LandingPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import NurseDashboardPage from '../pages/NurseDashboardPage';
-import PatientDashboardPage from '../pages/PatientDashboardPage';
+import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import Layout from './Layout';
-import PatientClaimManagementPage from '../pages/ClaimManagementPage';
+import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
 
 export default function Router() {
   return (
@@ -18,7 +18,7 @@ export default function Router() {
 
         <Route path="patient">
           <Route index element={<PatientDashboardPage />} />
-          <Route path="claims" element={<PatientClaimManagementPage />} />
+          <Route path="claims" element={<PatientClaimsPage />} />
         </Route>
 
         <Route path="/nurse-dashboard" element={<NurseDashboardPage />} />
