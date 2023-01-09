@@ -1,4 +1,28 @@
-# Getting Started with Create React App
+#
+
+##
+
+New Patient
+```
+  POST /user
+  
+  body
+  {
+    username, email, password, type: 'PATIENT'
+  }
+```
+
+Admin creates staff and insurer accounts.
+```
+  POST /user
+  header: authorization (admin)
+  {
+    username, email, password, type: 'STAFF' or 'INSURER'
+  }
+```
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
