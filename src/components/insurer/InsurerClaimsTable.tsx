@@ -19,11 +19,18 @@ export default function InsurerClaimsTable({ claims }: Props) {
     setClaim(claim);
   }
 
+  function fetchUsername(submitterId: string) {
+    //make GET req to b/e for username by userId = submitterId
+
+    return '[submitter username]';
+  }
+
   return (
     <table className='w-full text-sm text-left text-gray-500 mt-4'>
       <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
         <tr>
           <th className='px-4'>Status</th>
+          <th className='px-4'>Submitter</th>
           <th className='px-8'>Submitted</th>
           <th className='px-8'>Type</th>
           <th className='px-8'>Description</th>
@@ -35,6 +42,7 @@ export default function InsurerClaimsTable({ claims }: Props) {
           return (
             <tr key={claim.id} className='bg-white border-b'>
               <td>{claim.status}</td>
+              <td>{fetchUsername(claim.submitterId)}</td>
               <td>{`${claim.submitted.getUTCMonth() + 1}-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}</td>
               <td>{claim.type}</td>
               <td>{claim.description}</td>

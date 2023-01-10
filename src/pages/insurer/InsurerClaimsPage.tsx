@@ -37,14 +37,16 @@ export default function InsurerClaimsPage() {
 
   return (
     <>
-      <header>
-        <h2 className='text-3xl font-bold text-blue-800'>Manage Claims</h2>
-      </header>
+      <main className='flex flex-col gap-10 items-center mt-4'>
+        <header>
+          <h2 className='text-3xl font-bold text-blue-800'>Manage Claims</h2>
+        </header>
 
-      <section>
-        <ReloadButton onClick={() => fetch()} />
-        {<InsurerClaimsTable claims={claims} />}
-      </section>
+        <section>
+          <ReloadButton onClick={() => fetch()} />
+          <InsurerClaimsTable claims={claims} />
+        </section>
+      </main>
     </>
   )
 }
