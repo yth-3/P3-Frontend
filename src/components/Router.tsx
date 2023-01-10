@@ -9,7 +9,7 @@ import Layout from './Layout';
 import InsurerClaimsPage from '../pages/insurer/InsurerClaimsPage';
 import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
-import UserListPage from '../pages/UserListPage';
+import UserListPage from '../pages/admin/UserListPage';
 import NewClaim from '../pages/patient/NewClaim';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -40,6 +40,7 @@ export default function Router() {
 
         <Route path="admin" element={<ProtectedRoute role='Admin' />}>
           <Route index element={<AdminDashboardPage />} />
+          <Route path="users" element={<UserListPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />
