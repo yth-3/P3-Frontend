@@ -30,12 +30,12 @@ export default function Router() {
           </Route>
         </Route>
 
-        <Route path="insurer">
+        <Route path="insurer" element={<ProtectedRoute role='Insurer' />}>
           <Route index element={<InsurerDashboardPage />} />
           <Route path="claims" element={<InsurerClaimsPage />} />
         </Route>
 
-        <Route path="staff">
+        <Route path="staff" element={<ProtectedRoute role='Staff' />}>
           <Route index element={<StaffDashboardPage />} />
         </Route>
 
