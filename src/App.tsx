@@ -10,7 +10,7 @@ export const modalState = atom<string | null>({
   default: null,
 });
 export const principalState = atom<User | null>({
-  key: 'pricipalState',
+  key: 'principalState',
   default: null,
 });
 export const claimState = atom<Claim | null>({
@@ -24,8 +24,8 @@ function App() {
   useEffect(() => {
     const principalString = localStorage.getItem(PRINCIPAL);
     if (principalString) {
-      const pricipal: User = JSON.parse(principalString);
-      setPrincipal(pricipal);
+      const principal: User = JSON.parse(principalString);
+      setPrincipal(principal);
     }
   });
 
