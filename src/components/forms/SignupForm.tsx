@@ -58,7 +58,13 @@ export default function SignupForm({setLoading, setAccountCreated}: Props) {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        {}
+        <input
+          className='bg-gray-100 shadow-inner rounded-md px-5 py-2'
+          type='text'
+          placeholder='Email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <div className='flex flex-row items-center bg-gray-100 shadow-inner rounded-md'>
           <input
             className='bg-gray-100 rounded-md px-5 py-2'
@@ -98,7 +104,7 @@ export default function SignupForm({setLoading, setAccountCreated}: Props) {
                     :
                       'password'
                 }
-                placeholder='Confim Password'
+                placeholder='Confirm Password'
                 value={password2}
                 onChange={(e) => setPassword2(e.target.value)}
               />
@@ -118,13 +124,6 @@ export default function SignupForm({setLoading, setAccountCreated}: Props) {
               </>
           </div>
         }
-        <input
-          className='bg-gray-100 shadow-inner rounded-md px-5 py-2'
-          type='text'
-          placeholder='Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
         <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>Create an account</button>
         { error && <p className='flex justify-center text-red-600'>{error}</p> }
       </main>
