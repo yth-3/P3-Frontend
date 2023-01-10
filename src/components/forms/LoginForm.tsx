@@ -5,7 +5,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 import { modalState, principalState } from '../../App';
 import LargeButton from '../../components/ui/LargeButton';
-import { SIGNUP } from '../../utility/constants';
+import { PRINCIPAL, SIGNUP } from '../../utility/constants';
 import { backendApi } from '../../utility/api';
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 export default function LoginForm({setLoading}: Props) {
     const [username, setUsername]= useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [error, setError] = useState<string>("");
+    const [error, ] = useState<string>("");
     const setModal = useSetRecoilState(modalState);
     const setPrincipal = useSetRecoilState(principalState);
     const navigate = useNavigate();
@@ -28,6 +28,7 @@ export default function LoginForm({setLoading}: Props) {
             .then(resp => {
                 console.log(resp);
                 setPrincipal(resp.data);
+                localStorage.setItem(PRINCIPAL, JSON.stringify(resp.data));
                 setModal(null);
                 navigate('/patient');
                 setLoading(false);
