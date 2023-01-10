@@ -1,26 +1,29 @@
-#
+# Composite Care Healthcare App
 
-##
+## Description
 
-New Patient
-```
-  POST /user
-  
-  body
-  {
-    username, email, password, type: 'PATIENT'
-  }
-```
+[Live Site!](http://composite-care.s3-website-us-west-1.amazonaws.com/)
 
-Admin creates staff and insurer accounts.
-```
-  POST /user
-  header: authorization (admin)
-  {
-    username, email, password, type: 'STAFF' or 'INSURER'
-  }
-```
+This is the repo for the Composite Care frontend. It is a full stack application for a fictional health care provider. It has a React frontend a Spring Boot backend
 
+[Backend Repo](https://github.com/221114-Java-React/P3-Backend)
+
+## Tech Stack
+
+- TypeScript
+  - Strongly typed programming language built upon JavaScript
+- React
+  - Library for building user interfaces
+- Create React App
+  - Boot strapping the application structure
+- React Router
+  - Client side routing
+- Recoil
+  - State management library
+- Tailwind
+  - Styling, utility first CSS framework
+- Axios
+  - HTTP Requests
 
 ## Getting Started with Create React App
 
