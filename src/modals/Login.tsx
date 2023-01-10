@@ -1,18 +1,32 @@
 import { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
-import { modalState } from '../App';
+import { modalState, principalState } from '../App';
 import LargeButton from '../components/ui/LargeButton';
 import { SIGNUP } from '../utility/constants';
+import { backendApi } from '../utility/api';
 
 export default function Login() {
   const [username, setUsername]= useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const setModal = useSetRecoilState(modalState);
+  const setPrincipal = useSetRecoilState(principalState);
+  const navigate = useNavigate();
 
   async function submit(e: FormEvent) {
     e.preventDefault();
+
+    backendApi.post('auth', { username, password })
+      .then(resp => {
+        console.log(resp);
+        setPrincipal(resp.data);
+        setModal(null);
+        navigate('/patient');
+      }).catch(err => {
+        console.log('error', err);
+      });
 
     setError("");
 

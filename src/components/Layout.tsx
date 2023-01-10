@@ -1,12 +1,13 @@
 import { Link, Outlet } from 'react-router-dom';
 import { HeartIcon } from '@heroicons/react/24/outline';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { modalState } from '../App';
-import { LOGIN, SIGNUP } from '../utility/constants';
+import { modalState, principalState } from '../App';
+import { LOGIN, LOGOUT, SIGNUP } from '../utility/constants';
 
 export default function Layout() {
   const setModal = useSetRecoilState(modalState);
+  const principal = useRecoilValue(principalState);
 
   return (
     <>
@@ -16,20 +17,31 @@ export default function Layout() {
           <HeartIcon className="h-8 w-8 text-rose-100"/>
         </div>
 
-        <div className='flex gap-10'>
+        {principal ?
           <button
             className='place-self-center'
-            onClick={() => setModal(LOGIN)}
+            onClick={() => setModal(LOGOUT)}
           >
-            Login
+            Logout
           </button>
-          <button
-            className='place-self-center'
-            onClick={() => setModal(SIGNUP)}
-          >
-            Signup
-          </button>
-        </div>
+        :
+          <div className='flex gap-10'>
+            <button
+              className='place-self-center'
+              onClick={() => setModal(LOGIN)}
+            >
+              Login
+            </button>
+            <button
+              className='place-self-center'
+              onClick={() => setModal(SIGNUP)}
+            >
+              Signup
+            </button>
+          </div>
+        }
+
+        
       </nav>
       <Outlet />
     </>
