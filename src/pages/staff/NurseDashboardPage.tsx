@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // import { modalState } from '../../App';
 import LargeButton from '../../components/ui/LargeButton';
 
-export default function DoctorDashboardPage() {
+export default function StaffDashboardPage() {
     // const setModal = useSetRecoilState(modalState);
     const navigate = useNavigate();
 
@@ -15,14 +15,14 @@ export default function DoctorDashboardPage() {
                     id="header-copy"
                     className='bg-slate-50 opacity-90 w-fit p-4 rounded-lg text-2xl gap-6 flex flex-col text-blue-800'
                 >
-                    <h2 className='text-6xl'>Doctor Dashboard</h2>
+                    <h2 className='text-6xl'>Nurse Dashboard</h2>
                     <div>Welcome!</div>
                     <section className='flex flex-row gap-5 justify-center text-lg'>
                         <LargeButton onClick={() => navigate("/")}>View patients</LargeButton>
                         <LargeButton onClick={() => navigate("/")}>Schedule patient</LargeButton>
                     </section>
                 </div>
-            </header>
+            </header>     
         </main>
     )
 }

@@ -1,15 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil'
 import { modalState, principalState } from '../App'
+import { PRINCIPAL } from '../utility/constants';
 
 export default function Logout() {
   const setModal = useSetRecoilState(modalState);
-  const setPricipal = useSetRecoilState(principalState);
+  const setPrincipal = useSetRecoilState(principalState);
   const navigate = useNavigate();
 
   function handleYes() {
     setModal(null);
-    setPricipal(null);
+    setPrincipal(null);
+    localStorage.removeItem(PRINCIPAL);
     navigate('/');
   }
   return(
