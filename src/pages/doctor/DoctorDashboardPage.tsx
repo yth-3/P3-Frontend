@@ -1,11 +1,11 @@
-import { useSetRecoilState } from 'recoil';
+// import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import { modalState } from '../../App';
+// import { modalState } from '../../App';
 import LargeButton from '../../components/ui/LargeButton';
 
 export default function DoctorDashboardPage() {
-    const setModal = useSetRecoilState(modalState);
+    // const setModal = useSetRecoilState(modalState);
     const navigate = useNavigate();
 
     return (

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { modalState } from '../../App';
 import './InsurerDashboardPage.css';
 import LargeButton from '../../components/ui/LargeButton';
-import { FIND_PATIENT_CLAIM, RESOLVE_PATIENT_CLAIM } from '../../utility/constants';
+import { FIND_PATIENT_CLAIM } from '../../utility/constants';
 
 export default function InsurerDashboardPage() {
     const setModal = useSetRecoilState(modalState);
