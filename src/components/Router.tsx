@@ -8,6 +8,7 @@ import NurseDashboardPage from '../pages/NurseDashboardPage';
 import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import Layout from './Layout';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
+import UserListPage from '../pages/UserListPage';
 
 export default function Router() {
   return (
@@ -25,6 +26,7 @@ export default function Router() {
         <Route path="/doctor-dashboard" element={<DoctorDashboardPage />} />
         <Route path="/insurer-dashboard" element={<InsurerDashboardPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+        <Route path="/user-list" element={<UserListPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Route>
