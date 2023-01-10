@@ -1,7 +1,8 @@
-import { BrowserRouter } from 'react-router-dom';
-import { atom, RecoilRoot } from 'recoil';
+import { useEffect } from 'react';
+import { atom, useSetRecoilState } from 'recoil';
 import Modal from './components/Modal';
 import Router from './components/Router';
+import { PRINCIPAL } from './utility/constants';
 import { Claim, User } from './utility/types';
 
 export const modalState = atom<string | null>({
@@ -18,13 +19,21 @@ export const claimState = atom<Claim | null>({
 });
 
 function App() {
+  const setPrincipal = useSetRecoilState(principalState);
+
+  useEffect(() => {
+    const principalString = localStorage.getItem(PRINCIPAL);
+    if (principalString) {
+      const pricipal: User = JSON.parse(principalString);
+      setPrincipal(pricipal);
+    }
+  });
+
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <Router />
-        <Modal />
-      </BrowserRouter>
-    </RecoilRoot>
+    <>
+      <Router />
+      <Modal />
+    </>  
   );
 }
 
