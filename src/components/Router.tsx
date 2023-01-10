@@ -9,7 +9,6 @@ import Layout from './Layout';
 import InsurerClaimsPage from '../pages/insurer/InsurerClaimsPage';
 import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
-import NewClaim from '../pages/patient/NewClaim';
 import ProtectedRoute from './ProtectedRoute';
 
 
@@ -26,7 +25,6 @@ export default function Router() {
           <Route index element={<PatientDashboardPage />} />
           <Route path="claims">
             <Route index element={<PatientClaimsPage />} />
-            <Route path="new" element={<NewClaim />} />
           </Route>
         </Route>
 
