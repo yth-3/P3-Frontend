@@ -1,18 +1,19 @@
 import { FormEvent, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import { claimState, modalState } from '../../App';
-import { RESOLVE_PATIENT_CLAIM } from '../../utility/constants';
+import { claimState } from '../../App';
+import InlineModal from '../../components/InlineModal';
 import { Claim } from '../../utility/types';
+import ResolveClaim from './ResolveClaim';
 
 export default function FindClaim() {
   const [id, setId]= useState<string>("");
   const [error, setError] = useState<string>("");
-  const setModal = useSetRecoilState(modalState);
   const setClaim = useSetRecoilState(claimState);
+  const [setshowResolve, setShowResolve] = useState(false);
 
   function handleDetailsClick(id: string) {
-    setModal(RESOLVE_PATIENT_CLAIM);
+    setShowResolve(true);
 
     const claim: Claim = {
         id: id,
@@ -57,6 +58,11 @@ export default function FindClaim() {
       <section className='flex gap-1 justify-center items-center text-lg'>
         { error && <p className='text-red-600'>{error}</p> }
       </section>
+      {setshowResolve &&
+        <InlineModal onClose={() => setShowResolve(false)}>
+          <ResolveClaim />
+        </InlineModal>
+      }
     </form>
   )
 }
