@@ -1,4 +1,3 @@
-
 import { Claim } from '../../utility/types';
 import PatientClaimsTable from '../../components/patient/PatientClaimsTable';
 import LargeButton from '../../components/ui/LargeButton';
@@ -8,14 +7,41 @@ import InlineModal from '../../components/InlineModal';
 
 const claims: Claim[] = [
   {
-    id: '12345',
+    id: '12asdf345',
     submitterId: '12345',
-    submitted: new Date(),
+    submitted: new Date('2020-1-2'),
     claimed: 570,
     type: 'Consultation',
     description: 'Consulted for runny nose',
+    status: 'Approved',
+  },
+  {
+    id: '12wert3asf46',
+    submitterId: '12345',
+    submitted: new Date('2021-1-2'),
+    claimed: 570,
+    type: 'Procedure',
+    description: 'Removed wart',
+    status: 'Rejected',
+  },
+  {
+    id: '121234asdf5',
+    submitterId: '12345',
+    submitted: new Date('2022-1-2'),
+    claimed: 570,
+    type: 'Medication',
+    description: 'Allergy mediciine',
     status: 'Pending',
-  }
+  },
+  {
+    id: '121253wert45',
+    submitterId: '12345',
+    submitted: new Date('2020-11-2'),
+    claimed: 570,
+    type: 'Consultation',
+    description: 'Consulted for broken arm',
+    status: 'Approved',
+  },
 ];
 
 export default function PatientClaimsPage() {
@@ -32,11 +58,11 @@ export default function PatientClaimsPage() {
           <PatientClaimsTable claims={claims} />
         </section>
       </main>
-      {showNew &&
+      {showNew && (
         <InlineModal onClose={() => setShowNew(false)}>
           <NewClaim />
         </InlineModal>
-      }
+      )}
     </>
-  )
+  );
 }
