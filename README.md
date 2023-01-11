@@ -7,6 +7,7 @@
 This is the repo for the Composite Care frontend. It is a full stack application for a fictional health care provider. It has a React frontend a Spring Boot backend
 
 [Backend Repo](https://github.com/221114-Java-React/P3-Backend)
+[Backend API](http://compositecare-env.eba-hcsyxnmg.us-west-1.elasticbeanstalk.com/swagger-ui/index.html#/)
 
 ## Tech Stack
 

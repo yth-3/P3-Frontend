@@ -8,13 +8,24 @@ export default function ClaimDetail() {
     <>
       {claim && 
         <div>
-          <h3>{claim.status}</h3>
-          <div>{claim.description}</div>
-          <div>${claim.claimed}</div>
-          <div>{claim.type}</div>
-          <div>{claim.id}</div>
-          <div>{claim.description}</div>
-        </div>
+        <h3><strong>Claim ID:</strong> {claim?.id}</h3>
+        <h3><b>Date submitted:</b> {claim?.submitted.toUTCString()}</h3>
+        <h3><b>Amount claimed:</b>  ${claim?.claimed.toFixed(2)}</h3>
+        <h3><b>Type:</b>  {claim?.type}</h3>
+        <h3><b>Claim description:</b>  {claim?.description}</h3>
+        <h3><b>Claim status:</b>  {claim?.status}</h3>
+        { claim?.receipt &&
+          <h3><b>Claim receipt:</b>  {claim?.receipt}</h3>
+        }
+        {
+          claim?.resolverId &&
+            <>
+              <h3><b>Resolver ID:</b>  {claim?.resolverId}</h3>
+              <h3><b>Date resolved:</b>  {claim?.resolved?.toUTCString()}</h3>
+              <h3><b>Amount settled:</b>  ${claim?.settled?.toFixed(2)}</h3>
+            </>
+        }
+      </div>
       }
     </>
   )

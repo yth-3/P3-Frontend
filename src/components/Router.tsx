@@ -10,7 +10,6 @@ import InsurerClaimsPage from '../pages/insurer/InsurerClaimsPage';
 import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
 import UserListPage from '../pages/admin/UserListPage';
-import NewClaim from '../pages/patient/NewClaim';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function Router() {
