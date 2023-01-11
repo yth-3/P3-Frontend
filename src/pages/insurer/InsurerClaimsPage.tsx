@@ -1,29 +1,27 @@
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { claimState, modalState } from '../../App';
+import InsurerClaimsTable from '../../components/insurer/InsurerClaimsTable';
 
 import ReloadButton from '../../components/ui/ReloadButton';
-import { RESOLVE_PATIENT_CLAIM } from '../../utility/constants';
 import { Claim } from '../../utility/types';
 
 const claims: Claim[] = [
   {
-    id: '12345',
-    submitterId: '12345',
+    id: 'ccfa5d99-7b97-4f5b-a2d5-60154d12e9d5',
+    submitterId: '29a3e2ae-6475-456b-9faa-0c475dcc5259',
     submitted: new Date(),
-    claimed: 123,
-    type: '12345',
-    description: '12345',
-    status: 'PENDING'
+    claimed: 570,
+    type: 'Consultation',
+    description: 'Consulted for runny nose',
+    status: 'Pending',
   },
   {
-    id: '67890',
-    submitterId: '12345',
+    id: '9d13b8d2-c888-4648-a3c4-b6d39046a565',
+    submitterId: '9214ce05-a6f6-4b49-9b98-7c73735b0830',
     submitted: new Date(),
     claimed: 678,
-    type: '67890',
-    description: '67890',
-    status: 'APPROVED',
+    type: 'Surgery',
+    description: 'Plastic surgery',
+    status: 'Approved',
     resolverId: '67890',
     resolved: new Date(),
     settled: 123
@@ -39,62 +37,16 @@ export default function InsurerClaimsPage() {
 
   return (
     <>
-      <header>
-        <h2 className='text-3xl font-bold text-blue-800'>Manage Claims</h2>
-      </header>
+      <main className='flex flex-col gap-10 items-center mt-4'>
+        <header>
+          <h2 className='text-3xl font-bold text-blue-800'>Manage Claims</h2>
+        </header>
 
-      <section>
-        <ReloadButton onClick={() => fetch()} />
-        <ClaimsTable claims={claims} />
-      </section>
+        <section>
+          <ReloadButton onClick={() => fetch()} />
+          <InsurerClaimsTable claims={claims} />
+        </section>
+      </main>
     </>
-  )
-}
-
-type TableProps = {
-  claims: Claim[]
-};
-
-function ClaimsTable({ claims }: TableProps) {
-  const setModal = useSetRecoilState(modalState);
-  const setClaim = useSetRecoilState(claimState);
-
-  function handleDetailsClick(claim: Claim) {
-    setModal(RESOLVE_PATIENT_CLAIM);
-    setClaim(claim);
-  }
-
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Status</th>
-          <th>Submitted</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        {claims.map((claim) => {
-          return (
-            <tr key={claim.id}>
-              <td>{claim.status}</td>
-              <td>{claim.submitted.toUTCString()}</td>
-              <td>{claim.type}</td>
-              <td>{claim.description}</td>
-              <td>
-                <button
-                  className='text-blue-600 hover:underline'
-                  onClick={() => handleDetailsClick(claim)}
-                >
-                  Details
-                </button>
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
   )
 }
