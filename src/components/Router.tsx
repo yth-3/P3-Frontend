@@ -26,7 +26,6 @@ export default function Router() {
           <Route index element={<PatientDashboardPage />} />
           <Route path="claims">
             <Route index element={<PatientClaimsPage />} />
-            <Route path="new" element={<NewClaim />} />
           </Route>
         </Route>
         <Route path="insurer" element={<ProtectedRoute role='Insurer' />}>
