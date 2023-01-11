@@ -17,14 +17,14 @@ export default function ProtectedRoute({ role }: Props) {
   }
 
   if (!role && principal) {
-    return <Navigate to={`/${principal.role.toLowerCase()}`} />
+    return <Navigate to={`/${principal.role.toLowerCase()}`} replace />
   }
 
   if (role && role !== principal?.role) {
     if (principal) {
-      return <Navigate to={`/${principal.role.toLowerCase()}`} />
+      return <Navigate to={`/${principal.role.toLowerCase()}`} replace />
     }
-    return <Navigate to="/" />
+    return <Navigate to="/" replace />
   }
 
   return (
