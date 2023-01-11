@@ -1,7 +1,4 @@
-
-
 export default function NewClaim() {
-  return (
-    <div>TEST</div>
-  )
+  const test = 'test';
+  return <div>{test}</div>;
 }
