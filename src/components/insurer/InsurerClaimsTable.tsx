@@ -9,7 +9,7 @@ import ResolveClaim from '../../modals/insurer/ResolveClaim';
 
 type Props = {
   claims: Claim[];
-}
+};
 
 export default function InsurerClaimsTable({ claims }: Props) {
   const setClaim = useSetRecoilState(claimState);
@@ -17,6 +17,7 @@ export default function InsurerClaimsTable({ claims }: Props) {
 
   function handleDetailsClick(claim: Claim) {
     setClaim(claim);
+    setShowResolve(true);
   }
 
   function fetchUsername(submitterId: string) {
@@ -44,7 +45,9 @@ export default function InsurerClaimsTable({ claims }: Props) {
               <tr key={claim.id} className='bg-white border-b'>
                 <td>{claim.status}</td>
                 <td>{fetchUsername(claim.submitterId)}</td>
-                <td>{`${claim.submitted.getUTCMonth() + 1}-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}</td>
+                <td>{`${
+                  claim.submitted.getUTCMonth() + 1
+                }-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}</td>
                 <td>{claim.type}</td>
                 <td>{claim.description}</td>
                 <td>
@@ -53,19 +56,19 @@ export default function InsurerClaimsTable({ claims }: Props) {
                     className='bg-slate-200 p-1 rounded flex'
                   >
                     Details
-                    <ArrowTopRightOnSquareIcon className='w-5 h-5'/>
+                    <ArrowTopRightOnSquareIcon className='w-5 h-5' />
                   </button>
                 </td>
               </tr>
-            )
+            );
           })}
         </tbody>
       </table>
-      {setshowResolve &&
+      {setshowResolve && (
         <InlineModal onClose={() => setShowResolve(false)}>
           <ResolveClaim />
         </InlineModal>
-      }
+      )}
     </>
-  )
+  );
 }
