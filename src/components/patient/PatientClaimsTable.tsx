@@ -19,37 +19,45 @@ export default function PatientsClaimsTable({ claims }: Props) {
   }
 
   return (
-    <table className='w-full text-sm text-left text-gray-500 mt-4'>
-      <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
-        <tr>
-          <th className='px-4'>Status</th>
-          <th className='px-8'>Submitted</th>
-          <th className='px-8'>Type</th>
-          <th className='px-8'>Description</th>
-          <th className='px-8'>Details</th>
+    <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
+      <thead className='text-xs text-gray-700 uppercase bg-gray-200 rounded-lg'>
+        <tr className='py-5 rounded-lg'>
+          <th className='px-8 py-2'>Status</th>
+          <th className='px-8 py-2'>Submitted</th>
+          <th className='px-8 py-2'>Type</th>
+          <th className='px-8 py-2'>Description</th>
+          <th className='px-8 py-2'>Details</th>
         </tr>
       </thead>
       <tbody>
         {claims.map((claim) => {
           return (
             <tr key={claim.id} className='bg-white border-b'>
-              <td>{claim.status}</td>
-              <td>{`${claim.submitted.getUTCMonth() + 1}-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}</td>
-              <td>{claim.type}</td>
-              <td>{claim.description}</td>
-              <td>
+              <TableDataText text={claim.status} />
+              <TableDataText
+                text={`${
+                  claim.submitted.getUTCMonth() + 1
+                }-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}
+              />
+              <TableDataText text={claim.type} />
+              <TableDataText text={claim.description} />
+              <td className='px-8'>
                 <button
                   onClick={() => handleDetailsClick(claim)}
                   className='bg-slate-200 p-1 rounded flex'
                 >
                   Details
-                  <ArrowTopRightOnSquareIcon className='w-5 h-5'/>
+                  <ArrowTopRightOnSquareIcon className='w-5 h-5' />
                 </button>
               </td>
             </tr>
-          )
+          );
         })}
       </tbody>
     </table>
-  )
+  );
+}
+
+function TableDataText({ text }: { text: string | number }) {
+  return <td className='px-8 py-5'>{text}</td>;
 }
