@@ -18,24 +18,22 @@ export default function ResolveClaim() {
     <>
       { claim &&
         <div>
-          <>
-            <h3><b>Claim ID:</b> {claim?.id}</h3>
-            <h3><b>Submitter ID:</b> {claim?.submitterId}</h3>
-            <h3><b>Date submitted:</b> {claim?.submitted.toUTCString()}</h3>
-            <h3><b>Amount claimed:</b> ${claim?.claimed}</h3>
-            <h3><b>Claim type:</b> {claim?.type}</h3>
-            <h3><b>Claim description:</b> {claim?.description}</h3>
-            <h3><b>Claim status:</b> {claim?.status}</h3>
-          </>
+          <h3><strong>Claim ID:</strong> {claim?.id}</h3>
+          <h3><strong>Submitter ID:</strong> {claim?.submitterId}</h3>
+          <h3><strong>Date submitted:</strong> {claim?.submitted.toUTCString()}</h3>
+          <h3><strong>Amount claimed:</strong> ${claim?.claimed}</h3>
+          <h3><strong>Claim type:</strong> {claim?.type}</h3>
+          <h3><strong>Claim description:</strong> {claim?.description}</h3>
+          <h3><strong>Claim status:</strong> {claim?.status}</h3>
           { claim?.receipt &&
-            <h3><b>Claim receipt:</b> {claim?.receipt}</h3>
+            <h3><strong>Claim receipt:</strong> {claim?.receipt}</h3>
           }
           {
             claim?.resolverId ?
               <>
-                <h3><b>Resolver ID:</b> {claim?.resolverId}</h3>
-                <h3><b>Date resolved:</b> {claim?.resolved?.toUTCString()}</h3>
-                <h3><b>Amount settled:</b> ${claim?.settled}</h3>
+                <h3><strong>Resolver ID:</strong> {claim?.resolverId}</h3>
+                <h3><strong>Date resolved:</strong> {claim?.resolved?.toUTCString()}</h3>
+                <h3><strong>Amount settled:</strong> ${claim?.settled}</h3>
               </>
             :
               <section className='flex flex-col'>
