@@ -24,8 +24,8 @@ const claims: Claim[] = [
     status: 'Approved',
     resolverId: '67890',
     resolved: new Date(),
-    settled: 123
-  }
+    settled: 123,
+  },
 ];
 
 export default function InsurerClaimsPage() {
@@ -48,5 +48,5 @@ export default function InsurerClaimsPage() {
         </section>
       </main>
     </>
-  )
+  );
 }
