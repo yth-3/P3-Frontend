@@ -1,4 +1,3 @@
-
 import { Claim } from '../../utility/types';
 import PatientClaimsTable from '../../components/patient/PatientClaimsTable';
 import LargeButton from '../../components/ui/LargeButton';
@@ -15,7 +14,7 @@ const claims: Claim[] = [
     type: 'Consultation',
     description: 'Consulted for runny nose',
     status: 'Pending',
-  }
+  },
 ];
 
 export default function PatientClaimsPage() {
@@ -32,11 +31,11 @@ export default function PatientClaimsPage() {
           <PatientClaimsTable claims={claims} />
         </section>
       </main>
-      {showNew &&
+      {showNew && (
         <InlineModal onClose={() => setShowNew(false)}>
           <NewClaim />
         </InlineModal>
-      }
+      )}
     </>
-  )
+  );
 }

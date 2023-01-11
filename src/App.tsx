@@ -23,17 +23,17 @@ function App() {
 
   useEffect(() => {
     const principalString = localStorage.getItem(PRINCIPAL);
-    if (principalString) {
+    if (principalString && setPrincipal) {
       const principal: User = JSON.parse(principalString);
       setPrincipal(principal);
     }
-  });
+  }, [setPrincipal]);
 
   return (
     <>
       <Router />
       <Modal />
-    </>  
+    </>
   );
 }
 
