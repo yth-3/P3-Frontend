@@ -1,48 +1,37 @@
+import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 //import { useNavigate } from 'react-router-dom';
 
 import { backendApi } from '../../utility/api';
 import { principalState } from '../../App';
-// import { User } from '../../utility/types';
+import { User } from '../../utility/types';
+import AdminUsersTable from '../../components/admin/AdminUsersTable';
 
 export default function UserListPage() {
-    
-    //const navigate = useNavigate();
-    const principal = useRecoilValue(principalState);
-    let users;
+  //const navigate = useNavigate();
+  const principal = useRecoilValue(principalState);
+  const [users, setUsers] = useState<User[]>([]);
 
-    function getUsers() {
-        backendApi.get('/users', {
-            headers: {
-                authorization: principal?.token
-            }
-        }).then(response => {
-            //users = mapUsers(response.data);
-            console.log(response.data);
-        });
-    }
+  useEffect(() => {
+    backendApi
+      .get('/users', {
+        headers: {
+          authorization: principal?.token,
+        },
+      })
+      .then((response) => {
+        const allUsers = response.data;
+        setUsers(allUsers);
+      })
+      .catch((error) => console.error('Error:' + error));
+  }, [principal]);
 
-    getUsers();
-    return (
-        <main>
-            <h1>Users</h1>
-            <ul>
-                {users}
-            </ul>
-        </main>
-    )
-
-    // function mapUsers(users: Array<User>) {
-    //     return users.map((user: User) => {    
-    //         return (
-    //             <li key={user.userId}>
-    //                 <div>{user.email}</div>
-    //                 <div>{user.username}</div>
-    //                 <div>{user.active}</div>
-    //                 <div>{user.registered}</div>
-    //             </li>
-    //         )
-    //     })
-    // }
+  return (
+    <main className='flex flex-col gap-10 items-center mt-4'>
+      <header>
+        <h1>Users</h1>
+      </header>
+      <section>{AdminUsersTable(users)}</section>
+    </main>
+  );
 }
-
