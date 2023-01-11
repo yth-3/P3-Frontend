@@ -9,8 +9,8 @@ import Layout from './Layout';
 import InsurerClaimsPage from '../pages/insurer/InsurerClaimsPage';
 import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
+import UserListPage from '../pages/admin/UserListPage';
 import ProtectedRoute from './ProtectedRoute';
-
 
 export default function Router() {
   return (
@@ -27,7 +27,6 @@ export default function Router() {
             <Route index element={<PatientClaimsPage />} />
           </Route>
         </Route>
-
         <Route path="insurer" element={<ProtectedRoute role='Insurer' />}>
           <Route index element={<InsurerDashboardPage />} />
           <Route path="claims" element={<InsurerClaimsPage />} />
@@ -39,6 +38,7 @@ export default function Router() {
 
         <Route path="admin" element={<ProtectedRoute role='Admin' />}>
           <Route index element={<AdminDashboardPage />} />
+          <Route path="users" element={<UserListPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

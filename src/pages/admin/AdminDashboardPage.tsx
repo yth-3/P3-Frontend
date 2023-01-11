@@ -18,7 +18,7 @@ export default function AdminDashboardPage() {
                     <h2 className='text-6xl'>Admin Dashboard</h2>
                     <div>Welcome!</div>
                     <section className='flex flex-row gap-5 justify-center text-lg'>
-                        <LargeButton onClick={() => navigate("/")}>View all users</LargeButton>
+                        <LargeButton onClick={() => navigate("/admin/users")}>View all users</LargeButton>
                         <LargeButton onClick={() => navigate("/")}>Activate/inactivate user</LargeButton>
                     </section>
                 </div>
