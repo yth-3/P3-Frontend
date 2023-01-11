@@ -8,28 +8,25 @@ import SignupForm from '../components/forms/SignupForm';
 import Spinner from '../components/ui/Spinner';
 
 export default function Signup() {
-    const [accountCreated, setAccountCreated] = useState(false);
-    const setModal = useSetRecoilState(modalState);
-    const [isLoading, setLoading] = useState(false);
-    
-    return (
-        <div>
-            {
-                isLoading ?
-                    <Spinner />
-                :
-                    <>
-                        {
-                            accountCreated ?
-                                <>
-                                    <div>Account created</div>
-                                    <LargeButton onClick={() => setModal(LOGIN)}>Log in now</LargeButton>
-                                </>
-                            :
-                                <SignupForm setLoading={setLoading} setAccountCreated={setAccountCreated} />
-                        }
-                    </>
-            }
-        </div>
-    )
+  const [accountCreated, setAccountCreated] = useState(false);
+  const setModal = useSetRecoilState(modalState);
+  const [isLoading, setLoading] = useState(false);
+
+  return (
+    <>
+      {isLoading && <Spinner />}
+      {accountCreated ? (
+        <>
+          <div>Account created</div>
+          <LargeButton onClick={() => setModal(LOGIN)}>Log in now</LargeButton>
+        </>
+      ) : (
+        <SignupForm
+          setLoading={setLoading}
+          isLoading={isLoading}
+          setAccountCreated={setAccountCreated}
+        />
+      )}
+    </>
+  );
 }
