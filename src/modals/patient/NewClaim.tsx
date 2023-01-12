@@ -19,7 +19,7 @@ export default function NewClaim() {
           $
           <input
             className='bg-gray-100 shadow-inner rounded-md px-5 py-2 w-full'
-            type='number'
+            type='text'
             placeholder='Amount'
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -32,7 +32,11 @@ export default function NewClaim() {
             className='bg-gray-100 shadow-inner rounded-md px-5 py-2'
           >
             {options.map((option) => {
-              return <option value={option}>{option}</option>;
+              return (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              );
             })}
           </select>
         </label>

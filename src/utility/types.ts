@@ -13,7 +13,7 @@ export type Claim = {
 };
 
 export type User = {
-  active: boolean,
+  active: boolean;
   email: string;
   registered: string;
   role: string;
