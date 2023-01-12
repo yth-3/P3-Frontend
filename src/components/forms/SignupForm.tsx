@@ -74,7 +74,7 @@ export default function SignupForm({
       })
       .catch((error) => {
         console.log(error);
-        setError(error);
+        setError(error.response.data.message);
       })
       .finally(() => {
         setLoading(false);

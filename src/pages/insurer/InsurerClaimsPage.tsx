@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InsurerClaimsTable from '../../components/insurer/InsurerClaimsTable';
 
 import ReloadButton from '../../components/ui/ReloadButton';
-import { Claim } from '../../utility/types';
+import { backendApi } from '../../utility/api';
+import { Claim, User } from '../../utility/types';
 
 const claims: Claim[] = [
   {
@@ -19,7 +21,7 @@ const claims: Claim[] = [
     submitterId: '9214ce05-a6f6-4b49-9b98-7c73735b0830',
     submitted: new Date(),
     claimed: 678,
-    type: 'Surgery',
+    type: 'Procedure',
     description: 'Plastic surgery',
     status: 'Approved',
     resolverId: '67890',
@@ -30,10 +32,30 @@ const claims: Claim[] = [
 
 export default function InsurerClaimsPage() {
   const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [usersMap, setUsersMap] = useState<{ [key: string]: User }>({});
 
   async function fetch() {
     navigate('');
   }
+
+  async function fetchUsers() {
+    await backendApi
+      .get('users')
+      .then((response) => {
+        setError('');
+        let users: User[] = response.data;
+        users.forEach((user) => setUsersMap({ userId: user }));
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.response.data.message);
+      });
+  }
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <>
@@ -44,7 +66,7 @@ export default function InsurerClaimsPage() {
 
         <section>
           <ReloadButton onClick={() => fetch()} />
-          <InsurerClaimsTable claims={claims} />
+          <InsurerClaimsTable claims={claims} users={usersMap} />
         </section>
       </main>
     </>
