@@ -17,6 +17,10 @@ export const claimState = atom<Claim | null>({
   key: 'claimState',
   default: null,
 });
+export const userState = atom<User | null>({
+  key: 'userState',
+  default: null,
+});
 
 function App() {
   const setPrincipal = useSetRecoilState(principalState);

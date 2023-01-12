@@ -1,32 +1,101 @@
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import { useMemo, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+
+import { userState } from '../../App';
+import UserInfo from '../../modals/admin/UserInfo';
 import { User } from '../../utility/types';
+import InlineModal from '../InlineModal';
+
+type header = {
+  field: 'username' | 'role' | 'active';
+  order: 'ascending' | 'descending';
+};
 
 export default function AdminUsersTable(users: User[]) {
-  return (
-    <table className='w-full text-sm text-left text-gray-500 mt-4'>
-      <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
-        <tr>
-          <th className='px-8'>Username</th>
-          <th className='px-8'>Email</th>
-          <th className='px-8'>Role</th>
-          <th className='px-8'>Active</th>
-          <th className='px-8'>Date Registered</th>
-          <th className='px-8'>ID</th>
-        </tr>
-      </thead>
-      <tbody>{users.map(formatUser)}</tbody>
-    </table>
-  );
-}
+  const setUser = useSetRecoilState(userState);
+  const [showInfo, setShowInfo] = useState(false);
 
-function formatUser(user: User) {
+  function handleDetailsClick(user: User) {
+    setUser(user);
+    setShowInfo(true);
+  }
+
+  const [sortConfig, setSortConfig] = useState<header | null>(null);
+
+  const sortedUsers = useMemo(() => {
+    let sortedUsers = [...users];
+    if (sortConfig !== null) {
+      sortedUsers.sort((a, b) => {
+        if (a[sortConfig.field] < b[sortConfig.field]) {
+          return sortConfig.order === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.field] > b[sortConfig.field]) {
+          return sortConfig.order === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortedUsers;
+  }, [users, sortConfig]);
+
   return (
-    <tr key={user.userId} className='bg-white border-b'>
-      <td>{user.username}</td>
-      <td>{user.email}</td>
-      <td>{user.role}</td>
-      <td>{user.active}</td>
-      <td>{user.registered}</td>
-      <td>{user.userId}</td>
-    </tr>
+    <>
+      <table className='w-full text-sm text-left text-gray-500 mt-4'>
+        <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
+          <tr>
+            <th className='px-8 py-2'>
+              <button type='button' onClick={() => setSort('username')}>
+                Username
+              </button>
+            </th>
+            <th className='px-8 py-2'>
+              <button type='button' onClick={() => setSort('role')}>
+                Role
+              </button>
+            </th>
+            <th className='px-8 py-2'>
+              <button type='button' onClick={() => setSort('active')}>
+                Activation Status
+              </button>
+            </th>
+            <th className='px-8 py-2'>Details</th>
+          </tr>
+        </thead>
+        <tbody>{sortedUsers.map(formatUser)}</tbody>
+      </table>
+      {showInfo && (
+        <InlineModal onClose={() => setShowInfo(false)}>
+          <UserInfo />
+        </InlineModal>
+      )}
+    </>
   );
+
+  function setSort(field: header['field']) {
+    let order: header['order'] = 'ascending';
+    if (sortConfig?.field === field && sortConfig?.order === order) {
+      order = 'descending';
+    }
+    setSortConfig({ field, order });
+  }
+
+  function formatUser(user: User) {
+    return (
+      <tr key={user.userId} className='bg-white border-b'>
+        <td>{user.username}</td>
+        <td>{user.role}</td>
+        <td>{user.active ? 'Active' : 'Inactive'}</td>
+        <td className='px-8'>
+          <button
+            onClick={() => handleDetailsClick(user)}
+            className='bg-slate-200 p-1 rounded flex'
+          >
+            Details
+            <ArrowTopRightOnSquareIcon className='w-5 h-5' />
+          </button>
+        </td>
+      </tr>
+    );
+  }
 }
