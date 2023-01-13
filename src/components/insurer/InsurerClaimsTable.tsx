@@ -42,7 +42,7 @@ export default function InsurerClaimsTable({ claims, users }: Props) {
       });
     }
     return sortedClaims;
-  }, [users, sortConfig]);
+  }, [claims, sortConfig]);
 
   return (
     <>
