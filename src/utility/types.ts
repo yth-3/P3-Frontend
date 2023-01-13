@@ -1,5 +1,5 @@
 export type Claim = {
-  id: string;
+  id?: string;
   submitterId: string;
   submitted: Date;
   claimed: number;

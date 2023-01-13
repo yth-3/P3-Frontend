@@ -1,51 +1,34 @@
-import { Claim } from '../../utility/types';
 import PatientClaimsTable from '../../components/patient/PatientClaimsTable';
 import LargeButton from '../../components/ui/LargeButton';
 import NewClaim from '../../modals/patient/NewClaim';
 import { useState } from 'react';
 import InlineModal from '../../components/InlineModal';
-
-const claims: Claim[] = [
-  {
-    id: '12asdf345',
-    submitterId: '12345',
-    submitted: new Date('2020-1-2'),
-    claimed: 570,
-    type: 'Consultation',
-    description: 'Consulted for runny nose',
-    status: 'Approved',
-  },
-  {
-    id: '12wert3asf46',
-    submitterId: '12345',
-    submitted: new Date('2021-1-2'),
-    claimed: 570,
-    type: 'Procedure',
-    description: 'Removed wart',
-    status: 'Rejected',
-  },
-  {
-    id: '121234asdf5',
-    submitterId: '12345',
-    submitted: new Date('2022-1-2'),
-    claimed: 570,
-    type: 'Medication',
-    description: 'Allergy mediciine',
-    status: 'Pending',
-  },
-  {
-    id: '121253wert45',
-    submitterId: '12345',
-    submitted: new Date('2020-11-2'),
-    claimed: 570,
-    type: 'Consultation',
-    description: 'Consulted for broken arm',
-    status: 'Approved',
-  },
-];
+import { Claim } from '../../utility/types';
+// import { backendApi } from '../../utility/api';
+// import { useRecoilValue } from 'recoil';
+// import { principalState } from '../../App';
 
 export default function PatientClaimsPage() {
+  // const principal = useRecoilValue(principalState);
   const [showNew, setShowNew] = useState(false);
+
+  const [claims, setClaims] = useState<Claim[]>([]);
+
+  // useEffect(() => {
+  //   backendApi
+  //     .get('users', {
+  //       headers: {
+  //         authorization: principal?.token,
+  //       },
+  //     })
+  //     .then((resp) => console.log(resp));
+  // });
+
+  function handleFinish(claim: Claim) {
+    setShowNew(false);
+    setClaims([...claims, claim]);
+  }
+
   return (
     <>
       <main className='flex flex-col gap-10 items-center mt-4'>
@@ -60,7 +43,7 @@ export default function PatientClaimsPage() {
       </main>
       {showNew && (
         <InlineModal onClose={() => setShowNew(false)}>
-          <NewClaim />
+          <NewClaim onFinish={handleFinish} />
         </InlineModal>
       )}
     </>
