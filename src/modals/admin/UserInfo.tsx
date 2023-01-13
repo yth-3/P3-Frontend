@@ -1,10 +1,6 @@
-import { useRecoilValue } from 'recoil';
+import { User } from '../../utility/types';
 
-import { userState } from '../../App';
-
-export default function UserInfo() {
-  const user = useRecoilValue(userState);
-
+export default function UserInfo(user: User) {
   return (
     <>
       {user && (

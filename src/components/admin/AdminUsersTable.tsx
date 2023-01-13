@@ -1,8 +1,6 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import { useMemo, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
 
-import { userState } from '../../App';
 import UserInfo from '../../modals/admin/UserInfo';
 import { User } from '../../utility/types';
 import InlineModal from '../InlineModal';
@@ -13,7 +11,7 @@ type header = {
 };
 
 export default function AdminUsersTable(users: User[]) {
-  const setUser = useSetRecoilState(userState);
+  const [user, setUser] = useState<User | null>(null);
   const [showInfo, setShowInfo] = useState(false);
 
   function handleDetailsClick(user: User) {
@@ -64,9 +62,9 @@ export default function AdminUsersTable(users: User[]) {
         </thead>
         <tbody>{sortedUsers.map(formatUser)}</tbody>
       </table>
-      {showInfo && (
+      {showInfo && user && (
         <InlineModal onClose={() => setShowInfo(false)}>
-          <UserInfo />
+          {UserInfo(user)}
         </InlineModal>
       )}
     </>
