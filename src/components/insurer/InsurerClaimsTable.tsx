@@ -3,7 +3,7 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import { claimState } from '../../App';
 
 import { Claim, User } from '../../utility/types';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import InlineModal from '../InlineModal';
 import ResolveClaim from '../../modals/insurer/ResolveClaim';
 
@@ -12,58 +12,111 @@ type Props = {
   users: { [key: string]: User };
 };
 
+type header = {
+  field: 'status' | 'submitterId' | 'submitted' | 'type';
+  order: 'ascending' | 'descending';
+};
+
 export default function InsurerClaimsTable({ claims, users }: Props) {
   const setClaim = useSetRecoilState(claimState);
-  const [setshowResolve, setShowResolve] = useState(false);
+  const [showResolve, setShowResolve] = useState(false);
 
   function handleDetailsClick(claim: Claim) {
     setClaim(claim);
     setShowResolve(true);
   }
 
+  const [sortConfig, setSortConfig] = useState<header | null>(null);
+
+  const sortedClaims = useMemo(() => {
+    let sortedClaims = [...claims];
+    if (sortConfig !== null) {
+      sortedClaims.sort((a, b) => {
+        if (a[sortConfig.field] < b[sortConfig.field]) {
+          return sortConfig.order === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.field] > b[sortConfig.field]) {
+          return sortConfig.order === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortedClaims;
+  }, [claims, sortConfig]);
+
   return (
     <>
-      <table className='w-full text-sm text-left text-gray-500 mt-4'>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
-          <tr>
-            <th className='px-4'>Status</th>
-            <th className='px-4'>Submitter</th>
-            <th className='px-8'>Submitted</th>
-            <th className='px-8'>Type</th>
-            <th className='px-8'>Description</th>
-            <th className='px-8'>Details</th>
+      <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
+        <thead className='text-xs text-gray-700 capitalized bg-gray-50 rounded-lg'>
+          <tr className='py-5 rounded-lg'>
+            <th className='px-8 py-2'>
+              <button type='button' onClick={() => setSort('status')}>
+                Status
+              </button>
+            </th>
+            <th className='px-8 py-2'>
+              <button type='button' onClick={() => setSort('submitterId')}>
+                Submitter
+              </button>
+            </th>
+            <th className='px-8 py-2'>
+              <button type='button' onClick={() => setSort('submitted')}>
+                Submitted
+              </button>
+            </th>
+            <th className='px-8 py-2'>
+              <button type='button' onClick={() => setSort('type')}>
+                Type
+              </button>
+            </th>
+            <th className='px-8 py-2'>Description</th>
+            <th className='px-8 py-2'>Details</th>
           </tr>
         </thead>
-        <tbody>
-          {claims.map((claim) => {
-            return (
-              <tr key={claim.id} className='bg-white border-b'>
-                <td>{claim.status}</td>
-                <td>{users[claim.submitterId]?.username}</td>
-                <td>{`${
-                  claim.submitted.getUTCMonth() + 1
-                }-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}</td>
-                <td>{claim.type}</td>
-                <td>{claim.description}</td>
-                <td>
-                  <button
-                    onClick={() => handleDetailsClick(claim)}
-                    className='bg-slate-200 p-1 rounded flex'
-                  >
-                    Details
-                    <ArrowTopRightOnSquareIcon className='w-5 h-5' />
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <tbody>{sortedClaims.map(formatClaim)}</tbody>
       </table>
-      {setshowResolve && (
+      {showResolve && (
         <InlineModal onClose={() => setShowResolve(false)}>
-          <ResolveClaim />
+          <ResolveClaim onClose={() => setShowResolve(false)} />
         </InlineModal>
       )}
     </>
   );
+
+  function formatClaim(claim: Claim) {
+    return (
+      <tr key={claim.id} className='bg-white border-b'>
+        <TableDataText text={claim.status} />
+        <TableDataText text={users[claim.submitterId]?.username} />
+        <TableDataText
+          text={`${
+            claim.submitted.getUTCMonth() + 1
+          }-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}
+        />
+        <TableDataText text={claim.type} />
+        <TableDataText text={claim.description} />
+        <td className='px-8'>
+          <button
+            onClick={() => handleDetailsClick(claim)}
+            className='bg-slate-200 p-1 rounded flex'
+          >
+            Details
+            <ArrowTopRightOnSquareIcon className='w-5 h-5' />
+          </button>
+        </td>
+      </tr>
+    );
+  }
+
+  function setSort(field: header['field']) {
+    let order: header['order'] = 'ascending';
+    if (sortConfig?.field === field && sortConfig?.order === order) {
+      order = 'descending';
+    }
+    setSortConfig({ field, order });
+  }
+}
+
+function TableDataText({ text }: { text: string | number }) {
+  return <td className='px-8 py-5'>{text}</td>;
 }
