@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { principalState } from '../../App';
 import InsurerClaimsTable from '../../components/insurer/InsurerClaimsTable';
 
 import ReloadButton from '../../components/ui/ReloadButton';
@@ -9,7 +11,7 @@ import { Claim, User } from '../../utility/types';
 const claims: Claim[] = [
   {
     id: 'ccfa5d99-7b97-4f5b-a2d5-60154d12e9d5',
-    submitterId: '29a3e2ae-6475-456b-9faa-0c475dcc5259',
+    submitterId: '70cdb54d-3df1-42f8-9ae5-d08ac5dbbe4b',
     submitted: new Date(),
     claimed: 570,
     type: 'Consultation',
@@ -32,30 +34,35 @@ const claims: Claim[] = [
 
 export default function InsurerClaimsPage() {
   const navigate = useNavigate();
-  const [error, setError] = useState('');
+  const principal = useRecoilValue(principalState);
+  const [, setError] = useState('');
   const [usersMap, setUsersMap] = useState<{ [key: string]: User }>({});
 
   async function fetch() {
     navigate('');
   }
 
-  async function fetchUsers() {
-    await backendApi
-      .get('users')
+  useEffect(() => {
+    if (!principal) return;
+
+    backendApi
+      .get('/users/patients', {
+        headers: {
+          authorization: principal?.token,
+        },
+      })
       .then((response) => {
         setError('');
         let users: User[] = response.data;
-        users.forEach((user) => setUsersMap({ userId: user }));
+        let temp: { [key: string]: User } = {};
+        users.forEach((user) => (temp[user.userId] = user));
+        setUsersMap(temp);
       })
       .catch((error) => {
         console.log(error);
         setError(error.response.data.message);
       });
-  }
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  }, [principal]);
 
   return (
     <>
