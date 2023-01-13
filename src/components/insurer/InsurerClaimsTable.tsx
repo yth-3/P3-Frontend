@@ -2,28 +2,23 @@ import { useSetRecoilState } from 'recoil';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import { claimState } from '../../App';
 
-import { Claim } from '../../utility/types';
+import { Claim, User } from '../../utility/types';
 import { useState } from 'react';
 import InlineModal from '../InlineModal';
 import ResolveClaim from '../../modals/insurer/ResolveClaim';
 
 type Props = {
   claims: Claim[];
+  users: { [key: string]: User };
 };
 
-export default function InsurerClaimsTable({ claims }: Props) {
+export default function InsurerClaimsTable({ claims, users }: Props) {
   const setClaim = useSetRecoilState(claimState);
   const [setshowResolve, setShowResolve] = useState(false);
 
   function handleDetailsClick(claim: Claim) {
     setClaim(claim);
     setShowResolve(true);
-  }
-
-  function fetchUsername(submitterId: string) {
-    //make GET req to b/e for username by userId = submitterId
-
-    return '[submitter username]';
   }
 
   return (
@@ -44,7 +39,7 @@ export default function InsurerClaimsTable({ claims }: Props) {
             return (
               <tr key={claim.id} className='bg-white border-b'>
                 <td>{claim.status}</td>
-                <td>{fetchUsername(claim.submitterId)}</td>
+                <td>{users[claim.submitterId]?.username}</td>
                 <td>{`${
                   claim.submitted.getUTCMonth() + 1
                 }-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}</td>
