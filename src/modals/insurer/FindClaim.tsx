@@ -7,8 +7,8 @@ import { Claim } from '../../utility/types';
 import ResolveClaim from './ResolveClaim';
 
 export default function FindClaim() {
-  const [id, setId]= useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [id, setId] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const setClaim = useSetRecoilState(claimState);
   const [setshowResolve, setShowResolve] = useState(false);
 
@@ -16,14 +16,14 @@ export default function FindClaim() {
     setShowResolve(true);
 
     const claim: Claim = {
-        id: id,
-        submitterId: '12345',
-        submitted: new Date(),
-        claimed: 123,
-        type: '12345',
-        description: '12345',
-        status: 'PENDING'
-    }
+      id: id,
+      submitterId: '12345',
+      submitted: new Date(),
+      claimed: 123,
+      type: '12345',
+      description: '12345',
+      status: 'PENDING',
+    };
 
     setClaim(claim);
   }
@@ -31,13 +31,16 @@ export default function FindClaim() {
   async function submit(e: FormEvent) {
     e.preventDefault();
 
-    setError("");
+    setError('');
 
-    setId("");
+    setId('');
   }
-  
+
   return (
-    <form onSubmit={(e) => submit(e)} className='flex flex-col gap-10 justify-center'>
+    <form
+      onSubmit={(e) => submit(e)}
+      className='flex flex-col gap-10 justify-center'
+    >
       <main className='flex flex-col gap-5'>
         <h2 className='text-3xl text-center'>Find claim</h2>
         <input
@@ -48,21 +51,21 @@ export default function FindClaim() {
           onChange={(e) => setId(e.target.value)}
         />
         <button
-            className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'
-            onClick={() => handleDetailsClick(id)}
+          className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'
+          onClick={() => handleDetailsClick(id)}
         >
-            Resolve claim
+          Resolve claim
         </button>
       </main>
 
       <section className='flex gap-1 justify-center items-center text-lg'>
-        { error && <p className='text-red-600'>{error}</p> }
+        {error && <p className='text-red-600'>{error}</p>}
       </section>
-      {setshowResolve &&
+      {setshowResolve && (
         <InlineModal onClose={() => setShowResolve(false)}>
-          <ResolveClaim />
+          <ResolveClaim onClose={() => setShowResolve(false)} />
         </InlineModal>
-      }
+      )}
     </form>
-  )
+  );
 }
