@@ -13,11 +13,11 @@ export type Claim = {
 };
 
 export type User = {
-  active: boolean;
-  email: string;
-  registered: string;
-  role: string;
-  token: string;
   userId: string;
   username: string;
+  email: string;
+  registered: string;
+  active: boolean;
+  role: string;
+  token?: string;
 };

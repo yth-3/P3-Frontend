@@ -1,10 +1,15 @@
-import { useRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil';
 import { modalState } from '../App';
 import Login from '../modals/Login';
 import Signup from '../modals/Signup';
 import Logout from '../modals/Logout';
 import './Modal.css';
-import { LOGIN, LOGOUT, SIGNUP, VIEW_PATIENT_CLAIM } from '../utility/constants';
+import {
+  LOGIN,
+  LOGOUT,
+  SIGNUP,
+  VIEW_PATIENT_CLAIM,
+} from '../utility/constants';
 import ClaimDetail from '../modals/patient/ClaimDetail';
 
 export default function Modal() {
@@ -12,14 +17,14 @@ export default function Modal() {
 
   return (
     <>
-      {modal &&
+      {modal && (
         <div
-          id="modal-container"
+          id='modal-container'
           className='fixed top-0 left-0 w-full h-full'
           onClick={() => setModal(null)}
         >
           <div
-            id="modal-content"
+            id='modal-content'
             className='fixed w-fit h-fit bg-white p-8 rounded shadow-lg'
             onClick={(e) => e.stopPropagation()}
           >
@@ -29,7 +34,7 @@ export default function Modal() {
             {modal === VIEW_PATIENT_CLAIM && <ClaimDetail />}
           </div>
         </div>
-      }
+      )}
     </>
-  )
+  );
 }

@@ -13,6 +13,9 @@ export default function UserListPage() {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
+    if (!principal) {
+      return;
+    }
     backendApi
       .get('/users', {
         headers: {
