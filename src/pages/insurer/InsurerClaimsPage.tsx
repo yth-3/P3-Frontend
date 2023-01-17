@@ -5,12 +5,12 @@ import { principalState } from '../../App';
 import InsurerClaimsTable from '../../components/insurer/InsurerClaimsTable';
 import ReloadButton from '../../components/ui/ReloadButton';
 import { backendApi } from '../../utility/api';
-import { Claim, User } from '../../utility/types';
+import { Claim } from '../../utility/types';
 
 export default function InsurerClaimsPage() {
   const principal = useRecoilValue(principalState);
   const [, setError] = useState('');
-  const [usersMap, setUsersMap] = useState<{ [key: string]: User }>({});
+  // const [usersMap, setUsersMap] = useState<{ [key: string]: User }>({});
   const [claims, setClaims] = useState<Claim[]>([]);
 
   async function fetch() {
@@ -87,6 +87,7 @@ export default function InsurerClaimsPage() {
   useEffect(() => {
     if (!principal) return;
 
+    /*
     backendApi
       .get('/users/patients', {
         headers: {
@@ -104,6 +105,7 @@ export default function InsurerClaimsPage() {
         console.log(error);
         setError(error.response.data.message);
       });
+      */
 
     fetch();
   }, [principal]);
@@ -117,7 +119,7 @@ export default function InsurerClaimsPage() {
 
         <section>
           <ReloadButton onClick={() => fetch()} />
-          <InsurerClaimsTable claims={claims} users={usersMap} />
+          <InsurerClaimsTable claims={claims} />
         </section>
       </main>
     </>

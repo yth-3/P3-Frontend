@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react';
-import { /* useRecoilValue, */ useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { claimState, principalState } from '../../App';
 import InlineModal from '../../components/InlineModal';
-// import { backendApi } from '../../utility/api';
+import { backendApi } from '../../utility/api';
 import { Claim } from '../../utility/types';
 import ResolveClaim from './ResolveClaim';
 
@@ -12,12 +12,11 @@ export default function FindClaim() {
   const [error, setError] = useState('');
   const setClaim = useSetRecoilState(claimState);
   const [setshowResolve, setShowResolve] = useState(false);
-  // const principal = useRecoilValue(principalState);
+  const principal = useRecoilValue(principalState);
 
   async function handleDetailsClick(id: string) {
     setShowResolve(true);
 
-    /*
     backendApi
       .get(`claim/id?id=${id}`, {
         headers: {
@@ -33,8 +32,8 @@ export default function FindClaim() {
         console.log(error);
         setError(error.response.data.message);
       });
-    */
 
+    /*
     const claim: Claim = {
       id: id,
       submitterId: '12345',
@@ -46,6 +45,7 @@ export default function FindClaim() {
     };
 
     setClaim(claim);
+    */
   }
 
   async function submit(e: FormEvent) {
