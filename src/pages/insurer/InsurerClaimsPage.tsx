@@ -1,45 +1,87 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+
 import { principalState } from '../../App';
 import InsurerClaimsTable from '../../components/insurer/InsurerClaimsTable';
-
 import ReloadButton from '../../components/ui/ReloadButton';
 import { backendApi } from '../../utility/api';
 import { Claim, User } from '../../utility/types';
 
-const claims: Claim[] = [
-  {
-    id: 'ccfa5d99-7b97-4f5b-a2d5-60154d12e9d5',
-    submitterId: '70cdb54d-3df1-42f8-9ae5-d08ac5dbbe4b',
-    submitted: new Date(),
-    claimed: 570,
-    type: 'Consultation',
-    description: 'Consulted for runny nose',
-    status: 'Pending',
-  },
-  {
-    id: '9d13b8d2-c888-4648-a3c4-b6d39046a565',
-    submitterId: '9214ce05-a6f6-4b49-9b98-7c73735b0830',
-    submitted: new Date(),
-    claimed: 678,
-    type: 'Procedure',
-    description: 'Plastic surgery',
-    status: 'Approved',
-    resolverId: '67890',
-    resolved: new Date(),
-    settled: 123,
-  },
-];
-
 export default function InsurerClaimsPage() {
-  const navigate = useNavigate();
   const principal = useRecoilValue(principalState);
   const [, setError] = useState('');
   const [usersMap, setUsersMap] = useState<{ [key: string]: User }>({});
+  const [claims, setClaims] = useState<Claim[]>([]);
 
   async function fetch() {
-    navigate('');
+    if (!principal) return;
+
+    backendApi
+      .get('claims', {
+        headers: {
+          authorization: principal?.token,
+        },
+      })
+      .then((response) => {
+        setError('');
+        let allClaims = response.data;
+        setClaims(allClaims);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.response.data.message);
+      });
+
+    /*
+    let allClaims: Claim[] = [
+      {
+        id: '12asdf345',
+        submitterId: '12345',
+        submitted: new Date('2020-1-2'),
+        claimed: 570,
+        type: 'Consultation',
+        description: 'Consulted for runny nose',
+        status: 'Approved',
+        resolverId: 'cbc98d8b-7f7e-469d-a82d-4ce3e33832b5',
+        resolved: new Date(),
+        settled: 570,
+      },
+      {
+        id: '12wert3asf46',
+        submitterId: '12345',
+        submitted: new Date('2021-1-2'),
+        claimed: 570,
+        type: 'Procedure',
+        description: 'Removed wart',
+        status: 'Rejected',
+        resolverId: 'cbc98d8b-7f7e-469d-a82d-4ce3e33832b5',
+        resolved: new Date(),
+        settled: 0,
+      },
+      {
+        id: '121234asdf5',
+        submitterId: '12345',
+        submitted: new Date('2022-1-2'),
+        claimed: 570,
+        type: 'Medication',
+        description: 'Allergy mediciine',
+        status: 'Pending',
+      },
+      {
+        id: '121253wert45',
+        submitterId: '12345',
+        submitted: new Date('2020-11-2'),
+        claimed: 570,
+        type: 'Consultation',
+        description: 'Consulted for broken arm',
+        status: 'Approved',
+        resolverId: 'cbc98d8b-7f7e-469d-a82d-4ce3e33832b5',
+        resolved: new Date(),
+        settled: 285,
+      },
+    ];
+    setClaims(allClaims);
+    */
   }
 
   useEffect(() => {
@@ -62,6 +104,8 @@ export default function InsurerClaimsPage() {
         console.log(error);
         setError(error.response.data.message);
       });
+
+    fetch();
   }, [principal]);
 
   return (
