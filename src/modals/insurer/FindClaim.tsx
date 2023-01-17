@@ -1,31 +1,51 @@
 import { FormEvent, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { claimState } from '../../App';
+import { claimState, principalState } from '../../App';
 import InlineModal from '../../components/InlineModal';
+import { backendApi } from '../../utility/api';
 import { Claim } from '../../utility/types';
 import ResolveClaim from './ResolveClaim';
 
 export default function FindClaim() {
-  const [id, setId] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [id, setId] = useState('');
+  const [error, setError] = useState('');
   const setClaim = useSetRecoilState(claimState);
   const [setshowResolve, setShowResolve] = useState(false);
+  const principal = useRecoilValue(principalState);
 
-  function handleDetailsClick(id: string) {
+  async function handleDetailsClick(id: string) {
     setShowResolve(true);
 
+    backendApi
+      .get(`claim/id?id=${id}`, {
+        headers: {
+          authorization: principal?.token,
+        },
+      })
+      .then((response) => {
+        setError('');
+        let claim = response.data;
+        setClaim(claim);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.response.data.message);
+      });
+
+    /*
     const claim: Claim = {
       id: id,
       submitterId: '12345',
-      submitted: new Date(),
-      claimed: 123,
-      type: '12345',
-      description: '12345',
-      status: 'PENDING',
+      submitted: new Date('2022-1-2'),
+      claimed: 570,
+      type: 'Medication',
+      description: 'Allergy mediciine',
+      status: 'Pending',
     };
 
     setClaim(claim);
+    */
   }
 
   async function submit(e: FormEvent) {

@@ -1,10 +1,9 @@
 import { FormEvent, useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { claimState } from '../../App';
 import { ApproveButton, DenyButton } from '../../components/ui/ResolveButton';
-//import { backendApi } from '../../utility/api';
+import { backendApi } from '../../utility/api';
 
 type Props = {
   onClose: Function;
@@ -16,7 +15,7 @@ export default function ResolveClaim({ onClose }: Props) {
   const [settled, setSettled] = useState<number | string>('');
   const [selectedOption, setSelectedOption] = useState('option1');
 
-  //const [error, setError] = useState('');
+  const [error, setError] = useState('');
 
   async function submit(e: FormEvent) {
     e.preventDefault();
@@ -32,7 +31,7 @@ export default function ResolveClaim({ onClose }: Props) {
       console.log('approved');
       onClose();
 
-      /*backendApi
+      backendApi
         .put(`claims/approve/${claim?.id}`)
         .then((response) => {
           setError('');
@@ -42,12 +41,12 @@ export default function ResolveClaim({ onClose }: Props) {
         .catch((error) => {
           console.log(error);
           setError(error.response.data.message);
-        });*/
+        });
     } else if (status === 'Denied') {
       console.log('denied');
       onClose();
 
-      /*backendApi
+      backendApi
         .put(`claims/deny/${claim?.id}`)
         .then((response) => {
           setError('');
@@ -57,7 +56,7 @@ export default function ResolveClaim({ onClose }: Props) {
         .catch((error) => {
           console.log(error);
           setError(error.response.data.message);
-        });*/
+        });
     }
   }
 
@@ -75,35 +74,35 @@ export default function ResolveClaim({ onClose }: Props) {
             <strong>Claim ID:</strong> {claim?.id}
           </h3>
           <h3>
-            <strong>Submitter ID:</strong> {claim?.submitterId}
+            <strong>Submitter ID:</strong> {claim?.submitter.userId}
           </h3>
           <h3>
-            <strong>Date submitted:</strong> {claim?.submitted.toUTCString()}
+            <strong>Date submitted:</strong> {claim?.submitted}
           </h3>
           <h3>
             <strong>Amount claimed:</strong> ${claim?.claimed.toFixed(2)}
           </h3>
           <h3>
-            <strong>Claim type:</strong> {claim?.type}
+            <strong>Claim type:</strong> {claim?.type.type}
           </h3>
           <h3>
             <strong>Claim description:</strong> {claim?.description}
           </h3>
           <h3>
-            <strong>Claim status:</strong> {claim?.status}
+            <strong>Claim status:</strong> {claim?.status.status}
           </h3>
           {claim?.receipt && (
             <h3>
               <strong>Claim receipt:</strong> {claim?.receipt}
             </h3>
           )}
-          {claim?.resolverId ? (
+          {claim?.resolver?.userId ? (
             <>
               <h3>
-                <strong>Resolver ID:</strong> {claim?.resolverId}
+                <strong>Resolver ID:</strong> {claim?.resolver?.userId}
               </h3>
               <h3>
-                <strong>Date resolved:</strong> {claim?.resolved?.toUTCString()}
+                <strong>Date resolved:</strong> {claim?.resolved}
               </h3>
               <h3>
                 <strong>Amount settled:</strong> ${claim?.settled?.toFixed(2)}

@@ -51,7 +51,7 @@ export default function SignupForm({
       )
     ) {
       setError(
-        'Password must be minimum 8 characters, with at least 1 uppercase letter, 1 lowercase English letter, 1 number, and 1 one special character'
+        'Password must be minimum 8 characters, with at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character'
       );
       return;
     }
@@ -160,8 +160,8 @@ export default function SignupForm({
         <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>
           Create an account
         </button>
-        <div className='h-10'>
-          <p className='text-center text-red-600'>{error}</p>
+        <div className='w-64'>
+          <p className='whitespace-normal text-center text-red-600'>{error}</p>
         </div>
       </main>
 
