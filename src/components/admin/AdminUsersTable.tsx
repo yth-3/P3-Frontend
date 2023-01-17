@@ -40,7 +40,7 @@ export default function AdminUsersTable(users: User[]) {
   return (
     <>
       <table className='w-full text-sm text-left text-gray-500 mt-4'>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
+        <thead className='text-xs text-gray-700 capitalize bg-gray-50'>
           <tr>
             <th className='px-8 py-2'>
               <button type='button' onClick={() => setSort('username')}>
