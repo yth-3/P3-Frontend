@@ -48,7 +48,7 @@ export default function NewClaim({ onFinish }: Props) {
           },
         }
       )
-      .then((response) => {})
+      .then(() => onFinish())
       .catch((error) => console.error(error));
   }
 
