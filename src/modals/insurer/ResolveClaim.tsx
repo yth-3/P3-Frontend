@@ -15,8 +15,6 @@ export default function ResolveClaim({ onClose }: Props) {
   const [settled, setSettled] = useState<number | string>('');
   const [selectedOption, setSelectedOption] = useState('option1');
 
-  const [error, setError] = useState('');
-
   async function submit(e: FormEvent) {
     e.preventDefault();
   }
@@ -32,30 +30,26 @@ export default function ResolveClaim({ onClose }: Props) {
       onClose();
 
       backendApi
-        .put(`claims/approve/${claim?.id}`)
+        .put(`claims/approve/${claim?.claimId}`)
         .then((response) => {
-          setError('');
           console.log(response);
           onClose();
         })
         .catch((error) => {
           console.log(error);
-          setError(error.response.data.message);
         });
     } else if (status === 'Denied') {
       console.log('denied');
       onClose();
 
       backendApi
-        .put(`claims/deny/${claim?.id}`)
+        .put(`claims/deny/${claim?.claimId}`)
         .then((response) => {
-          setError('');
           console.log(response);
           onClose();
         })
         .catch((error) => {
           console.log(error);
-          setError(error.response.data.message);
         });
     }
   }
@@ -71,7 +65,7 @@ export default function ResolveClaim({ onClose }: Props) {
       {claim && (
         <div>
           <h3>
-            <strong>Claim ID:</strong> {claim?.id}
+            <strong>Claim ID:</strong> {claim?.claimId}
           </h3>
           <h3>
             <strong>Submitter ID:</strong> {claim?.submitter.userId}

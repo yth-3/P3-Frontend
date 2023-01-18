@@ -31,14 +31,24 @@ export default function PatientsClaimsTable({ claims }: Props) {
     const sorted = [...claims].sort((a, b) => {
       let ifAsc;
       if (sortedColumn === 'submitted') {
-        if (a[sortedColumn].getTime() === b[sortedColumn].getTime()) {
+        if (
+          new Date(a[sortedColumn]).getTime() ===
+          new Date(b[sortedColumn]).getTime()
+        ) {
           ifAsc = 0;
         } else {
           ifAsc =
-            a[sortedColumn].getTime() < b[sortedColumn].getTime() ? -1 : 1;
+            new Date(a[sortedColumn]).getTime() <
+            new Date(b[sortedColumn]).getTime()
+              ? -1
+              : 1;
         }
       } else {
-        ifAsc = a[sortedColumn].localeCompare(b[sortedColumn]);
+        if (sortedColumn === 'type') {
+          ifAsc = a[sortedColumn].type.localeCompare(b[sortedColumn].type);
+        } else {
+          ifAsc = a[sortedColumn].status.localeCompare(b[sortedColumn].status);
+        }
       }
       return asc ? ifAsc : ifAsc * -1;
     });
@@ -81,14 +91,16 @@ export default function PatientsClaimsTable({ claims }: Props) {
       <tbody>
         {sortedClaims().map((claim) => {
           return (
-            <tr key={claim.id} className='bg-white border-b'>
-              <TableDataText text={claim.status} />
+            <tr key={claim.claimId} className='bg-white border-b'>
+              <TableDataText text={claim.status.status} />
               <TableDataText
                 text={`${
-                  claim.submitted.getUTCMonth() + 1
-                }-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}
+                  new Date(claim.submitted).getUTCMonth() + 1
+                }-${new Date(claim.submitted).getUTCDate()}-${new Date(
+                  claim.submitted
+                ).getUTCFullYear()}`}
               />
-              <TableDataText text={claim.type} />
+              <TableDataText text={claim.type.type} />
               <TableDataText text={claim.description} />
               <td className='px-8'>
                 <button

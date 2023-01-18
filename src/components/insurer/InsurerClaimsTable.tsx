@@ -2,7 +2,7 @@ import { useSetRecoilState } from 'recoil';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import { claimState } from '../../App';
 
-import { Claim, User } from '../../utility/types';
+import { Claim } from '../../utility/types';
 import { useMemo, useState } from 'react';
 import InlineModal from '../InlineModal';
 import ResolveClaim from '../../modals/insurer/ResolveClaim';
@@ -84,7 +84,7 @@ export default function InsurerClaimsTable({ claims }: Props) {
 
   function formatClaim(claim: Claim) {
     return (
-      <tr key={claim.id} className='bg-white border-b'>
+      <tr key={claim.claimId} className='bg-white border-b'>
         <TableDataText text={claim.status.status} />
         <TableDataText text={claim.submitter.username} />
         <TableDataText text={claim.submitted} />

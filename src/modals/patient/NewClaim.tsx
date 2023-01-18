@@ -3,7 +3,6 @@ import { useRecoilValue } from 'recoil';
 import { principalState } from '../../App';
 import Spinner from '../../components/ui/Spinner';
 import { backendApi } from '../../utility/api';
-import { Claim } from '../../utility/types';
 
 const options = ['Medication', 'Consultation', 'Procedure'];
 
@@ -49,19 +48,7 @@ export default function NewClaim({ onFinish }: Props) {
           },
         }
       )
-      .then((response) => {
-        const newClaim: Claim = {
-          type: claimType!,
-          claimed: Number(claimedAmount),
-          description,
-          submitterId: principal?.userId!,
-          submitted: new Date(),
-          status: 'Pending',
-          id: Math.random() * 1000 + '',
-        };
-        onFinish(newClaim);
-        console.log(response);
-      })
+      .then((response) => {})
       .catch((error) => console.error(error));
   }
 

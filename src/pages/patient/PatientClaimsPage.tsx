@@ -12,7 +12,7 @@ export default function PatientClaimsPage() {
   // const principal = useRecoilValue(principalState);
   const [showNew, setShowNew] = useState(false);
 
-  const [claims, setClaims] = useState<Claim[]>([]);
+  const [claims] = useState<Claim[]>([]);
 
   // useEffect(() => {
   //   backendApi
@@ -23,11 +23,6 @@ export default function PatientClaimsPage() {
   //     })
   //     .then((resp) => console.log(resp));
   // });
-
-  function handleFinish(claim: Claim) {
-    setShowNew(false);
-    setClaims([...claims, claim]);
-  }
 
   return (
     <>
@@ -43,7 +38,7 @@ export default function PatientClaimsPage() {
       </main>
       {showNew && (
         <InlineModal onClose={() => setShowNew(false)}>
-          <NewClaim onFinish={handleFinish} />
+          <NewClaim onFinish={() => {}} />
         </InlineModal>
       )}
     </>
