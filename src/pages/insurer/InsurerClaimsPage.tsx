@@ -1,21 +1,23 @@
+import { useCallback } from 'react';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { principalState } from '../../App';
 import InsurerClaimsTable from '../../components/insurer/InsurerClaimsTable';
 import ReloadButton from '../../components/ui/ReloadButton';
-import { backendApi } from '../../utility/api';
+import ResolveClaim from '../../modals/insurer/ResolveClaim';
+import InlineModal from '../../components/InlineModal';
 import { Claim } from '../../utility/types';
+import { backendApi } from '../../utility/api';
+import { principalState } from '../../App';
 
 export default function InsurerClaimsPage() {
   const principal = useRecoilValue(principalState);
+  const [showResolve, setShowResolve] = useState(false);
+
   const [, setError] = useState('');
-  // const [usersMap, setUsersMap] = useState<{ [key: string]: User }>({});
   const [claims, setClaims] = useState<Claim[]>([]);
 
-  useEffect(() => {
-    if (!principal) return;
-
+  const fetchClaims = useCallback(() => {
     backendApi
       .get('claims', {
         headers: {
@@ -32,22 +34,11 @@ export default function InsurerClaimsPage() {
       });
   }, [principal]);
 
-  function fetch() {
-    backendApi
-      .get('claims', {
-        headers: {
-          authorization: principal?.token,
-        },
-      })
-      .then((response) => {
-        setError('');
-        let allClaims = response.data;
-        setClaims(allClaims);
-      })
-      .catch((error) => {
-        setError(error.response.data.message);
-      });
-  }
+  useEffect(() => {
+    if (!principal) return;
+
+    fetchClaims();
+  }, [principal, fetchClaims]);
 
   return (
     <>
@@ -57,10 +48,15 @@ export default function InsurerClaimsPage() {
         </header>
 
         <section>
-          <ReloadButton onClick={fetch} />
-          <InsurerClaimsTable claims={claims} />
+          <ReloadButton onClick={fetchClaims} />
+          <InsurerClaimsTable claims={claims} setShowResolve={setShowResolve} />
         </section>
       </main>
+      {showResolve && (
+        <InlineModal onClose={() => setShowResolve(false)}>
+          <ResolveClaim onFinish={() => {}} />
+        </InlineModal>
+      )}
     </>
   );
 }
