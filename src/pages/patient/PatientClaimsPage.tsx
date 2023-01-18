@@ -14,16 +14,6 @@ export default function PatientClaimsPage() {
 
   const [claims] = useState<Claim[]>([]);
 
-  // useEffect(() => {
-  //   backendApi
-  //     .get('users', {
-  //       headers: {
-  //         authorization: principal?.token,
-  //       },
-  //     })
-  //     .then((resp) => console.log(resp));
-  // });
-
   return (
     <>
       <main className='flex flex-col gap-10 items-center mt-4'>

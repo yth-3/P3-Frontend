@@ -26,31 +26,20 @@ export default function ResolveClaim({ onClose }: Props) {
 
   function handleResolve(status: string) {
     if (status === 'Approved') {
-      console.log('approved');
       onClose();
 
       backendApi
         .put(`claims/approve/${claim?.claimId}`)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           onClose();
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch(() => {});
     } else if (status === 'Denied') {
-      console.log('denied');
       onClose();
 
-      backendApi
-        .put(`claims/deny/${claim?.claimId}`)
-        .then((response) => {
-          console.log(response);
-          onClose();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      backendApi.put(`claims/deny/${claim?.claimId}`).then(() => {
+        onClose();
+      });
     }
   }
 

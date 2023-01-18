@@ -28,7 +28,6 @@ export default function FindClaim() {
         setClaim(claim);
       })
       .catch((error) => {
-        console.log(error);
         setError(error.response.data.message);
       });
 

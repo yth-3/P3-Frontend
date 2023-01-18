@@ -28,7 +28,6 @@ export default function InsurerClaimsPage() {
         setClaims(allClaims);
       })
       .catch((error) => {
-        console.log(error);
         setError(error.response.data.message);
       });
   }, [principal]);
@@ -46,7 +45,6 @@ export default function InsurerClaimsPage() {
         setClaims(allClaims);
       })
       .catch((error) => {
-        console.log(error);
         setError(error.response.data.message);
       });
   }
