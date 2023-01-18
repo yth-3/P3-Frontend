@@ -13,7 +13,7 @@ export default function InsurerClaimsPage() {
   // const [usersMap, setUsersMap] = useState<{ [key: string]: User }>({});
   const [claims, setClaims] = useState<Claim[]>([]);
 
-  async function fetch() {
+  useEffect(() => {
     if (!principal) return;
 
     backendApi
@@ -28,87 +28,26 @@ export default function InsurerClaimsPage() {
         setClaims(allClaims);
       })
       .catch((error) => {
-        console.log(error);
         setError(error.response.data.message);
       });
+  }, [principal]);
 
-    /*
-    let allClaims: Claim[] = [
-      {
-        id: '12asdf345',
-        submitterId: '12345',
-        submitted: new Date('2020-1-2'),
-        claimed: 570,
-        type: 'Consultation',
-        description: 'Consulted for runny nose',
-        status: 'Approved',
-        resolverId: 'cbc98d8b-7f7e-469d-a82d-4ce3e33832b5',
-        resolved: new Date(),
-        settled: 570,
-      },
-      {
-        id: '12wert3asf46',
-        submitterId: '12345',
-        submitted: new Date('2021-1-2'),
-        claimed: 570,
-        type: 'Procedure',
-        description: 'Removed wart',
-        status: 'Rejected',
-        resolverId: 'cbc98d8b-7f7e-469d-a82d-4ce3e33832b5',
-        resolved: new Date(),
-        settled: 0,
-      },
-      {
-        id: '121234asdf5',
-        submitterId: '12345',
-        submitted: new Date('2022-1-2'),
-        claimed: 570,
-        type: 'Medication',
-        description: 'Allergy mediciine',
-        status: 'Pending',
-      },
-      {
-        id: '121253wert45',
-        submitterId: '12345',
-        submitted: new Date('2020-11-2'),
-        claimed: 570,
-        type: 'Consultation',
-        description: 'Consulted for broken arm',
-        status: 'Approved',
-        resolverId: 'cbc98d8b-7f7e-469d-a82d-4ce3e33832b5',
-        resolved: new Date(),
-        settled: 285,
-      },
-    ];
-    setClaims(allClaims);
-    */
-  }
-
-  useEffect(() => {
-    if (!principal) return;
-
-    /*
+  function fetch() {
     backendApi
-      .get('/users/patients', {
+      .get('claims', {
         headers: {
           authorization: principal?.token,
         },
       })
       .then((response) => {
         setError('');
-        let users: User[] = response.data;
-        let temp: { [key: string]: User } = {};
-        users.forEach((user) => (temp[user.userId] = user));
-        setUsersMap(temp);
+        let allClaims = response.data;
+        setClaims(allClaims);
       })
       .catch((error) => {
-        console.log(error);
         setError(error.response.data.message);
       });
-      */
-
-    fetch();
-  }, [principal]);
+  }
 
   return (
     <>
@@ -118,7 +57,7 @@ export default function InsurerClaimsPage() {
         </header>
 
         <section>
-          <ReloadButton onClick={() => fetch()} />
+          <ReloadButton onClick={fetch} />
           <InsurerClaimsTable claims={claims} />
         </section>
       </main>

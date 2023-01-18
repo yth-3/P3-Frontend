@@ -69,11 +69,9 @@ export default function SignupForm({
       })
       .then((response) => {
         setError('');
-        console.log(response);
         if (response.status === 201) setAccountCreated(true);
       })
       .catch((error) => {
-        console.log(error);
         setError(error.response.data.message);
       })
       .finally(() => {

@@ -4,7 +4,6 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { claimState, principalState } from '../../App';
 import InlineModal from '../../components/InlineModal';
 import { backendApi } from '../../utility/api';
-import { Claim } from '../../utility/types';
 import ResolveClaim from './ResolveClaim';
 
 export default function FindClaim() {
@@ -29,7 +28,6 @@ export default function FindClaim() {
         setClaim(claim);
       })
       .catch((error) => {
-        console.log(error);
         setError(error.response.data.message);
       });
 
