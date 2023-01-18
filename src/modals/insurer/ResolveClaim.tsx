@@ -2,26 +2,25 @@ import { FormEvent, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import { claimState, principalState } from '../../App';
-import { SettleButton, DenyButton } from '../../components/ui/ResolveButton';
+import {
+  SettleButton,
+  DenyButton,
+  ApproveButton,
+} from '../../components/ui/ResolveButton';
 import Spinner from '../../components/ui/Spinner';
 import { backendApi } from '../../utility/api';
-import { ClaimStatus } from '../../utility/types';
 
 type Props = {
   onFinish: Function;
 };
-
 export default function ResolveClaim({ onFinish }: Props) {
   const claim = useRecoilValue(claimState);
   const principal = useRecoilValue(principalState);
   const [loading, setLoading] = useState(false);
   const [isSettling, setSettling] = useState(false);
-  const [settled, setSettled] = useState<number | string>('');
+  const [settled, setSettled] = useState('');
   const [selectedOption, setSelectedOption] = useState('option1');
-  const [status, setStatus] = useState<ClaimStatus>({
-    statusId: '',
-    status: '',
-  });
+  const [status, setStatus] = useState('');
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!isNaN(Number(e.target.value))) {
@@ -38,10 +37,10 @@ export default function ResolveClaim({ onFinish }: Props) {
     e.preventDefault();
     setLoading(true);
 
-    if (status.statusId === 'SETTLED')
+    if (status === 'settled')
       backendApi
         .put(
-          `claims/settle/${claim?.claimId}`,
+          `claims/approve/${claim?.claimId}`,
           {
             settled,
           },
@@ -51,22 +50,27 @@ export default function ResolveClaim({ onFinish }: Props) {
             },
           }
         )
-        .then(() => {})
+        .then(() => onFinish())
         .catch((error) => {
-          console.error(error);
+          console.error(error.response.data.message);
+        })
+        .finally(() => {
+          setLoading(false);
         });
-    else if (status.statusId === 'DENIED') {
+    else if (status === 'denied')
       backendApi
         .put(`claims/deny/${claim?.claimId}`, {
           headers: {
             authorization: principal?.token,
           },
         })
-        .then(() => {})
+        .then(() => onFinish())
         .catch((error) => {
-          console.error(error);
+          console.error(error.response.data.message);
+        })
+        .finally(() => {
+          setLoading(false);
         });
-    }
   }
 
   return (
@@ -179,14 +183,7 @@ export default function ResolveClaim({ onFinish }: Props) {
                   <div className='flex flex-row justify-center gap-5'>
                     {isSettling ? (
                       <>
-                        <SettleButton
-                          onClick={() =>
-                            setStatus({
-                              statusId: 'SETTLED',
-                              status: 'SETTLED',
-                            })
-                          }
-                        />
+                        <SettleButton onClick={() => setStatus('settled')} />
                         <button
                           className='text-blue-600 hover:text-blue-500 hover:underline'
                           onClick={() => setSettling(false)}
@@ -196,15 +193,8 @@ export default function ResolveClaim({ onFinish }: Props) {
                       </>
                     ) : (
                       <>
-                        <SettleButton onClick={handleSettling} />
-                        <DenyButton
-                          onClick={() =>
-                            setStatus({
-                              statusId: 'DENIED',
-                              status: 'DENIED',
-                            })
-                          }
-                        />
+                        <ApproveButton onClick={handleSettling} />
+                        <DenyButton onClick={() => setStatus('denied')} />
                       </>
                     )}
                   </div>

@@ -1,5 +1,4 @@
-import { useCallback } from 'react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import InsurerClaimsTable from '../../components/insurer/InsurerClaimsTable';
@@ -13,11 +12,11 @@ import { principalState } from '../../App';
 export default function InsurerClaimsPage() {
   const principal = useRecoilValue(principalState);
   const [showResolve, setShowResolve] = useState(false);
-
-  const [, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
   const [claims, setClaims] = useState<Claim[]>([]);
 
   const fetchClaims = useCallback(() => {
+    setLoading(true);
     backendApi
       .get('claims', {
         headers: {
@@ -25,12 +24,12 @@ export default function InsurerClaimsPage() {
         },
       })
       .then((response) => {
-        setError('');
-        let allClaims = response.data;
-        setClaims(allClaims);
+        setClaims(response.data);
+        setLoading(false);
       })
       .catch((error) => {
-        setError(error.response.data.message);
+        console.error(error.response.data.message);
+        setLoading(false);
       });
   }, [principal]);
 
@@ -39,6 +38,11 @@ export default function InsurerClaimsPage() {
 
     fetchClaims();
   }, [principal, fetchClaims]);
+
+  function finishResolveClaim() {
+    fetchClaims();
+    setShowResolve(false);
+  }
 
   return (
     <>
@@ -49,12 +53,16 @@ export default function InsurerClaimsPage() {
 
         <section>
           <ReloadButton onClick={fetchClaims} />
-          <InsurerClaimsTable claims={claims} setShowResolve={setShowResolve} />
+          <InsurerClaimsTable
+            claims={claims}
+            isLoading={isLoading}
+            setShowResolve={setShowResolve}
+          />
         </section>
       </main>
       {showResolve && (
         <InlineModal onClose={() => setShowResolve(false)}>
-          <ResolveClaim onFinish={() => {}} />
+          <ResolveClaim onFinish={finishResolveClaim} />
         </InlineModal>
       )}
     </>

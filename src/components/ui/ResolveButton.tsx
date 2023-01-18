@@ -1,10 +1,11 @@
 type Props = {
   onClick: Function;
 };
+
 export function SettleButton({ onClick }: Props): JSX.Element {
   return (
     <button
-      className='bg-green-500 hover:bg-green-400 p-3 rounded-sm text-slate-50'
+      className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-slate-50'
       onClick={(e) => onClick(e)}
     >
       Settle
@@ -19,6 +20,17 @@ export function DenyButton({ onClick }: Props): JSX.Element {
       onClick={(e) => onClick(e)}
     >
       Deny
+    </button>
+  );
+}
+
+export function ApproveButton({ onClick }: Props): JSX.Element {
+  return (
+    <button
+      className='bg-green-500 hover:bg-green-400 p-3 rounded-sm text-slate-50'
+      onClick={(e) => onClick(e)}
+    >
+      Approve
     </button>
   );
 }

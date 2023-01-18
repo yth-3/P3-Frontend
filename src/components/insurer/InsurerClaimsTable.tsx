@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 import { claimState } from '../../App';
 import { Claim } from '../../utility/types';
+import Spinner from '../ui/Spinner';
 
 type header = 'status' | 'submitter' | 'submitted' | 'type';
 const sortedHeaders: header[] = ['status', 'submitter', 'submitted', 'type'];
@@ -16,9 +17,13 @@ const sortedHeaders: header[] = ['status', 'submitter', 'submitted', 'type'];
 type Props = {
   claims: Claim[];
   setShowResolve: Function;
+  isLoading: boolean;
 };
-
-export default function InsurerClaimsTable({ claims, setShowResolve }: Props) {
+export default function InsurerClaimsTable({
+  claims,
+  setShowResolve,
+  isLoading,
+}: Props) {
   const setClaim = useSetRecoilState(claimState);
   const [sortedColumn, setSortedColumn] = useState<header | null>(null);
   const [asc, setAsc] = useState(true);
@@ -89,7 +94,21 @@ export default function InsurerClaimsTable({ claims, setShowResolve }: Props) {
           <th className='px-8 py-2'></th>
         </tr>
       </thead>
-      <tbody>{sortedClaims().map((claim) => formatClaim(claim))}</tbody>
+      <tbody>
+        {isLoading ? (
+          <tr>
+            <td>
+              <Spinner />
+            </td>
+          </tr>
+        ) : sortedClaims().length === 0 ? (
+          <tr>
+            <td>No claims found</td>
+          </tr>
+        ) : (
+          sortedClaims().map((claim) => formatClaim(claim))
+        )}
+      </tbody>
     </table>
   );
 
