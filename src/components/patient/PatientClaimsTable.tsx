@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import {
   ArrowTopRightOnSquareIcon,
@@ -10,15 +11,16 @@ import { modalState, claimState } from '../../App';
 import { VIEW_PATIENT_CLAIM } from '../../utility/constants';
 
 import { Claim } from '../../utility/types';
-import { useState } from 'react';
+import Spinner from '../../components/ui/Spinner';
 
 type header = 'status' | 'submitted' | 'type';
 const sortedHeaders: header[] = ['status', 'submitted', 'type'];
 
 type Props = {
   claims: Claim[];
+  loading: boolean;
 };
-export default function PatientsClaimsTable({ claims }: Props) {
+export default function PatientsClaimsTable({ claims, loading }: Props) {
   const setModal = useSetRecoilState(modalState);
   const setClaim = useSetRecoilState(claimState);
   const [sortedColumn, setSortedColumn] = useState<header | null>(null);
@@ -84,36 +86,48 @@ export default function PatientsClaimsTable({ claims }: Props) {
               />
             );
           })}
-          <th className='px-8 py-2'>Description</th>
+          <th className='px-8 py-2 w-11'>Description</th>
           <th className='px-8 py-2'></th>
         </tr>
       </thead>
       <tbody>
-        {sortedClaims().map((claim) => {
-          return (
-            <tr key={claim.claimId} className='bg-white border-b'>
-              <TableDataText text={claim.status.status} />
-              <TableDataText
-                text={`${
-                  new Date(claim.submitted).getUTCMonth() + 1
-                }-${new Date(claim.submitted).getUTCDate()}-${new Date(
-                  claim.submitted
-                ).getUTCFullYear()}`}
-              />
-              <TableDataText text={claim.type.type} />
-              <TableDataText text={claim.description} />
-              <td className='px-8'>
-                <button
-                  onClick={() => handleDetailsClick(claim)}
-                  className='bg-slate-200 p-1 rounded flex'
-                >
-                  Details
-                  <ArrowTopRightOnSquareIcon className='w-5 h-5' />
-                </button>
-              </td>
-            </tr>
-          );
-        })}
+        {loading ? (
+          <tr>
+            <td>
+              <Spinner />
+            </td>
+          </tr>
+        ) : sortedClaims().length === 0 ? (
+          <tr>
+            <td>You have no claims</td>
+          </tr>
+        ) : (
+          sortedClaims().map((claim) => {
+            return (
+              <tr key={claim.claimId} className='bg-white border-b'>
+                <TableDataText text={claim.status.status} />
+                <TableDataText
+                  text={`${
+                    new Date(claim.submitted).getUTCMonth() + 1
+                  }-${new Date(claim.submitted).getUTCDate()}-${new Date(
+                    claim.submitted
+                  ).getUTCFullYear()}`}
+                />
+                <TableDataText text={claim.type.type} />
+                <TableDataText text={claim.description} />
+                <td className='px-8'>
+                  <button
+                    onClick={() => handleDetailsClick(claim)}
+                    className='bg-slate-200 p-1 rounded flex'
+                  >
+                    Details
+                    <ArrowTopRightOnSquareIcon className='w-5 h-5' />
+                  </button>
+                </td>
+              </tr>
+            );
+          })
+        )}
       </tbody>
     </table>
   );
