@@ -8,8 +8,9 @@ export default function LoggedOut({ onClick }: Props) {
     onClick();
   }
   return (
-    <div>
-      <div>Your session has expired. Please login again</div>
+    <div className='flex flex-col gap-4'>
+      <div>Your session has expired</div>
+      <div>Please login again</div>
       <LargeButton onClick={handleClick}>Ok</LargeButton>
     </div>
   );
