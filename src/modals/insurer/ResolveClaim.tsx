@@ -52,21 +52,25 @@ export default function ResolveClaim({ onFinish }: Props) {
         )
         .then(() => onFinish())
         .catch((error) => {
-          console.error(error.response.data.message);
+          console.error(error);
         })
         .finally(() => {
           setLoading(false);
         });
     else if (status === 'denied')
       backendApi
-        .put(`claims/deny/${claim?.claimId}`, {
-          headers: {
-            authorization: principal?.token,
-          },
-        })
+        .put(
+          `claims/deny/${claim?.claimId}`,
+          {},
+          {
+            headers: {
+              authorization: principal?.token,
+            },
+          }
+        )
         .then(() => onFinish())
         .catch((error) => {
-          console.error(error.response.data.message);
+          console.error(error);
         })
         .finally(() => {
           setLoading(false);
