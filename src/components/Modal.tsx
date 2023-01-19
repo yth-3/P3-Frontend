@@ -5,6 +5,7 @@ import Signup from '../modals/Signup';
 import Logout from '../modals/Logout';
 import './Modal.css';
 import {
+  LOGGED_OUT,
   LOGIN,
   LOGOUT,
   SIGNUP,
@@ -32,6 +33,7 @@ export default function Modal() {
             {modal === SIGNUP && <Signup />}
             {modal === LOGOUT && <Logout />}
             {modal === VIEW_PATIENT_CLAIM && <ClaimDetail />}
+            {modal === LOGGED_OUT && <div>Your session has expired</div>}
           </div>
         </div>
       )}
