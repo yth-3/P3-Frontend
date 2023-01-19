@@ -66,9 +66,6 @@ export default function UserInfo({ user }: Props) {
           },
         }
       )
-      .then((response) => {
-        console.log(response);
-      })
       .catch((error) => console.log('Error: ' + error));
   }
 
@@ -83,9 +80,6 @@ export default function UserInfo({ user }: Props) {
           },
         }
       )
-      .then((response) => {
-        console.log(response);
-      })
       .catch((error) => console.log('Error: ' + error));
   }
 }
