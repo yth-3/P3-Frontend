@@ -10,14 +10,14 @@ export default function FindClaim() {
   const [id, setId] = useState('');
   const [error, setError] = useState('');
   const setClaim = useSetRecoilState(claimState);
-  const [setshowResolve, setShowResolve] = useState(false);
+  const [showResolve, setShowResolve] = useState(false);
   const principal = useRecoilValue(principalState);
 
   async function handleDetailsClick(id: string) {
     setShowResolve(true);
 
     backendApi
-      .get(`claim/id?id=${id}`, {
+      .get(`claims/id?id=${id}`, {
         headers: {
           authorization: principal?.token,
         },
@@ -32,11 +32,9 @@ export default function FindClaim() {
       });
   }
 
-  async function submit(e: FormEvent) {
+  function submit(e: FormEvent) {
     e.preventDefault();
-
     setError('');
-
     setId('');
   }
 
@@ -65,7 +63,7 @@ export default function FindClaim() {
       <section className='flex gap-1 justify-center items-center text-lg'>
         {error && <p className='text-red-600'>{error}</p>}
       </section>
-      {setshowResolve && (
+      {showResolve && (
         <InlineModal onClose={() => setShowResolve(false)}>
           <ResolveClaim onFinish={() => {}} />
         </InlineModal>
