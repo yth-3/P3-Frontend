@@ -2,22 +2,21 @@ import { useSetRecoilState } from 'recoil';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import { claimState } from '../../App';
 
-import { Claim, User } from '../../utility/types';
+import { Claim } from '../../utility/types';
 import { useMemo, useState } from 'react';
 import InlineModal from '../InlineModal';
 import ResolveClaim from '../../modals/insurer/ResolveClaim';
 
 type Props = {
   claims: Claim[];
-  users: { [key: string]: User };
 };
 
 type header = {
-  field: 'status' | 'submitterId' | 'submitted' | 'type';
+  field: 'status' | 'submitter' | 'submitted' | 'type';
   order: 'ascending' | 'descending';
 };
 
-export default function InsurerClaimsTable({ claims, users }: Props) {
+export default function InsurerClaimsTable({ claims }: Props) {
   const setClaim = useSetRecoilState(claimState);
   const [showResolve, setShowResolve] = useState(false);
 
@@ -55,7 +54,7 @@ export default function InsurerClaimsTable({ claims, users }: Props) {
               </button>
             </th>
             <th className='px-8 py-2'>
-              <button type='button' onClick={() => setSort('submitterId')}>
+              <button type='button' onClick={() => setSort('submitter')}>
                 Submitter
               </button>
             </th>
@@ -85,15 +84,11 @@ export default function InsurerClaimsTable({ claims, users }: Props) {
 
   function formatClaim(claim: Claim) {
     return (
-      <tr key={claim.id} className='bg-white border-b'>
-        <TableDataText text={claim.status} />
-        <TableDataText text={users[claim.submitterId]?.username} />
-        <TableDataText
-          text={`${
-            claim.submitted.getUTCMonth() + 1
-          }-${claim.submitted.getUTCDate()}-${claim.submitted.getUTCFullYear()}`}
-        />
-        <TableDataText text={claim.type} />
+      <tr key={claim.claimId} className='bg-white border-b'>
+        <TableDataText text={claim.status.status} />
+        <TableDataText text={claim.submitter.username} />
+        <TableDataText text={claim.submitted} />
+        <TableDataText text={claim.type.type} />
         <TableDataText text={claim.description} />
         <td className='px-8'>
           <button

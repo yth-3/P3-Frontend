@@ -29,14 +29,12 @@ export default function LoginForm({ setLoading, isLoading }: Props) {
       .post('auth', { username, password })
       .then((response) => {
         setError(false);
-        console.log(response);
         setPrincipal(response.data);
         localStorage.setItem(PRINCIPAL, JSON.stringify(response.data));
         setModal(null);
         navigate('/patient');
       })
       .catch((error) => {
-        console.log(error);
         setError(true);
       })
       .finally(() => {

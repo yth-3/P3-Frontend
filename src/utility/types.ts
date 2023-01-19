@@ -1,14 +1,14 @@
 export type Claim = {
-  id: string;
-  submitterId: string;
-  submitted: Date;
+  claimId: string;
+  submitter: User;
+  submitted: string;
   claimed: number;
-  type: string;
+  type: ClaimType;
   description: string;
-  status: string;
+  status: ClaimStatus;
   receipt?: string;
-  resolverId?: string;
-  resolved?: Date;
+  resolver?: User;
+  resolved?: string;
   settled?: number;
 };
 
@@ -20,4 +20,19 @@ export type User = {
   active: boolean;
   role: string;
   token?: string;
+};
+
+export type UserRole = {
+  roleId: string;
+  role: string;
+};
+
+export type ClaimType = {
+  typeId: string;
+  type: string;
+};
+
+export type ClaimStatus = {
+  statusId: string;
+  status: string;
 };
