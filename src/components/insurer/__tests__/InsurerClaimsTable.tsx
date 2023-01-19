@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Claim } from '../../../utility/types';
 import InsurerClaimsTable from '../InsurerClaimsTable';
 
 const [, setShowResolve] = useState(false);
-const claims: Claim[] = [
+const claims = [
   {
     claimId: 'fcdf3806-e2aa-414f-9d2c-a4138e57391c',
     submitter: {

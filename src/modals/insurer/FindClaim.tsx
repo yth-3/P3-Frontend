@@ -30,20 +30,6 @@ export default function FindClaim() {
       .catch((error) => {
         setError(error.response.data.message);
       });
-
-    /*
-    const claim: Claim = {
-      id: id,
-      submitterId: '12345',
-      submitted: new Date('2022-1-2'),
-      claimed: 570,
-      type: 'Medication',
-      description: 'Allergy mediciine',
-      status: 'Pending',
-    };
-
-    setClaim(claim);
-    */
   }
 
   async function submit(e: FormEvent) {
