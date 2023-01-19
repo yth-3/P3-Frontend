@@ -10,7 +10,11 @@ type header = {
   order: 'ascending' | 'descending';
 };
 
-export default function AdminUsersTable(users: User[]) {
+type Props = {
+  users: User[];
+};
+
+export default function AdminUsersTable({ users }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [showInfo, setShowInfo] = useState(false);
 
@@ -64,7 +68,7 @@ export default function AdminUsersTable(users: User[]) {
       </table>
       {showInfo && user && (
         <InlineModal onClose={() => setShowInfo(false)}>
-          {UserInfo(user)}
+          <UserInfo user={user} />
         </InlineModal>
       )}
     </>

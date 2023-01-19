@@ -34,7 +34,9 @@ export default function UserListPage() {
       <header>
         <h1>Users</h1>
       </header>
-      <section>{AdminUsersTable(users)}</section>
+      <section>
+        <AdminUsersTable users={users} />
+      </section>
     </main>
   );
 }
