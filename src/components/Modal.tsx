@@ -16,6 +16,10 @@ import ClaimDetail from '../modals/patient/ClaimDetail';
 export default function Modal() {
   const [modal, setModal] = useRecoilState(modalState);
 
+  function handleClick() {
+    setModal(null);
+  }
+
   return (
     <>
       {modal && (
@@ -33,7 +37,12 @@ export default function Modal() {
             {modal === SIGNUP && <Signup />}
             {modal === LOGOUT && <Logout />}
             {modal === VIEW_PATIENT_CLAIM && <ClaimDetail />}
-            {modal === LOGGED_OUT && <div>Your session has expired</div>}
+            {modal === LOGGED_OUT && (
+              <div>
+                <div>Your session has expired. Please login again</div>
+                <button onClick={handleClick}>Ok</button>
+              </div>
+            )}
           </div>
         </div>
       )}
