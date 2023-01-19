@@ -1,85 +1,115 @@
 import { useSetRecoilState } from 'recoil';
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
-import { claimState } from '../../App';
+import {
+  ArrowTopRightOnSquareIcon,
+  ArrowsUpDownIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
+} from '@heroicons/react/24/outline';
+import { useState } from 'react';
 
+import { claimState } from '../../App';
 import { Claim } from '../../utility/types';
-import { useMemo, useState } from 'react';
-import InlineModal from '../InlineModal';
-import ResolveClaim from '../../modals/insurer/ResolveClaim';
+import Spinner from '../ui/Spinner';
+
+type header = 'status' | 'submitter' | 'submitted' | 'type';
+const sortedHeaders: header[] = ['status', 'submitter', 'submitted', 'type'];
 
 type Props = {
   claims: Claim[];
+  setShowResolve: Function;
+  isLoading: boolean;
 };
-
-type header = {
-  field: 'status' | 'submitter' | 'submitted' | 'type';
-  order: 'ascending' | 'descending';
-};
-
-export default function InsurerClaimsTable({ claims }: Props) {
+export default function InsurerClaimsTable({
+  claims,
+  setShowResolve,
+  isLoading,
+}: Props) {
   const setClaim = useSetRecoilState(claimState);
-  const [showResolve, setShowResolve] = useState(false);
+  const [sortedColumn, setSortedColumn] = useState<header | null>(null);
+  const [asc, setAsc] = useState(true);
+
+  function sortedClaims() {
+    if (!sortedColumn) return claims;
+    const sorted = [...claims].sort((a, b) => {
+      let ifAsc;
+      if (sortedColumn === 'submitted')
+        if (
+          new Date(a[sortedColumn]).getTime() ===
+          new Date(b[sortedColumn]).getTime()
+        ) {
+          ifAsc = 0;
+        } else {
+          ifAsc =
+            new Date(a[sortedColumn]).getTime() <
+            new Date(b[sortedColumn]).getTime()
+              ? -1
+              : 1;
+        }
+      else {
+        if (sortedColumn === 'type')
+          ifAsc = a[sortedColumn].type.localeCompare(b[sortedColumn].type);
+        else if (sortedColumn === 'status')
+          ifAsc = a[sortedColumn].status.localeCompare(b[sortedColumn].status);
+        else
+          ifAsc = a[sortedColumn].username.localeCompare(
+            b[sortedColumn].username
+          );
+      }
+
+      return asc ? ifAsc : ifAsc * -1;
+    });
+    return sorted;
+  }
 
   function handleDetailsClick(claim: Claim) {
     setClaim(claim);
     setShowResolve(true);
   }
 
-  const [sortConfig, setSortConfig] = useState<header | null>(null);
-
-  const sortedClaims = useMemo(() => {
-    let sortedClaims = [...claims];
-    if (sortConfig !== null) {
-      sortedClaims.sort((a, b) => {
-        if (a[sortConfig.field] < b[sortConfig.field]) {
-          return sortConfig.order === 'ascending' ? -1 : 1;
-        }
-        if (a[sortConfig.field] > b[sortConfig.field]) {
-          return sortConfig.order === 'ascending' ? 1 : -1;
-        }
-        return 0;
-      });
+  function handleHeaderClick(column: header) {
+    if (column !== sortedColumn) {
+      setSortedColumn(column);
+      setAsc(true);
+    } else {
+      setAsc(!asc);
     }
-    return sortedClaims;
-  }, [claims, sortConfig]);
+  }
 
   return (
-    <>
-      <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
-        <thead className='text-xs text-gray-700 capitalized bg-gray-50 rounded-lg'>
-          <tr className='py-5 rounded-lg'>
-            <th className='px-8 py-2'>
-              <button type='button' onClick={() => setSort('status')}>
-                Status
-              </button>
-            </th>
-            <th className='px-8 py-2'>
-              <button type='button' onClick={() => setSort('submitter')}>
-                Submitter
-              </button>
-            </th>
-            <th className='px-8 py-2'>
-              <button type='button' onClick={() => setSort('submitted')}>
-                Submitted
-              </button>
-            </th>
-            <th className='px-8 py-2'>
-              <button type='button' onClick={() => setSort('type')}>
-                Type
-              </button>
-            </th>
-            <th className='px-8 py-2'>Description</th>
-            <th className='px-8 py-2'>Details</th>
+    <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
+      <thead className='text-xs text-gray-700 capitalized bg-gray-50 rounded-lg'>
+        <tr className='py-5 rounded-lg'>
+          {sortedHeaders.map((header) => {
+            return (
+              <SortableHeader
+                key={header}
+                text={header}
+                asc={asc}
+                sorted={sortedColumn === header}
+                onClick={() => handleHeaderClick(header)}
+              />
+            );
+          })}
+          <th className='px-8 py-2'>Description</th>
+          <th className='px-8 py-2'></th>
+        </tr>
+      </thead>
+      <tbody>
+        {isLoading ? (
+          <tr>
+            <td>
+              <Spinner />
+            </td>
           </tr>
-        </thead>
-        <tbody>{sortedClaims.map(formatClaim)}</tbody>
-      </table>
-      {showResolve && (
-        <InlineModal onClose={() => setShowResolve(false)}>
-          <ResolveClaim onClose={() => setShowResolve(false)} />
-        </InlineModal>
-      )}
-    </>
+        ) : sortedClaims().length === 0 ? (
+          <tr>
+            <td>No claims found</td>
+          </tr>
+        ) : (
+          sortedClaims().map((claim) => formatClaim(claim))
+        )}
+      </tbody>
+    </table>
   );
 
   function formatClaim(claim: Claim) {
@@ -87,7 +117,11 @@ export default function InsurerClaimsTable({ claims }: Props) {
       <tr key={claim.claimId} className='bg-white border-b'>
         <TableDataText text={claim.status.status} />
         <TableDataText text={claim.submitter.username} />
-        <TableDataText text={claim.submitted} />
+        <TableDataText
+          text={`${new Date(claim.submitted).getUTCMonth() + 1}-${new Date(
+            claim.submitted
+          ).getUTCDate()}-${new Date(claim.submitted).getUTCFullYear()}`}
+        />
         <TableDataText text={claim.type.type} />
         <TableDataText text={claim.description} />
         <td className='px-8'>
@@ -102,14 +136,31 @@ export default function InsurerClaimsTable({ claims }: Props) {
       </tr>
     );
   }
+}
 
-  function setSort(field: header['field']) {
-    let order: header['order'] = 'ascending';
-    if (sortConfig?.field === field && sortConfig?.order === order) {
-      order = 'descending';
-    }
-    setSortConfig({ field, order });
-  }
+type SortableHeaderProps = {
+  text: string;
+  sorted: boolean;
+  asc: boolean;
+  onClick: Function;
+};
+function SortableHeader({ text, sorted, asc, onClick }: SortableHeaderProps) {
+  return (
+    <th onClick={() => onClick()} className='px-8 py-2 cursor-pointer'>
+      <div className='flex gap-1 items-center capitalize'>
+        {text}
+        {sorted ? (
+          asc ? (
+            <ArrowUpIcon className='h-3 w-3' />
+          ) : (
+            <ArrowDownIcon className='h-3 w-3' />
+          )
+        ) : (
+          <ArrowsUpDownIcon className='h-4 w-3' />
+        )}
+      </div>
+    </th>
+  );
 }
 
 function TableDataText({ text }: { text: string | number }) {

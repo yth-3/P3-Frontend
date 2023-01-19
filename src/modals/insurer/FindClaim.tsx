@@ -81,7 +81,7 @@ export default function FindClaim() {
       </section>
       {setshowResolve && (
         <InlineModal onClose={() => setShowResolve(false)}>
-          <ResolveClaim onClose={() => setShowResolve(false)} />
+          <ResolveClaim onFinish={() => {}} />
         </InlineModal>
       )}
     </form>
