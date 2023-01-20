@@ -10,6 +10,10 @@ export default function PatientDashboardPage() {
   const principal = useRecoilValue(principalState);
   const [showNew, setShowNew] = useState(false);
 
+  function handleFinish() {
+    setShowNew(false);
+  }
+
   return (
     <>
       <main className='flex flex-col gap-10 items-center'>
@@ -24,7 +28,7 @@ export default function PatientDashboardPage() {
       </main>
       {showNew && (
         <InlineModal onClose={() => setShowNew(false)}>
-          <NewClaim onFinish={() => {}} />
+          <NewClaim onFinish={handleFinish} />
         </InlineModal>
       )}
     </>
