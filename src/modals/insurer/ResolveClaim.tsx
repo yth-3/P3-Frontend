@@ -16,7 +16,7 @@ type Props = {
 export default function ResolveClaim({ onFinish }: Props) {
   const claim = useRecoilValue(claimState);
   const principal = useRecoilValue(principalState);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [isSettling, setSettling] = useState(false);
   const [settled, setSettled] = useState('');
   const [selectedOption, setSelectedOption] = useState('option1');
@@ -79,7 +79,7 @@ export default function ResolveClaim({ onFinish }: Props) {
 
   return (
     <div className='flex flex-col'>
-      {loading ? (
+      {isLoading ? (
         <Spinner />
       ) : (
         <form onSubmit={handleSubmit}>
@@ -125,6 +125,11 @@ export default function ResolveClaim({ onFinish }: Props) {
                     <strong>Amount settled:</strong> $
                     {claim?.settled?.toFixed(2)}
                   </h3>
+                  <section className='flex flex-col'>
+                    <h3 className='text-blue-600 font-bold text-center py-5'>
+                      This claim has already been resolved
+                    </h3>
+                  </section>
                 </>
               ) : (
                 <section className='flex flex-col'>
