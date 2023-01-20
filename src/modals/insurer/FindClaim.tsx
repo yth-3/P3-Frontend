@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { claimState, principalState } from '../../App';
+import Spinner from '../../components/ui/Spinner';
 import { backendApi } from '../../utility/api';
 
 type Props = {
@@ -12,9 +13,11 @@ export default function FindClaim({ onFinish }: Props) {
   const [error, setError] = useState('');
   const setClaim = useSetRecoilState(claimState);
   const principal = useRecoilValue(principalState);
+  const [isLoading, setLoading] = useState(false);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setLoading(true);
 
     backendApi
       .get(`claims/id?id=${claimId}`, {
@@ -23,37 +26,49 @@ export default function FindClaim({ onFinish }: Props) {
         },
       })
       .then((response) => {
-        setError('');
-        setClaim(response.data);
-        onFinish();
+        if (!response.data.claimId) setError('Claim not found');
+        else {
+          setError('');
+          setClaim(response.data);
+          onFinish();
+        }
       })
       .catch((error) => {
         setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className='flex flex-col gap-10 justify-center'
-    >
-      <main className='flex flex-col gap-5'>
-        <h2 className='text-3xl text-center'>Find Claim</h2>
-        <input
-          className='bg-gray-100 shadow-inner rounded-md px-5 py-2'
-          type='text'
-          placeholder='Claim ID'
-          value={claimId}
-          onChange={(e) => setClaimId(e.target.value)}
-        />
-        <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>
-          Resolve Claim
-        </button>
-      </main>
+    <div className='flex flex-col gap-5'>
+      <h3 className='text-3xl text-blue-900 mx-auto'>Find Claim</h3>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <form
+          onSubmit={handleSubmit}
+          className='flex flex-col gap-5 justify-center'
+        >
+          <main className='flex flex-col gap-5'>
+            <input
+              className='bg-gray-100 shadow-inner rounded-md px-5 py-2'
+              type='text'
+              placeholder='Claim ID'
+              value={claimId}
+              onChange={(e) => setClaimId(e.target.value)}
+            />
+            <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>
+              Resolve Claim
+            </button>
+          </main>
 
-      <section className='flex gap-1 justify-center items-center text-lg'>
-        {error && <p className='text-red-600'>Claim not found</p>}
-      </section>
-    </form>
+          <section className='flex justify-center items-center text-lg'>
+            {error && <p className='text-red-600'>{error}</p>}
+          </section>
+        </form>
+      )}
+    </div>
   );
 }

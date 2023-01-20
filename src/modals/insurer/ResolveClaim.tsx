@@ -125,6 +125,11 @@ export default function ResolveClaim({ onFinish }: Props) {
                     <strong>Amount settled:</strong> $
                     {claim?.settled?.toFixed(2)}
                   </h3>
+                  <section className='flex flex-col'>
+                    <h3 className='text-blue-600 font-bold text-center py-5'>
+                      This claim has already been resolved
+                    </h3>
+                  </section>
                 </>
               ) : (
                 <section className='flex flex-col'>
