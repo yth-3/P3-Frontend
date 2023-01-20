@@ -2,72 +2,58 @@ import { FormEvent, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { claimState, principalState } from '../../App';
-import InlineModal from '../../components/InlineModal';
 import { backendApi } from '../../utility/api';
-import ResolveClaim from './ResolveClaim';
 
-export default function FindClaim() {
-  const [id, setId] = useState('');
+type Props = {
+  onFinish: Function;
+};
+export default function FindClaim({ onFinish }: Props) {
+  const [claimId, setClaimId] = useState('');
   const [error, setError] = useState('');
   const setClaim = useSetRecoilState(claimState);
-  const [showResolve, setShowResolve] = useState(false);
   const principal = useRecoilValue(principalState);
 
-  async function handleDetailsClick(id: string) {
-    setShowResolve(true);
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
 
     backendApi
-      .get(`claims/id?id=${id}`, {
+      .get(`claims/id?id=${claimId}`, {
         headers: {
           authorization: principal?.token,
         },
       })
       .then((response) => {
         setError('');
-        let claim = response.data;
-        setClaim(claim);
+        setClaim(response.data);
+        onFinish();
       })
       .catch((error) => {
-        setError(error.response.data.message);
+        setError(error);
       });
-  }
-
-  function submit(e: FormEvent) {
-    e.preventDefault();
-    setError('');
-    setId('');
   }
 
   return (
     <form
-      onSubmit={(e) => submit(e)}
+      onSubmit={handleSubmit}
       className='flex flex-col gap-10 justify-center'
     >
       <main className='flex flex-col gap-5'>
-        <h2 className='text-3xl text-center'>Find claim</h2>
+        <h2 className='text-3xl text-center'>Find Claim</h2>
         <input
           className='bg-gray-100 shadow-inner rounded-md px-5 py-2'
           type='text'
           placeholder='Claim ID'
-          value={id}
-          onChange={(e) => setId(e.target.value)}
+          value={claimId}
+          onChange={(e) => setClaimId(e.target.value)}
         />
-        <button
-          className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'
-          onClick={() => handleDetailsClick(id)}
-        >
-          Resolve claim
+        <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>
+          Resolve Claim
         </button>
       </main>
 
       <section className='flex gap-1 justify-center items-center text-lg'>
-        {error && <p className='text-red-600'>{error}</p>}
+        {error && <p className='text-red-600'>Claim not found</p>}
       </section>
-      {showResolve && (
-        <InlineModal onClose={() => setShowResolve(false)}>
-          <ResolveClaim onFinish={() => {}} />
-        </InlineModal>
-      )}
     </form>
   );
 }
