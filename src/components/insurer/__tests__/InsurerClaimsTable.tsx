@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import ReactDOM from 'react-dom';
+import { render, screen } from '@testing-library/react';
 
+import { Claim } from '../../../utility/types';
 import InsurerClaimsTable from '../InsurerClaimsTable';
 
-const [, setShowResolve] = useState(false);
-const claims = [
+const emptyClaims: Claim[] = [];
+const stubbedClaims: Claim[] = [
   {
     claimId: 'fcdf3806-e2aa-414f-9d2c-a4138e57391c',
     submitter: {
@@ -93,14 +93,24 @@ const claims = [
   },
 ];
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(
+it('renders the appropriate message with empty claims array', () => {
+  render(
     <InsurerClaimsTable
-      claims={claims}
-      setShowResolve={setShowResolve}
+      claims={emptyClaims}
+      setShowResolve={() => {}}
       isLoading={false}
-    />,
-    div
+    />
+  );
+  const emptyStatus = screen.getByText(/No claims found/i);
+  expect(emptyStatus).toBeInTheDocument();
+});
+
+it('renders without crashing', () => {
+  render(
+    <InsurerClaimsTable
+      claims={stubbedClaims}
+      setShowResolve={() => {}}
+      isLoading={false}
+    />
   );
 });
