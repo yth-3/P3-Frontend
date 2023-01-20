@@ -79,7 +79,6 @@ export default function ResolveClaim({ onFinish }: Props) {
 
   return (
     <div className='flex flex-col'>
-      <h3 className='text-3xl text-blue-900 mx-auto'>Resolve Claim</h3>
       {loading ? (
         <Spinner />
       ) : (
