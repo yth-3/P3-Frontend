@@ -1,6 +1,13 @@
+import { useRecoilValue } from 'recoil';
+import { principalState } from '../../App';
+import { backendApi } from '../../utility/api';
 import { User } from '../../utility/types';
 
-export default function UserInfo(user: User) {
+type Props = {
+  user: User;
+};
+export default function UserInfo({ user }: Props) {
+  const principal = useRecoilValue(principalState);
   return (
     <>
       {user && (
@@ -29,8 +36,51 @@ export default function UserInfo(user: User) {
             <b>Activation Status: </b>
             {user?.active ? 'Active' : 'Inactive'}
           </h3>
+          <button
+            className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'
+            onClick={() => toggleActive(user)}
+          >
+            Toggle Activation Status
+          </button>
         </div>
       )}
     </>
   );
+
+  function toggleActive(user: User) {
+    if (user.active) {
+      deactivate(user.userId);
+    } else {
+      activate(user.userId);
+    }
+    window.location.reload();
+  }
+
+  function activate(id: string) {
+    backendApi
+      .put(
+        `/users/activate/${id}`,
+        {},
+        {
+          headers: {
+            authorization: principal?.token,
+          },
+        }
+      )
+      .catch((error) => console.error('Error: ' + error));
+  }
+
+  function deactivate(id: string) {
+    backendApi
+      .put(
+        `/users/deactivate/${id}`,
+        {},
+        {
+          headers: {
+            authorization: principal?.token,
+          },
+        }
+      )
+      .catch((error) => console.error('Error: ' + error));
+  }
 }

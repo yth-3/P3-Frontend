@@ -11,38 +11,39 @@ import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
 import UserListPage from '../pages/admin/UserListPage';
 import ProtectedRoute from './ProtectedRoute';
+import AddUserPage from '../pages/admin/AddUserPage';
 
 export default function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-
-        <Route path="/" element={<ProtectedRoute role={null} />}>
+      <Route path='/' element={<Layout />}>
+        <Route path='/' element={<ProtectedRoute role={null} />}>
           <Route index element={<LandingPage />} />
         </Route>
 
-        <Route path="patient" element={<ProtectedRoute role='Patient' />}>
+        <Route path='patient' element={<ProtectedRoute role='Patient' />}>
           <Route index element={<PatientDashboardPage />} />
-          <Route path="claims">
+          <Route path='claims'>
             <Route index element={<PatientClaimsPage />} />
           </Route>
         </Route>
-        <Route path="insurer" element={<ProtectedRoute role='Insurer' />}>
+        <Route path='insurer' element={<ProtectedRoute role='Insurer' />}>
           <Route index element={<InsurerDashboardPage />} />
-          <Route path="claims" element={<InsurerClaimsPage />} />
+          <Route path='claims' element={<InsurerClaimsPage />} />
         </Route>
 
-        <Route path="staff" element={<ProtectedRoute role='Staff' />}>
+        <Route path='staff' element={<ProtectedRoute role='Staff' />}>
           <Route index element={<StaffDashboardPage />} />
         </Route>
 
-        <Route path="admin" element={<ProtectedRoute role='Admin' />}>
+        <Route path='admin' element={<ProtectedRoute role='Admin' />}>
           <Route index element={<AdminDashboardPage />} />
-          <Route path="users" element={<UserListPage />} />
+          <Route path='users' element={<UserListPage />} />
+          <Route path='add' element={<AddUserPage />} />
         </Route>
 
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path='*' element={<NotFoundPage />} />
       </Route>
     </Routes>
-  )
+  );
 }
