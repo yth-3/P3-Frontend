@@ -5,15 +5,21 @@ import Signup from '../modals/Signup';
 import Logout from '../modals/Logout';
 import './Modal.css';
 import {
+  LOGGED_OUT,
   LOGIN,
   LOGOUT,
   SIGNUP,
   VIEW_PATIENT_CLAIM,
 } from '../utility/constants';
 import ClaimDetail from '../modals/patient/ClaimDetail';
+import LoggedOut from '../modals/LoggedOut';
 
 export default function Modal() {
   const [modal, setModal] = useRecoilState(modalState);
+
+  function handleClick() {
+    setModal(null);
+  }
 
   return (
     <>
@@ -32,6 +38,7 @@ export default function Modal() {
             {modal === SIGNUP && <Signup />}
             {modal === LOGOUT && <Logout />}
             {modal === VIEW_PATIENT_CLAIM && <ClaimDetail />}
+            {modal === LOGGED_OUT && <LoggedOut onClick={handleClick} />}
           </div>
         </div>
       )}
