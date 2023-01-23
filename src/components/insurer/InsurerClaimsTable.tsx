@@ -77,7 +77,7 @@ export default function InsurerClaimsTable({
 
   return (
     <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
-      <thead className='text-xs text-gray-700 capitalized bg-gray-50 rounded-lg'>
+      <thead className='text-xs text-gray-700 uppercase bg-gray-50 rounded-lg'>
         <tr className='py-5 rounded-lg'>
           {sortedHeaders.map((header) => {
             return (
@@ -118,9 +118,9 @@ export default function InsurerClaimsTable({
         <TableDataText text={claim.status.status} />
         <TableDataText text={claim.submitter.username} />
         <TableDataText
-          text={`${new Date(claim.submitted).getUTCMonth() + 1}-${new Date(
+          text={`${new Date(claim.submitted).getMonth() + 1}-${new Date(
             claim.submitted
-          ).getUTCDate()}-${new Date(claim.submitted).getUTCFullYear()}`}
+          ).getDate()}-${new Date(claim.submitted).getFullYear()}`}
         />
         <TableDataText text={claim.type.type} />
         <TableDataText text={claim.description} />
@@ -147,7 +147,7 @@ type SortableHeaderProps = {
 function SortableHeader({ text, sorted, asc, onClick }: SortableHeaderProps) {
   return (
     <th onClick={() => onClick()} className='px-8 py-2 cursor-pointer'>
-      <div className='flex gap-1 items-center capitalize'>
+      <div className='flex gap-1 items-center uppercase'>
         {text}
         {sorted ? (
           asc ? (
