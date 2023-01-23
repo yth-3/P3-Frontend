@@ -98,13 +98,13 @@ export default function ResolveClaim({ onFinish }: Props) {
           {claim && (
             <div>
               <h3>
-                <strong>Claim ID:</strong> {claim?.claimId}
+                <strong>Claim ID:</strong> {claim.claimId}
               </h3>
               <h3 className='flex flex-row gap-1'>
                 <strong>Submitter ID:</strong>
                 <div
                   className='text-blue-600 hover:text-blue-500 hover:underline cursor-pointer'
-                  onClick={() => handleUserIdClick(claim?.submitter)}
+                  onClick={() => handleUserIdClick(claim.submitter)}
                 >
                   {claim.submitter.userId}
                 </div>
@@ -151,7 +151,7 @@ export default function ResolveClaim({ onFinish }: Props) {
                   </h3>
                   <h3>
                     <strong>Amount settled:</strong> $
-                    {claim?.settled?.toFixed(2)}
+                    {claim.settled?.toFixed(2)}
                   </h3>
                   <section className='flex flex-col'>
                     <h3 className='text-blue-600 font-bold text-center py-5'>
