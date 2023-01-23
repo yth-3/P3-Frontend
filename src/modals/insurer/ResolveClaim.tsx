@@ -11,7 +11,7 @@ import {
 import Spinner from '../../components/ui/Spinner';
 import { backendApi } from '../../utility/api';
 import { User } from '../../utility/types';
-import UserInfo from '../admin/UserInfo';
+import UserInfo from './UserInfo';
 
 type Props = {
   onFinish: Function;
@@ -242,7 +242,7 @@ export default function ResolveClaim({ onFinish }: Props) {
       )}
       {showUserInfo && user && (
         <InlineModal onClose={() => setShowUserInfo(false)}>
-          {UserInfo(user)}
+          <UserInfo user={user} />
         </InlineModal>
       )}
     </div>
