@@ -1,12 +1,9 @@
-import { useRecoilValue } from 'recoil';
-import { principalState } from '../../App';
 import { User } from '../../utility/types';
 
 type Props = {
   user: User;
 };
 export default function UserInfo({ user }: Props) {
-  const principal = useRecoilValue(principalState);
   return (
     <>
       {user && (
