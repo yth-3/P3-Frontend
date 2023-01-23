@@ -53,6 +53,7 @@ export default function UserInfo({ user }: Props) {
     } else {
       activate(user.userId);
     }
+    window.location.reload();
   }
 
   function activate(id: string) {

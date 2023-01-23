@@ -1,4 +1,9 @@
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowDownIcon,
+  ArrowsUpDownIcon,
+  ArrowTopRightOnSquareIcon,
+  ArrowUpIcon,
+} from '@heroicons/react/24/outline';
 import { useMemo, useState } from 'react';
 
 import UserInfo from '../../modals/admin/UserInfo';
@@ -14,9 +19,15 @@ type Props = {
   users: User[];
 };
 
+const headers: header['field'][] = ['username', 'role', 'active'];
+
 export default function AdminUsersTable({ users }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [sortedColumn, setSortedColumn] = useState<header['field'] | null>(
+    null
+  );
+  const [asc, setAsc] = useState(false);
 
   function handleDetailsClick(user: User) {
     setUser(user);
@@ -28,6 +39,7 @@ export default function AdminUsersTable({ users }: Props) {
   const sortedUsers = useMemo(() => {
     let sortedUsers = [...users];
     if (sortConfig !== null) {
+      setSortedColumn(sortConfig.field);
       sortedUsers.sort((a, b) => {
         if (a[sortConfig.field] < b[sortConfig.field]) {
           return sortConfig.order === 'ascending' ? -1 : 1;
@@ -46,21 +58,17 @@ export default function AdminUsersTable({ users }: Props) {
       <table className='w-full text-sm text-left text-gray-500 mt-4'>
         <thead className='text-xs text-gray-700 capitalize bg-gray-50'>
           <tr>
-            <th className='px-8 py-2'>
-              <button type='button' onClick={() => setSort('username')}>
-                Username
-              </button>
-            </th>
-            <th className='px-8 py-2'>
-              <button type='button' onClick={() => setSort('role')}>
-                Role
-              </button>
-            </th>
-            <th className='px-8 py-2'>
-              <button type='button' onClick={() => setSort('active')}>
-                Activation Status
-              </button>
-            </th>
+            {headers.map((header) => {
+              return (
+                <SortableHeader
+                  key={header}
+                  text={header}
+                  asc={asc}
+                  sorted={sortedColumn === header}
+                  onClick={() => setSort(header)}
+                />
+              );
+            })}
             <th className='px-8 py-2'>Details</th>
           </tr>
         </thead>
@@ -76,8 +84,10 @@ export default function AdminUsersTable({ users }: Props) {
 
   function setSort(field: header['field']) {
     let order: header['order'] = 'ascending';
+    setAsc(true);
     if (sortConfig?.field === field && sortConfig?.order === order) {
       order = 'descending';
+      setAsc(false);
     }
     setSortConfig({ field, order });
   }
@@ -98,6 +108,31 @@ export default function AdminUsersTable({ users }: Props) {
           </button>
         </td>
       </tr>
+    );
+  }
+
+  type SortableHeaderProps = {
+    text: string;
+    sorted: boolean;
+    asc: boolean;
+    onClick: Function;
+  };
+  function SortableHeader({ text, sorted, asc, onClick }: SortableHeaderProps) {
+    return (
+      <th onClick={() => onClick()} className='px-8 py-2 cursor-pointer'>
+        <div className='flex gap-1 items-center capitalize'>
+          {text}
+          {sorted ? (
+            asc ? (
+              <ArrowUpIcon className='h-3 w-3' />
+            ) : (
+              <ArrowDownIcon className='h-3 w-3' />
+            )
+          ) : (
+            <ArrowsUpDownIcon className='h-4 w-3' />
+          )}
+        </div>
+      </th>
     );
   }
 }
