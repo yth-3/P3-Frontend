@@ -21,19 +21,24 @@ export default function UserInfo({ user }: Props) {
             {user?.username}
           </h3>
           <h3>
-            <b>Email Address: </b>
-            {user?.email}
+            <b>Email address: </b>
+            <a
+              href={'mailto:' + user?.email}
+              className='text-blue-600 hover:text-blue-500 hover:underline'
+            >
+              {user?.email}
+            </a>
           </h3>
           <h3>
             <b>Role: </b>
             {user?.role}
           </h3>
           <h3>
-            <b>Date Registered: </b>
+            <b>Date registered: </b>
             {user?.registered.substring(0, user?.registered.indexOf(' '))}
           </h3>
           <h3>
-            <b>Activation Status: </b>
+            <b>Activation status: </b>
             {user?.active ? 'Active' : 'Inactive'}
           </h3>
           <button
