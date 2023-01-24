@@ -6,6 +6,8 @@ import { principalState } from '../../App';
 import { backendApi } from '../../utility/api';
 import LargeButton from '../ui/LargeButton';
 import { PW_REGEX } from '../../utility/constants';
+import PwEyeIcon from '../ui/PwEyeIcon';
+
 
 type Props = {
   setLoading: Function;
@@ -97,19 +99,7 @@ export default function ChangePasswordForm({
             value={password1}
             onChange={(e) => handleChange(setPassword1, e.target.value)}
           />
-          <>
-            {isPwVisible ? (
-              <EyeSlashIcon
-                className='hover:bg-gray-200 rounded-md h-10 w-10 px-2 cursor-pointer'
-                onClick={() => setPwVisible(false)}
-              />
-            ) : (
-              <EyeIcon
-                className='hover:bg-gray-200 rounded-md h-10 w-10 px-2 cursor-pointer'
-                onClick={() => setPwVisible(true)}
-              />
-            )}
-          </>
+          <PwEyeIcon isPwVisible={isPwVisible} setPwVisible={setPwVisible} />
         </div>
         {(password1 || password2) && (
           <div className='flex flex-row items-center bg-gray-100 shadow-inner rounded-md'>

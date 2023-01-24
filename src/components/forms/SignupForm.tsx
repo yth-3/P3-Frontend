@@ -2,7 +2,6 @@ import { FormEvent, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { modalState } from '../../App';
 import { backendApi } from '../../utility/api';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 import {
   EMAIL_REGEX,
@@ -11,6 +10,7 @@ import {
   UNAME_REGEX,
 } from '../../utility/constants';
 import LargeButton from '../ui/LargeButton';
+import PwEyeIcon from '../ui/PwEyeIcon';
 
 type Props = {
   setLoading: Function;
@@ -114,19 +114,7 @@ export default function SignupForm({
             value={password1}
             onChange={(e) => handleChange(setPassword1, e.target.value)}
           />
-          <>
-            {isPwVisible ? (
-              <EyeSlashIcon
-                className='hover:bg-gray-200 rounded-md h-10 w-10 px-2 cursor-pointer'
-                onClick={() => setPwVisible(false)}
-              />
-            ) : (
-              <EyeIcon
-                className='hover:bg-gray-200 rounded-md h-10 w-10 px-2 cursor-pointer'
-                onClick={() => setPwVisible(true)}
-              />
-            )}
-          </>
+          <PwEyeIcon isPwVisible={isPwVisible} setPwVisible={setPwVisible} />
         </div>
         {(password1 || password2) && (
           <div className='flex flex-row items-center bg-gray-100 shadow-inner rounded-md'>
@@ -137,19 +125,7 @@ export default function SignupForm({
               value={password2}
               onChange={(e) => handleChange(setPassword2, e.target.value)}
             />
-            <>
-              {isPwVisible ? (
-                <EyeSlashIcon
-                  className='hover:bg-gray-200 rounded-md h-10 w-10 px-2 cursor-pointer'
-                  onClick={() => setPwVisible(false)}
-                />
-              ) : (
-                <EyeIcon
-                  className='hover:bg-gray-200 rounded-md h-10 w-10 px-2 cursor-pointer'
-                  onClick={() => setPwVisible(true)}
-                />
-              )}
-            </>
+            <PwEyeIcon isPwVisible={isPwVisible} setPwVisible={setPwVisible} />
           </div>
         )}
         <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>
