@@ -10,9 +10,11 @@ import {
   LOGOUT,
   SIGNUP,
   VIEW_PATIENT_CLAIM,
+  ACCOUNT,
 } from '../utility/constants';
 import ClaimDetail from '../modals/patient/ClaimDetail';
 import LoggedOut from '../modals/LoggedOut';
+import AccountSettings from '../modals/AccountSettings';
 
 export default function Modal() {
   const [modal, setModal] = useRecoilState(modalState);
@@ -39,6 +41,7 @@ export default function Modal() {
             {modal === LOGOUT && <Logout />}
             {modal === VIEW_PATIENT_CLAIM && <ClaimDetail />}
             {modal === LOGGED_OUT && <LoggedOut onClick={handleClick} />}
+            {modal === ACCOUNT && <AccountSettings />}
           </div>
         </div>
       )}

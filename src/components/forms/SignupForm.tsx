@@ -3,7 +3,12 @@ import { useSetRecoilState } from 'recoil';
 import { modalState } from '../../App';
 import { backendApi } from '../../utility/api';
 
-import { LOGIN } from '../../utility/constants';
+import {
+  EMAIL_REGEX,
+  LOGIN,
+  PW_REGEX,
+  UNAME_REGEX,
+} from '../../utility/constants';
 import LargeButton from '../ui/LargeButton';
 import PwEyeIcon from '../ui/PwEyeIcon';
 
@@ -29,27 +34,19 @@ export default function SignupForm({
   async function submit(e: FormEvent) {
     e.preventDefault();
 
-    if (!username.match(/^[a-z0-9_-]{3,20}$/g)) {
+    if (!username.match(UNAME_REGEX)) {
       setError(
         'Username must be 3 to 20 characters long, and may contain only letters, numbers, "_", and "-"'
       );
       return;
     }
 
-    if (
-      !email.match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
-      )
-    ) {
+    if (!email.match(EMAIL_REGEX)) {
       setError('Invalid email');
       return;
     }
 
-    if (
-      !password1.match(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g
-      )
-    ) {
+    if (!password1.match(PW_REGEX)) {
       setError(
         'Password must be minimum 8 characters, with at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character'
       );
