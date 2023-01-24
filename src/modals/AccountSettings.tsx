@@ -48,7 +48,7 @@ export default function AccountSettings() {
       )}
       {accountChanged !== '' && (
         <div className='flex justify-center pt-5 text-blue-600 font-bold'>
-          {accountChanged}
+          {showForm === '' && accountChanged}
         </div>
       )}
     </>

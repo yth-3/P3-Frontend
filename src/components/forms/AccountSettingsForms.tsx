@@ -5,6 +5,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { principalState } from '../../App';
 import { backendApi } from '../../utility/api';
 import LargeButton from '../ui/LargeButton';
+import { PW_REGEX, UNAME_REGEX } from '../../utility/constants';
 
 type Props = {
   setLoading: Function;
@@ -26,7 +27,7 @@ export function ChangeUsernameForm({
   async function submit(e: FormEvent) {
     e.preventDefault();
 
-    if (!username.match(/^[a-z0-9_-]{3,20}$/g)) {
+    if (!username.match(UNAME_REGEX)) {
       setError(
         'Username must be 3 to 20 characters long, and may contain only letters, numbers, "_", and "-"'
       );
@@ -61,12 +62,17 @@ export function ChangeUsernameForm({
 
     setLoading(true);
   }
+
   function handleChange(
     setter: React.Dispatch<React.SetStateAction<string>>,
     value: string
   ) {
     setter(value);
     setError('');
+  }
+
+  function handleButtonClick(formType: string) {
+    setShowForm(formType);
   }
 
   return (
@@ -92,7 +98,7 @@ export function ChangeUsernameForm({
       </main>
 
       <section className='flex gap-1 justify-center items-center text-lg'>
-        <LargeButton onClick={() => setShowForm('password')}>
+        <LargeButton onClick={() => handleButtonClick('password')}>
           Change password
         </LargeButton>
       </section>
@@ -115,11 +121,7 @@ export function ChangePasswordForm({
   async function submitPassword(e: FormEvent) {
     e.preventDefault();
 
-    if (
-      !password1.match(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g
-      )
-    ) {
+    if (!password1.match(PW_REGEX)) {
       setError(
         'Password must be minimum 8 characters, with at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character'
       );
@@ -159,12 +161,17 @@ export function ChangePasswordForm({
 
     setLoading(true);
   }
+
   function handleChange(
     setter: React.Dispatch<React.SetStateAction<string>>,
     value: string
   ) {
     setter(value);
     setError('');
+  }
+
+  function handleButtonClick(formType: string) {
+    setShowForm(formType);
   }
 
   return (
@@ -229,7 +236,7 @@ export function ChangePasswordForm({
       </main>
 
       <section className='flex gap-1 justify-center items-center text-lg'>
-        <LargeButton onClick={() => setShowForm('username')}>
+        <LargeButton onClick={() => handleButtonClick('username')}>
           Change username
         </LargeButton>
       </section>
