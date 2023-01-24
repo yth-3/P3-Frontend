@@ -34,7 +34,7 @@ export function ChangeUsernameForm({
     }
 
     backendApi
-      .post(
+      .put(
         'users/username',
         {
           username,
@@ -47,7 +47,7 @@ export function ChangeUsernameForm({
       )
       .then((response) => {
         setError('');
-        if (response.status === 201) {
+        if (response.status === 202) {
           setShowForm('');
           setAccountChanged('Username changed');
         }
@@ -145,7 +145,7 @@ export function ChangePasswordForm({
       )
       .then((response) => {
         setError('');
-        if (response.status === 201) {
+        if (response.status === 202) {
           setShowForm('');
           setAccountChanged('Username changed');
         }

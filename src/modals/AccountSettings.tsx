@@ -19,7 +19,6 @@ export default function AccountSettings() {
   return (
     <>
       {isLoading && <Spinner />}
-      {accountChanged !== '' && <div>{accountChanged}</div>}
       {showForm === '' ? (
         <main className='flex flex-col gap-5'>
           <h2 className='text-3xl text-center'>Account Settings</h2>
@@ -46,6 +45,11 @@ export default function AccountSettings() {
             setAccountChanged={setAccountChanged}
           />
         )
+      )}
+      {accountChanged !== '' && (
+        <div className='flex justify-center pt-5 text-blue-600 font-bold'>
+          {accountChanged}
+        </div>
       )}
     </>
   );
