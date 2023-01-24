@@ -6,3 +6,4 @@ export const PRINCIPAL = 'local storage key for principal';
 export const TOKEN_START = 'when the token was created';
 export const ONE_HOUR = 60 * 60 * 1000; // 60 seconds times 60 minutes * 1000 milliseconds per second
 export const LOGGED_OUT = 'logged out modal';
+export const ACCOUNT = 'account settings modal';
