@@ -1,12 +1,12 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 import { modalState, principalState } from '../../App';
 import LargeButton from '../../components/ui/LargeButton';
 import { PRINCIPAL, SIGNUP, TOKEN_START } from '../../utility/constants';
 import { backendApi } from '../../utility/api';
+import PwEyeIcon from '../ui/PwEyeIcon';
 
 type Props = {
   setLoading: Function;
@@ -75,19 +75,7 @@ export default function LoginForm({ setLoading, isLoading }: Props) {
             value={password}
             onChange={(e) => handleChange(setPassword, e.target.value)}
           />
-          <>
-            {isPwVisible ? (
-              <EyeSlashIcon
-                className='hover:bg-gray-200 rounded-md h-10 w-10 px-2 cursor-pointer'
-                onClick={() => setPwVisible(false)}
-              />
-            ) : (
-              <EyeIcon
-                className='hover:bg-gray-200 rounded-md h-10 w-10 px-2 cursor-pointer'
-                onClick={() => setPwVisible(true)}
-              />
-            )}
-          </>
+          <PwEyeIcon isPwVisible={isPwVisible} setPwVisible={setPwVisible} />
         </div>
         <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>
           Log in
