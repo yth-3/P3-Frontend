@@ -3,6 +3,7 @@ import { FormEvent, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { principalState } from '../../App';
 import { backendApi } from '../../utility/api';
+import { EMAIL_REGEX, PW_REGEX, UNAME_REGEX } from '../../utility/constants';
 import InlineModal from '../InlineModal';
 
 export default function AddUserForm() {
@@ -122,18 +123,14 @@ export default function AddUserForm() {
   async function submit(e: FormEvent) {
     e.preventDefault();
 
-    if (!username.match(/^[a-z0-9_-]{3,20}$/g)) {
+    if (!username.match(UNAME_REGEX)) {
       setError(
         'Username must be 3 to 20 characters long, and may contain only letters, numbers, "_", and "-"'
       );
       return;
     }
 
-    if (
-      !email.match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
-      )
-    ) {
+    if (!email.match(EMAIL_REGEX)) {
       setError('Invalid email');
       return;
     }
@@ -143,11 +140,7 @@ export default function AddUserForm() {
       return;
     }
 
-    if (
-      !password1.match(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g
-      )
-    ) {
+    if (!password1.match(PW_REGEX)) {
       setError(
         'Password must be minimum 8 characters, with at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character'
       );

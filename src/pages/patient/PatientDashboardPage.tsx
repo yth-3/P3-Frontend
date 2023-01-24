@@ -26,7 +26,7 @@ export default function PatientDashboardPage() {
           <LargeLink to='claims'>View Claims</LargeLink>
         </section>
         <section>
-          <h2 className='text-xl'>This your dashboard.</h2>
+          <h2 className='text-xl'>This is your dashboard.</h2>
           <div>
             From here you can file a new claim for medications, procedures or
             any consultations you received. You can also view previous claims
