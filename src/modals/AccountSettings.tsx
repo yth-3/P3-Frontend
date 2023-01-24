@@ -1,9 +1,7 @@
 import { useState } from 'react';
 
-import {
-  ChangeUsernameForm,
-  ChangePasswordForm,
-} from '../components/forms/AccountSettingsForms';
+import ChangeUsernameForm from '../components/forms/ChangeUsernameForm';
+import ChangePasswordForm from '../components/forms/ChangePasswordForm';
 import LargeButton from '../components/ui/LargeButton';
 import Spinner from '../components/ui/Spinner';
 
