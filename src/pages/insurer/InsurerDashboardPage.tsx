@@ -32,16 +32,15 @@ export default function InsurerDashboardPage() {
         <header id='insurer-header' className='flex flex-col items-center pt-8'>
           <div
             id='header-copy'
-            className='bg-slate-50 opacity-90 w-fit p-4 rounded-lg gap-4 flex flex-col text-blue-800'
+            className='bg-slate-50 opacity-90 w-1/2 p-4 rounded-lg gap-4 flex flex-col text-blue-800'
           >
             <h2 className='text-4xl'>Welcome, {principal?.username}</h2>
-
-            <h2 className='text-xl'>This is your dashboard.</h2>
-            <div>
-              You can view and manage all patient claims that have been
-              submitted. From here you can also directly resolve a claim if you
-              know the claim ID.
-            </div>
+            <h2>This is your dashboard.</h2>
+            <h2>
+              As an insurer, you can view and manage all patient claims that
+              have been submitted. From here you can also directly resolve a
+              claim if you know the claim ID.
+            </h2>
           </div>
         </header>
 
