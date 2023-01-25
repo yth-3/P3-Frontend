@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import { User } from '../../utility/types';
 import UserInfo from '../admin/UserInfo';
 
@@ -14,8 +15,10 @@ const user: User = {
 
 it('renders without crashing', () => {
   render(
-    <BrowserRouter>
-      <UserInfo user={user} />
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <UserInfo user={user} />
+      </BrowserRouter>
+    </RecoilRoot>
   );
 });
