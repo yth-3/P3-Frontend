@@ -5,11 +5,12 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
 } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { claimState } from '../../App';
 import { Claim } from '../../utility/types';
 import Spinner from '../ui/Spinner';
+import Pagination from '../../utility/Pagination';
 
 type header = 'status' | 'submitter' | 'submitted' | 'type';
 const sortedHeaders: header[] = ['status', 'submitter', 'submitted', 'type'];
@@ -27,8 +28,10 @@ export default function InsurerClaimsTable({
   const setClaim = useSetRecoilState(claimState);
   const [sortedColumn, setSortedColumn] = useState<header | null>(null);
   const [asc, setAsc] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  function sortedClaims() {
+  const sortedClaims = useMemo(() => {
     if (!sortedColumn) return claims;
     const sorted = [...claims].sort((a, b) => {
       let ifAsc;
@@ -59,7 +62,7 @@ export default function InsurerClaimsTable({
       return asc ? ifAsc : ifAsc * -1;
     });
     return sorted;
-  }
+  }, [claims, sortedColumn, asc]);
 
   function handleDetailsClick(claim: Claim) {
     setClaim(claim);
@@ -75,41 +78,55 @@ export default function InsurerClaimsTable({
     }
   }
 
+  const currentClaims = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return sortedClaims.slice(firstPageIndex, lastPageIndex);
+  }, [sortedClaims, currentPage]);
+
   return (
-    <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
-      <thead className='text-xs text-gray-700 uppercase bg-gray-200 rounded-lg'>
-        <tr className='py-5 rounded-lg'>
-          {sortedHeaders.map((header) => {
-            return (
-              <SortableHeader
-                key={header}
-                text={header}
-                asc={asc}
-                sorted={sortedColumn === header}
-                onClick={() => handleHeaderClick(header)}
-              />
-            );
-          })}
-          <th className='px-8 py-2'>Description</th>
-          <th className='px-8 py-2'></th>
-        </tr>
-      </thead>
-      <tbody>
-        {isLoading ? (
-          <tr>
-            <td>
-              <Spinner />
-            </td>
+    <div>
+      <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
+        <thead className='text-xs text-gray-700 uppercase bg-gray-200 rounded-lg'>
+          <tr className='py-5 rounded-lg'>
+            {sortedHeaders.map((header) => {
+              return (
+                <SortableHeader
+                  key={header}
+                  text={header}
+                  asc={asc}
+                  sorted={sortedColumn === header}
+                  onClick={() => handleHeaderClick(header)}
+                />
+              );
+            })}
+            <th className='px-8 py-2'>Description</th>
+            <th className='px-8 py-2'></th>
           </tr>
-        ) : sortedClaims().length === 0 ? (
-          <tr>
-            <td>No claims found</td>
-          </tr>
-        ) : (
-          sortedClaims().map((claim) => formatClaim(claim))
-        )}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {isLoading ? (
+            <tr>
+              <td>
+                <Spinner />
+              </td>
+            </tr>
+          ) : sortedClaims.length === 0 ? (
+            <tr>
+              <td>No claims found</td>
+            </tr>
+          ) : (
+            currentClaims.map((claim) => formatClaim(claim))
+          )}
+        </tbody>
+      </table>
+      <Pagination
+        currentPage={currentPage}
+        totalCount={claims.length}
+        pageSize={pageSize}
+        onPageChange={setCurrentPage}
+      />
+    </div>
   );
 
   function formatClaim(claim: Claim) {
