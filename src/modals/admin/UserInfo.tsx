@@ -54,7 +54,6 @@ export default function UserInfo({ user }: Props) {
   );
 
   function toggleActive(user: User) {
-    console.log(user.userId);
     if (user.active) {
       deactivate(user.userId);
     } else {
