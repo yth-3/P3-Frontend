@@ -109,11 +109,9 @@ export default function PatientsClaimsTable({
               <tr key={claim.claimId} className='bg-white border-b'>
                 <TableDataText text={claim.status.status} />
                 <TableDataText
-                  text={`${
-                    new Date(claim.submitted).getUTCMonth() + 1
-                  }-${new Date(claim.submitted).getUTCDate()}-${new Date(
+                  text={`${new Date(claim.submitted).getMonth() + 1}-${new Date(
                     claim.submitted
-                  ).getUTCFullYear()}`}
+                  ).getDate()}-${new Date(claim.submitted).getFullYear()}`}
                 />
                 <TableDataText text={claim.type.type} />
                 <TableDataText text={claim.description} />
