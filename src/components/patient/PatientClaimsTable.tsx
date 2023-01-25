@@ -7,9 +7,7 @@ import {
   ArrowUpIcon,
 } from '@heroicons/react/24/outline';
 
-import { modalState, claimState } from '../../App';
-import { VIEW_PATIENT_CLAIM } from '../../utility/constants';
-
+import { claimState } from '../../App';
 import { Claim } from '../../utility/types';
 import Spinner from '../../components/ui/Spinner';
 
@@ -19,9 +17,13 @@ const sortedHeaders: header[] = ['status', 'submitted', 'type'];
 type Props = {
   claims: Claim[];
   loading: boolean;
+  setShowDetail: Function;
 };
-export default function PatientsClaimsTable({ claims, loading }: Props) {
-  const setModal = useSetRecoilState(modalState);
+export default function PatientsClaimsTable({
+  claims,
+  loading,
+  setShowDetail,
+}: Props) {
   const setClaim = useSetRecoilState(claimState);
   const [sortedColumn, setSortedColumn] = useState<header | null>(null);
   const [asc, setAsc] = useState(true);
@@ -58,7 +60,7 @@ export default function PatientsClaimsTable({ claims, loading }: Props) {
   }
 
   function handleDetailsClick(claim: Claim) {
-    setModal(VIEW_PATIENT_CLAIM);
+    setShowDetail(true);
     setClaim(claim);
   }
 

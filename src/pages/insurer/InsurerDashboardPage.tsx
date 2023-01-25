@@ -16,12 +16,12 @@ export default function InsurerDashboardPage() {
   const [showResolve, setShowResolve] = useState(false);
   const navigate = useNavigate();
 
-  function finishFindClaim() {
+  function handleFinishFindClaim() {
     setShowFind(false);
     setShowResolve(true);
   }
 
-  function finishResolveClaim() {
+  function handleFinishResolveClaim() {
     setShowResolve(false);
     navigate('claims');
   }
@@ -56,12 +56,12 @@ export default function InsurerDashboardPage() {
       </main>
       {showFind && (
         <InlineModal onClose={() => setShowFind(false)}>
-          <FindClaim onFinish={finishFindClaim} />
+          <FindClaim onFinish={handleFinishFindClaim} />
         </InlineModal>
       )}
       {showResolve && (
         <InlineModal onClose={() => setShowResolve(false)}>
-          <ResolveClaim onFinish={finishResolveClaim} />
+          <ResolveClaim onFinish={handleFinishResolveClaim} />
         </InlineModal>
       )}
     </>
