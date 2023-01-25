@@ -30,7 +30,7 @@ export default function AdminUsersTable({ users }: Props) {
   );
   const [asc, setAsc] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 7;
   function handleDetailsClick(user: User) {
     setUser(user);
     setShowInfo(true);
