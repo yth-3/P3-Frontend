@@ -29,7 +29,7 @@ export default function InsurerClaimsTable({
   const [sortedColumn, setSortedColumn] = useState<header | null>(null);
   const [asc, setAsc] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 7;
 
   const sortedClaims = useMemo(() => {
     if (!sortedColumn) return claims;
