@@ -45,18 +45,18 @@ export default function Pagination({
 
   return (
     <ul className='flex gap-10'>
-      <li>
+      <li key='first'>
         <button disabled={currentPage === 1} onClick={onPrevious}>
           prev
         </button>
       </li>
       {paginationRange?.map((pageNumber) => {
         if (pageNumber === DOTS) {
-          return <li>&#8230;</li>;
+          return <li key={'Page number: ' + pageNumber}>&#8230;</li>;
         }
 
         return (
-          <li>
+          <li key={'Page number: ' + pageNumber}>
             <button onClick={() => onPageChange(pageNumber)}>
               {pageNumber}
             </button>
@@ -64,7 +64,7 @@ export default function Pagination({
         );
       })}
 
-      <li>
+      <li key='last'>
         <button disabled={currentPage === lastPage} onClick={onNext}>
           next
         </button>

@@ -43,6 +43,7 @@ export default function UserInfo({ user }: Props) {
           </h3>
           <button
             className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'
+            type='button'
             onClick={() => toggleActive(user)}
           >
             Toggle Activation Status
@@ -58,7 +59,6 @@ export default function UserInfo({ user }: Props) {
     } else {
       activate(user.userId);
     }
-    window.location.reload();
   }
 
   function activate(id: string) {
@@ -72,6 +72,9 @@ export default function UserInfo({ user }: Props) {
           },
         }
       )
+      .then(() => {
+        window.location.reload();
+      })
       .catch((error) => console.error('Error: ' + error));
   }
 
@@ -86,6 +89,9 @@ export default function UserInfo({ user }: Props) {
           },
         }
       )
+      .then(() => {
+        window.location.reload();
+      })
       .catch((error) => console.error('Error: ' + error));
   }
 }
