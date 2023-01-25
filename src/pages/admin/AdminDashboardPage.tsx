@@ -34,7 +34,7 @@ export default function AdminDashboardPage() {
           View all users
         </LargeButton>
         <LargeButton onClick={() => navigate('/admin/add')}>
-          Add new Insurer/Staff Member
+          Add new Insurer/Staff member
         </LargeButton>
       </section>
     </main>

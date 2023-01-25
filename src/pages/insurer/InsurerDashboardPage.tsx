@@ -29,7 +29,10 @@ export default function InsurerDashboardPage() {
   return (
     <>
       <main className='flex flex-col gap-10 items-center'>
-        <header id='insurer-header' className='flex flex-col items-center pt-8'>
+        <header
+          id='insurer-header'
+          className='text-lg flex flex-col items-center pt-8'
+        >
           <div
             id='header-copy'
             className='bg-slate-50 opacity-90 w-1/2 p-4 rounded-lg gap-4 flex flex-col text-blue-800'
@@ -44,7 +47,7 @@ export default function InsurerDashboardPage() {
           </div>
         </header>
 
-        <section className='flex gap-4'>
+        <section className='flex gap-5 justify-center text-lg'>
           <LargeLink to='claims'>Manage claims</LargeLink>
           <LargeButton onClick={() => setShowFind(true)}>
             Resolve claim

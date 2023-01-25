@@ -19,7 +19,10 @@ export default function PatientDashboardPage() {
   return (
     <>
       <main className='flex flex-col gap-10 items-center'>
-        <header id='patient-header' className='flex flex-col items-center pt-8'>
+        <header
+          id='patient-header'
+          className='text-lg flex flex-col items-center pt-8'
+        >
           <div
             id='header-copy'
             className='bg-slate-50 opacity-90 w-1/4 p-4 rounded-lg gap-4 flex flex-col text-blue-800'
@@ -34,7 +37,7 @@ export default function PatientDashboardPage() {
           </div>
         </header>
 
-        <section className='flex gap-4'>
+        <section className='flex gap-5 justify-center text-lg'>
           <LargeButton onClick={() => setShowNew(true)}>New Claim</LargeButton>
           <LargeLink to='claims'>View Claims</LargeLink>
         </section>
