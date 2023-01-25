@@ -7,7 +7,11 @@ import { EMAIL_REGEX, PW_REGEX, UNAME_REGEX } from '../../utility/constants';
 import InlineModal from '../InlineModal';
 import PwEyeIcon from '../ui/PwEyeIcon';
 
-export default function AddUserForm() {
+type Props = {
+  onFinish: Function;
+};
+
+export default function AddUserForm({ onFinish }: Props) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
@@ -24,8 +28,21 @@ export default function AddUserForm() {
       className='flex flex-col gap-10 justify-center'
       onSubmit={(e) => submit(e)}
     >
-      <main className='flex flex-col gap 5'>
+      <main className='flex flex-col gap-5'>
         <h2 className='text-3xl text-center'>Add New User</h2>
+        <select
+          name={role}
+          id='role'
+          value={role}
+          onChange={(e) => handleChange(setRole, e.target.value)}
+          className='h-10'
+        >
+          <option hidden id='default' value=''>
+            Select a Role
+          </option>
+          <option value='insurer'>Insurer</option>
+          <option value='staff'>Staff</option>
+        </select>
         <input
           className='bg-gray-100 shadow-inner rounded-md px-5 py-2 margin-bottom: 10px'
           type='text'
@@ -40,18 +57,6 @@ export default function AddUserForm() {
           value={email}
           onChange={(e) => handleChange(setEmail, e.target.value)}
         />
-        <select
-          name={role}
-          id='role'
-          value={role}
-          onChange={(e) => handleChange(setRole, e.target.value)}
-        >
-          <option hidden id='default' value=''>
-            Select a Role
-          </option>
-          <option value='insurer'>Insurer</option>
-          <option value='staff'>Staff</option>
-        </select>
         <div className='flex flex-row items-center bg-gray-100 shadow-inner rounded-md'>
           <input
             className='bg-gray-100 shadow-inner rounded-md px-5 py-2'
@@ -74,7 +79,7 @@ export default function AddUserForm() {
             <PwEyeIcon isPwVisible={pwVisible} setPwVisible={setPwVisible} />
           </div>
         )}
-        <button className='bg-blue-600 hover:bg-blue-500 p3 rounded-sm text-lg text-slate-50'>
+        <button className='bg-blue-600 hover:bg-blue-500 p-3 rounded-sm text-lg text-slate-50'>
           Submit
         </button>
         <div className='w-64'>
@@ -146,13 +151,13 @@ export default function AddUserForm() {
       .then((response) => {
         setError('');
         if (response.status === 201) {
-          console.log('success');
           setUsername('');
           setEmail('');
           setRole('');
           setPassword2('');
           setPassword1('');
           setShowCreated(true);
+          onFinish();
         }
       })
       .catch((error) => {

@@ -11,7 +11,6 @@ import PatientDashboardPage from '../pages/patient/PatientDashboardPage';
 import PatientClaimsPage from '../pages/patient/PatientClaimsPage';
 import UserListPage from '../pages/admin/UserListPage';
 import ProtectedRoute from './ProtectedRoute';
-import AddUserPage from '../pages/admin/AddUserPage';
 
 export default function Router() {
   return (
@@ -39,7 +38,6 @@ export default function Router() {
         <Route path='admin' element={<ProtectedRoute role='Admin' />}>
           <Route index element={<AdminDashboardPage />} />
           <Route path='users' element={<UserListPage />} />
-          <Route path='add' element={<AddUserPage />} />
         </Route>
 
         <Route path='*' element={<NotFoundPage />} />
