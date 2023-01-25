@@ -1,4 +1,5 @@
 import { useRecoilValue } from 'recoil';
+
 import { claimState } from '../../App';
 
 export default function ClaimDetail() {
@@ -12,37 +13,37 @@ export default function ClaimDetail() {
             <strong>Claim ID:</strong> {claim?.claimId}
           </h3>
           <h3>
-            <b>Date submitted:</b>{' '}
+            <strong>Date submitted:</strong>{' '}
             {claim && new Date(claim?.submitted).toUTCString()}
           </h3>
           <h3>
-            <b>Amount claimed:</b> ${claim?.claimed.toFixed(2)}
+            <strong>Amount claimed:</strong> ${claim?.claimed.toFixed(2)}
           </h3>
           <h3>
-            <b>Type:</b> {claim?.type.type}
+            <strong>Type:</strong> {claim?.type.type}
           </h3>
           <h3>
-            <b>Claim description:</b> {claim?.description}
+            <strong>Claim description:</strong> {claim?.description}
           </h3>
           <h3>
-            <b>Claim status:</b> {claim?.status.status}
+            <strong>Claim status:</strong> {claim?.status.status}
           </h3>
           {claim?.receipt && (
             <h3>
-              <b>Claim receipt:</b> {claim?.receipt}
+              <strong>Claim receipt:</strong> {claim?.receipt}
             </h3>
           )}
           {claim?.resolver && (
             <>
               <h3>
-                <b>Resolver ID:</b> {claim.resolver.userId}
+                <strong>Resolver ID:</strong> {claim.resolver.userId}
               </h3>
               <h3>
-                <b>Date resolved:</b>{' '}
+                <strong>Date resolved:</strong>{' '}
                 {claim.resolved && new Date(claim.resolved).toUTCString()}
               </h3>
               <h3>
-                <b>Amount settled:</b> ${claim?.settled?.toFixed(2)}
+                <strong>Amount settled:</strong> ${claim?.settled?.toFixed(2)}
               </h3>
             </>
           )}
