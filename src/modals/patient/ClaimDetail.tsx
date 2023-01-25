@@ -13,7 +13,7 @@ export default function ClaimDetail() {
           </h3>
           <h3>
             <b>Date submitted:</b>{' '}
-            {claim && new Date(claim?.submitted).toUTCString()}
+            {claim && new Date(claim?.submitted).toString()}
           </h3>
           <h3>
             <b>Amount claimed:</b> ${claim?.claimed.toFixed(2)}
@@ -39,7 +39,7 @@ export default function ClaimDetail() {
               </h3>
               <h3>
                 <b>Date resolved:</b>{' '}
-                {claim.resolved && new Date(claim.resolved).toUTCString()}
+                {claim.resolved && new Date(claim.resolved).toString()}
               </h3>
               <h3>
                 <b>Amount settled:</b> ${claim?.settled?.toFixed(2)}
