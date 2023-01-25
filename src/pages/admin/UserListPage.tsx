@@ -11,7 +11,7 @@ import Pagination from '../../utility/Pagination';
 export default function UserListPage() {
   //const navigate = useNavigate();
   const principal = useRecoilValue(principalState);
-  const pageSize = 10;
+  const pageSize = 7;
   const [users, setUsers] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -41,7 +41,7 @@ export default function UserListPage() {
   return (
     <main className='flex flex-col gap-10 items-center mt-4'>
       <header>
-        <h1>Users</h1>
+        <h1 className='text-sky-900 text-4xl'>Users</h1>
       </header>
       <section>
         <AdminUsersTable users={currentUsers} />

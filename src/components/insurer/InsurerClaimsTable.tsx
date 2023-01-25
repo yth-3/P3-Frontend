@@ -77,7 +77,7 @@ export default function InsurerClaimsTable({
 
   return (
     <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
-      <thead className='text-xs text-gray-700 uppercase bg-gray-50 rounded-lg'>
+      <thead className='text-xs text-gray-700 uppercase bg-gray-200 rounded-lg'>
         <tr className='py-5 rounded-lg'>
           {sortedHeaders.map((header) => {
             return (
