@@ -16,10 +16,10 @@ export default function Signup() {
     <>
       {isLoading && <Spinner />}
       {accountCreated ? (
-        <>
+        <div className='flex flex-col gap-5 justify-center'>
           <div>Account created</div>
           <LargeButton onClick={() => setModal(LOGIN)}>Log in now</LargeButton>
-        </>
+        </div>
       ) : (
         <SignupForm
           setLoading={setLoading}
