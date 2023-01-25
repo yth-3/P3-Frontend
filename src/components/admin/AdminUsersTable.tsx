@@ -12,7 +12,7 @@ import { User } from '../../utility/types';
 import InlineModal from '../InlineModal';
 
 type header = {
-  field: 'username' | 'role' | 'active';
+  field: 'username' | 'role' | 'active' | 'registered';
   order: 'ascending' | 'descending';
 };
 
@@ -20,7 +20,7 @@ type Props = {
   users: User[];
 };
 
-const headers: header['field'][] = ['username', 'role', 'active'];
+const headers: header['field'][] = ['username', 'role', 'active', 'registered'];
 
 export default function AdminUsersTable({ users }: Props) {
   const [user, setUser] = useState<User | null>(null);
@@ -112,6 +112,9 @@ export default function AdminUsersTable({ users }: Props) {
         <td className='px-8 py-5'>{user.username}</td>
         <td className='px-8 py-5'>{user.role}</td>
         <td className='px-8 py-5'>{user.active ? 'Active' : 'Inactive'}</td>
+        <td className='px-8 py-5'>
+          {user.registered.substring(0, user?.registered.indexOf(' '))}
+        </td>
         <td className='px-8 py-5'>
           <button
             onClick={() => handleDetailsClick(user)}
