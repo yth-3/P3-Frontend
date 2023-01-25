@@ -7,11 +7,12 @@ import {
 import { useMemo, useState } from 'react';
 
 import UserInfo from '../../modals/admin/UserInfo';
+import Pagination from '../../utility/Pagination';
 import { User } from '../../utility/types';
 import InlineModal from '../InlineModal';
 
 type header = {
-  field: 'username' | 'role' | 'active';
+  field: 'username' | 'role' | 'active' | 'registered';
   order: 'ascending' | 'descending';
 };
 
@@ -19,7 +20,7 @@ type Props = {
   users: User[];
 };
 
-const headers: header['field'][] = ['username', 'role', 'active'];
+const headers: header['field'][] = ['username', 'role', 'active', 'registered'];
 
 export default function AdminUsersTable({ users }: Props) {
   const [user, setUser] = useState<User | null>(null);
@@ -28,7 +29,8 @@ export default function AdminUsersTable({ users }: Props) {
     null
   );
   const [asc, setAsc] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
   function handleDetailsClick(user: User) {
     setUser(user);
     setShowInfo(true);
@@ -53,6 +55,12 @@ export default function AdminUsersTable({ users }: Props) {
     return sortedUsers;
   }, [users, sortConfig]);
 
+  const currentUsers = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return sortedUsers.slice(firstPageIndex, lastPageIndex);
+  }, [sortedUsers, currentPage]);
+
   return (
     <>
       <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
@@ -72,8 +80,14 @@ export default function AdminUsersTable({ users }: Props) {
             <th className='px-8 py-2'></th>
           </tr>
         </thead>
-        <tbody>{sortedUsers.map(formatUser)}</tbody>
+        <tbody>{currentUsers.map(formatUser)}</tbody>
       </table>
+      <Pagination
+        currentPage={currentPage}
+        totalCount={users.length}
+        pageSize={pageSize}
+        onPageChange={setCurrentPage}
+      />
       {showInfo && user && (
         <InlineModal onClose={() => setShowInfo(false)}>
           <UserInfo user={user} />
@@ -98,6 +112,9 @@ export default function AdminUsersTable({ users }: Props) {
         <td className='px-8 py-5'>{user.username}</td>
         <td className='px-8 py-5'>{user.role}</td>
         <td className='px-8 py-5'>{user.active ? 'Active' : 'Inactive'}</td>
+        <td className='px-8 py-5'>
+          {user.registered.substring(0, user?.registered.indexOf(' '))}
+        </td>
         <td className='px-8 py-5'>
           <button
             onClick={() => handleDetailsClick(user)}
