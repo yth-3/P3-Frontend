@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 //import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +6,6 @@ import { backendApi } from '../../utility/api';
 import { principalState } from '../../App';
 import { User } from '../../utility/types';
 import AdminUsersTable from '../../components/admin/AdminUsersTable';
-import Pagination from '../../utility/Pagination';
 
 export default function UserListPage() {
   //const navigate = useNavigate();
