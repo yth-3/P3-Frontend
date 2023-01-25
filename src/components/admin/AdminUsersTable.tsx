@@ -63,9 +63,9 @@ export default function AdminUsersTable({ users }: Props) {
 
   return (
     <>
-      <table className='w-full text-sm text-left text-gray-500 mt-4'>
-        <thead className='text-xs text-gray-700 capitalize bg-gray-50'>
-          <tr>
+      <table className='w-full text-sm text-left text-gray-500 mt-4 rounded-md'>
+        <thead className='text-xs text-gray-700 uppercase bg-gray-200 rounded-lg'>
+          <tr className='py-5 rounded-lg'>
             {headers.map((header) => {
               return (
                 <SortableHeader
@@ -77,7 +77,7 @@ export default function AdminUsersTable({ users }: Props) {
                 />
               );
             })}
-            <th className='px-8 py-2'>Details</th>
+            <th className='px-8 py-2'></th>
           </tr>
         </thead>
         <tbody>{currentUsers.map(formatUser)}</tbody>
@@ -109,10 +109,10 @@ export default function AdminUsersTable({ users }: Props) {
   function formatUser(user: User) {
     return (
       <tr key={user.userId} className='bg-white border-b'>
-        <td>{user.username}</td>
-        <td>{user.role}</td>
-        <td>{user.active ? 'Active' : 'Inactive'}</td>
-        <td className='px-8'>
+        <td className='px-8 py-5'>{user.username}</td>
+        <td className='px-8 py-5'>{user.role}</td>
+        <td className='px-8 py-5'>{user.active ? 'Active' : 'Inactive'}</td>
+        <td className='px-8 py-5'>
           <button
             onClick={() => handleDetailsClick(user)}
             className='bg-slate-200 p-1 rounded flex'
@@ -134,7 +134,7 @@ export default function AdminUsersTable({ users }: Props) {
   function SortableHeader({ text, sorted, asc, onClick }: SortableHeaderProps) {
     return (
       <th onClick={() => onClick()} className='px-8 py-2 cursor-pointer'>
-        <div className='flex gap-1 items-center capitalize'>
+        <div className='flex gap-1 items-center'>
           {text}
           {sorted ? (
             asc ? (
